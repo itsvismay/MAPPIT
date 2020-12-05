@@ -1,12 +1,12 @@
 %% THE SETUP
 xse = [0 0 0;
-       10 0 5;
-       0 7 8;
+       10 0 9;
+       0 7 1;
        10 10 10];
 
 max_time = 10;
 waypoints = size(xse,1)-1;
-seg_per_waypoint = 200;
+seg_per_waypoint = 10;
 segments = seg_per_waypoint*waypoints; %total_segments = segments per waypoint * num waypoints
 
 %vertices
@@ -52,7 +52,20 @@ r1v = reshape(q, 3, size(r1v,1))';
 PV = r1v;
 PE = r1e;
 [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',0.5, 'PolySize', 10);
+
 % %PLOT AGENTS
+fname = "single_agent.json";
+s = struct;
+s.path = r1v;
+s.thickness = 0.5;
+s.stiffness = 1;
+jsontext = jsonencode(s);
+jsontext = strrep(jsontext, ',', sprintf(',\n'));
+jsontext = strrep(jsontext, '[{', sprintf('[\r{\r'));
+jsontext = strrep(jsontext, '}]', sprintf('\r}\r]'));
+fileID = fopen(fname, 'w');
+fprintf(fileID, jsontext);
+
 figure('Name', 'Simple collision');
 tsurf(CF, CV);
 axis equal

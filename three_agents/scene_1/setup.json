@@ -1,0 +1,29 @@
+{
+	"name": "scene_1",
+	"agents": {
+		"agent1":{
+			"xse": [[8.5, -5,  0], 
+					[8.5, 6, 10]], 
+			"mesh": "agent_1.obj",
+			"animation_cycles": null
+		},
+		"agent2":{
+			"xse": [[8,2, 0],
+					[9,-7,10]],
+			"mesh": "agent_2.obj",
+			"animation_cycles": null
+		},
+		"agent3":{
+			"xse": [[9,2,0],
+					[8,-7, 10]],
+			"mesh": "agent_3.obj",
+			"animation_cycles": null
+		}
+	},
+	"obstacles": {},
+	"terrain": {
+		"mesh": "terrain.obj"
+	},
+	"tol":2.05
+
+}
