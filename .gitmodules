@@ -1,0 +1,3 @@
+[submodule "smooth-distances"]
+	path = smooth-distances
+	url = git@github.com:abhimadan/smooth-distances.git

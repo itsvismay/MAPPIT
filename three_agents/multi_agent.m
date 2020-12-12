@@ -19,7 +19,7 @@ for i = 1:numel(a)
     agent.xse = getfield(setup_params.agents, a{i}).xse;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 10;
+    agent.seg_per_waypoint = 20;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     
