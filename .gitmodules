@@ -1,3 +1,6 @@
 [submodule "smooth-distances"]
-	path = smooth-distances
+	path = external/smooth-distances
 	url = git@github.com:abhimadan/smooth-distances.git
+[submodule "CrowdsPaper"]
+	path = CrowdsPaper
+	url = git@github.com:itsvismay/CrowdsPaper.git
