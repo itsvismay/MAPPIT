@@ -7,13 +7,15 @@
 			    [ 0,    10,    10]
 			], 
 			"mesh": "agent_1.obj",
-			"animation_cycles": null
+			"animation_cycles": null,
+            "radius": 1
 		},
 		"agent2":{
 			"xse": [[0, 0, 0],
 					[10,10,10]],
 			"mesh": "agent_2.obj",
-			"animation_cycles": null
+			"animation_cycles": null,
+            "radius":1
 		}
 	},
 	"obstacles": {},

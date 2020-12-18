@@ -1,10 +1,11 @@
 %read in from the scene file
-fname = "../roomba_maze/scene_2/";
+fname = "../../three_agents/scene_1/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
 scene.terrain.V = tV;
 scene.terrain.F = tF;
+scene.terrain.BV = tV(unique(boundary_faces(tF)),:);
 scene.agents = [];
 
 v = [];
@@ -14,6 +15,7 @@ Aeq = [];
 beq = [];
 A = [];
 b = [];
+UserTols = [];
 
 a = fieldnames(setup_params.agents);
 for i = 1:numel(a)
@@ -21,7 +23,7 @@ for i = 1:numel(a)
     agent.xse = getfield(setup_params.agents, a{i}).xse;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 15;
+    agent.seg_per_waypoint = 6;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
@@ -39,7 +41,7 @@ for i = 1:numel(a)
     
     %wiggles the rod start so that they aren't intersecting
     endtime = r1v(end,3);
-    r1v(:,3) = sort(rand(1,size(r1v,1))*(endtime));
+    r1v(:,3) = r1v(:,3)-0.5*i;%sort(rand(1,size(r1v,1))*(endtime));
     r1v(end,3) = endtime;
     agent.v = r1v;            
     v = [v;r1v];
@@ -81,8 +83,12 @@ for i = 1:numel(a)
         zeros(size(A1,1), size(A,2)) A1];
     b = [b; b1];
     
-    scene.agents = [scene.agents agent];   
+    scene.agents = [scene.agents agent]; 
+    UserTols = [UserTols agent.radius];
 end
+Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
+A = [A zeros(size(A,1),numel(scene.agents))];
+
 
 PV = v;
 PE = e;
@@ -91,62 +97,78 @@ surf_anim = tsurf(CF, CV);
 axis equal;
 drawnow;
 
-UserTols = 2*ones(size(scene.agents(1).v,1),size(scene.agents(2).v,1));
-Aeq = [Aeq zeros(size(Aeq,1),numel(UserTols))];
-A = [A zeros(size(A,1),numel(UserTols))];
 %minimize here
-
 options = optimoptions('fmincon');
-options.MaxFunctionEvaluations = 1e3;
-q = [reshape(v', numel(v), 1); 0*reshape(UserTols',numel(UserTols),1)];
-mu = 1;
-for k = 1:10
-    [q, fval, exitflag, output] = fmincon(@(x) path_energy(x, numel(scene.agents), e, surf_anim, numel(v), UserTols, mu), q, A,b,Aeq,beq,[],[], [],options);
-    mu = mu/2.0;
-    PV = reshape(q(1:numel(v)), 3, numel(v)/3)';
-    [CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',2, 'PolySize', 4);
-    surf_anim.Vertices = CV;
-    drawnow;
-end
+options.MaxFunctionEvaluations = 1e5;
+q_i  = [reshape(v', numel(v),1); zeros(numel(scene.agents),1)];
+[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
+                            q_i, ...
+                            A,b,Aeq,beq,[],[], ...
+                            @(x)nonlinear_constraints(x, scene), options);
+q = q_i(1:end-numel(scene.agents));
+                        
+PV = reshape(q, 3, numel(q)/3)';
+[CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',2, 'PolySize', 4);
+surf_anim.Vertices = CV;
+drawnow;
 
+function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
+    q = q_i(1:end-num_agents);
+    Q = reshape(q, numel(q)/num_agents, num_agents); %3*nodes x agents
+    G = zeros(size(Q));
+    Tols = q_i(end-num_agents+1:end);
 
-
-function [f] = path_energy(q, num_agents, e, surf_anim, num_v, UserTols, mu)
-    Q = reshape(q(1:num_v), num_v/num_agents, num_agents); %3*nodes x agents
-    Tols = reshape(q(num_v+1:end), size(UserTols))';
-    
     T = 0;
+    B = 0;
+    W = 0;
+    
+    g = zeros(size(q));
+
     for i=1:num_agents
         q_i = Q(:, i); %3*nodes
         
+        %various fun path energies, I'll use principle of least action becase I like it
+        %kinetic energy of curve integrated along piecewise linear segment is 
+        % 0.5*dx'*dx./dt 
         m = 1;
 
         dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
         T = T + sum(0.5*m*sum(dx(:, 1:2).*dx(:,1:2),2)./dx(:,3)); %kinetic energy
-            
-    end
-    
-    B = 0;
-    U = 0;
-    for i=1:num_agents
-        for j=i+1:num_agents
-            A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
+        
+        A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
+        [A1, J1] = sample_points_for_rod(A1, 50);
+        for j =i+1:num_agents
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
-            d = (A1(:,1) - A2(:,1)').^2 + (A1(:,2) - A2(:,2)').^2 + (A1(:,3) - A2(:,3)').^2;
-            d = sqrt(d);
-            B = sum(sum(-mu*log(-Tols + d)));
-            
-            U = sum(sum((Tols -UserTols).^2));
+            [A2, J2] = sample_points_for_rod(A2, 50);
+            [D,G] = soft_distance(20,A1, A2);
+
+            tol = Tols(i) + Tols(j);
+            B = B + -1*log(-tol + D);
         end
+        A1(:, 3) = zeros(size(A1,1),1);
+        P = scene.terrain.BV;
+        [D,G] = soft_distance(200,scene.terrain.BV, A1);
+        d = sqrt((A1(:,1) - P(:,1)').^2 + (A1(:,2) - P(:,2)').^2 + (A1(:,3) - P(:,3)').^2); 
+        trueD = min(d(:));
+        
+        tol = Tols(i);
+        B = B + -1*log(-UserTols(i) + D);
+     
+        
+        W = 0.5*(Tols - UserTols')'*(Tols - UserTols');
+        W = 10*W;
+        
     end
-    
     
     %find minimum energy curve
-    T
-    B
-    U
-    f = T+B+U;
+    f = T+W+B;
+    f
+    
+%     PV = reshape(q, 3, numel(q)/3)';
+%     PE = e;
+%     [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',2, 'PolySize', 4);
+%     surf_anim.Vertices = CV;
+%     drawnow;
     
 
 end
-

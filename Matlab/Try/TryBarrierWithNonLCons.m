@@ -1,5 +1,5 @@
 %read in from the scene file
-fname = "../roomba_maze/scene_2/";
+fname = "../../three_agents/scene_1/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -15,6 +15,7 @@ Aeq = [];
 beq = [];
 A = [];
 b = [];
+UserTols = [];
 
 a = fieldnames(setup_params.agents);
 for i = 1:numel(a)
@@ -82,7 +83,8 @@ for i = 1:numel(a)
         zeros(size(A1,1), size(A,2)) A1];
     b = [b; b1];
     
-    scene.agents = [scene.agents agent];   
+    scene.agents = [scene.agents agent]; 
+    UserTols = [UserTols agent.radius];
 end
 Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
 A = [A zeros(size(A,1),numel(scene.agents))];
@@ -99,7 +101,7 @@ drawnow;
 options = optimoptions('fmincon');
 options.MaxFunctionEvaluations = 1e5;
 q_i  = [reshape(v', numel(v),1); zeros(numel(scene.agents),1)];
-[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x, numel(scene.agents), e, surf_anim),... 
+[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
                             @(x)nonlinear_constraints(x, scene), options);
@@ -111,8 +113,10 @@ surf_anim.Vertices = CV;
 drawnow;
 
 function [c, ceq] = nonlinear_constraints(q_i, scene)
-    c = 0;
-    w = 0;
+    c = zeros(numel(scene.agents),1);
+    w = zeros(numel(scene.agents),1);
+    r = zeros(numel(scene.agents),1)
+    ;
     num_agents = numel(scene.agents);
     q = q_i(1:end-numel(scene.agents));
    
@@ -122,139 +126,33 @@ function [c, ceq] = nonlinear_constraints(q_i, scene)
     
     %intersection constraints
     for i=1:num_agents
-        for j=i+1:num_agents
-            A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
-            A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
-                
-            [A1, J1] = sample_points_for_rod(A1, 50);
-            [A2, J2] = sample_points_for_rod(A2, 50);
-
-            %true min D
-            d = sqrt((A1(:,1) - A2(:,1)').^2 + (A1(:,2) - A2(:,2)').^2 + (A1(:,3) - A2(:,3)').^2); 
-            true_min_d = min(d(:));
-
-%             [D, G2]= soft_distance( 200, A1, A2);
-%             [D, G1]= soft_distance( 200, A2, A1);
-
-            D = true_min_d;
-            D
-            
-            tol = Tols(i) + Tols(j);
-            
-            c = max(c, tol-D);
-
-%             JG1 = -J1'*G1;
-%             JG2 = -J2'*G2;
-%             
-%             GQ(:, i) = GQ(:, i) + reshape(JG1', numel(JG1),1);
-%             GQ(:, j) = GQ(:, j) + reshape(JG2', numel(JG2),1);
-        end
+        A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
+        [A1, J1] = sample_points_for_rod(A1, 50);
+        A1(:, 3) = zeros(size(A1,1),1);
+        P = scene.terrain.BV;
+        [D,G] = soft_distance(200,P, A1);
         
-        P = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
-        
-        [P, J1] = sample_points_for_rod(P, 50);
-        %add radius (-x,  to make signed_
-        P(:, 3) = zeros(size(P,1),1);
-
-%         [D,G] = soft_distance(10,scene.terrain.BV, P);
-        A1 = scene.terrain.BV;
-        A2 = P;
-        d = sqrt((A1(:,1) - A2(:,1)').^2 + (A1(:,2) - A2(:,2)').^2 + (A1(:,3) - A2(:,3)').^2); 
-        true_min_d = min(d(:));
-%         JG = -J1'*G;
-        D = true_min_d;
-        tol = Tols(j);
-        if(tol-D>0)
-            w = max(w, tol - D);
-%             GQ(:, j) = GQ(:, j) + reshape(JG, numel(JG),1);
+        tol = Tols(i);
+        if(1-D>0)
+            w(i) = max(w(i), 1 - D);
         end
+        c(i) = max(w(i), r(i));
     end
-%     GC = [reshape(GQ, size(GQ,1)*size(GQ,2),1); 0];
-    c
-    w
-    c= max(c,w);
     c
     ceq = [];
-    GCeq = [];
-
-    
+   
 end
 
-function [P,J] = sample_points_for_rod(X, samples, varargin)
-%     ts = linspace(X(1,3)+0.001, X(end,3)-0.001, samples);
-%     PV = [interp1(X(:,3), X(:, 1:2), ts, 'linear') ts'];
-%     PE = [(1:size(PV,1)-1)' (2:size(PV,1))'];
-%     if numel(varargin)>0 && strcmp('cylinders',varargin{1})
-%         rad = varargin{2}; 
-%         
-%         [P,J,~,~] = edge_cylinders(PV,PE, 'Thickness',2*rad, 'PolySize', 10);
-%     else
-%         % samples along centerline
-%         P = PV;
-%         J = PE;
-%     end
 
-    s = 10; %5 samples per edge
-    %for each edge
-    P = zeros(s*(size(X,1)-1)+1, 3);
-    J = zeros(size(P,1), size(X,1));
-    for i = 1:size(X,1)-1
-        tl = X(i,3);
-        tr = X(i+1,3);
-        xl = X(i,1);
-        xr = X(i+1,1);
-        yl = X(i,2);
-        yr = X(i+1, 2);
-        for j =1:s
-            P(s*(i-1)+j,3) = tl + (j-1)*(tr - tl)/s;
-            P(s*(i-1)+j,1) = xl + (j-1)*(xr - xl)/s;
-            P(s*(i-1)+j,2) = yl + (j-1)*(yr - yl)/s;
-            J(s*(i-1)+j,i) = 1 -(j-1)/s;
-            J(s*(i-1)+j,i+1) = (j-1)/s;
-        end
-    end
-    P(end,:) = X(end,:);
-    J(end,end-1) = 0;
-    J(end,end) = 1;
-    
-  
-end
-
-% soft distance function
-function [D, G] = soft_distance(alpha, X, V)
-
-     %plot soft distance to get a sense of what is going on
-     dx = (X(:,1) - V(:,1)');
-     dy = (X(:,2) - V(:,2)');
-     dz = (X(:,3) - V(:,3)');
-    
-     d = sqrt(dx.^2 + dy.^2 + dz.^2); 
-     diff_all_d = exp(-alpha*d);
-     diff_d = sum(sum(diff_all_d));
-     
-     D = -1./alpha.*log(diff_d);
-     
-     G = zeros(size(V));
-     %loop over all mesh vertices
-     for i=1:size(V,1)
-         
-        G(i, 1) = -(1./diff_d).*sum(diff_all_d(:,i).*(dx(:,i)./d(:,i)));
-        G(i, 2) = -(1./diff_d).*sum(diff_all_d(:,i).*(dy(:,i)./d(:,i)));
-        G(i, 3) = -(1./diff_d).*sum(diff_all_d(:,i).*(dz(:,i)./d(:,i)));
-     end
-     
-                
-end
-
-function [f,g] = path_energy(q_i, num_agents, e, surf_anim)
+function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     q = q_i(1:end-num_agents);
     Q = reshape(q, numel(q)/num_agents, num_agents); %3*nodes x agents
     G = zeros(size(Q));
     Tols = q_i(end-num_agents+1:end);
 
     T = 0;
-    V = 0;
-    V2 = 0;
+    B = 0;
+    W = 0;
     
     g = zeros(size(q));
 
@@ -269,37 +167,37 @@ function [f,g] = path_energy(q_i, num_agents, e, surf_anim)
         dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
         T = T + sum(0.5*m*sum(dx(:, 1:2).*dx(:,1:2),2)./dx(:,3)); %kinetic energy
         
-%         dEdq_left = zeros(numel(q_i)/3, 3);
-%         dEdq_right = zeros(numel(q_i)/3, 3);
-%         
-%         dEdq_left(1:end-1,1) = -m*dx(:,1)./dx(:,3);
-%         dEdq_left(1:end-1,2) = -m*dx(:,2)./dx(:,3);
-%         dEdq_left(1:end-1,3) = 0.5*m*(dx(:,1).*dx(:,1) + dx(:,2).*dx(:,2))./(dx(:,3).*dx(:,3));
-%         
-%         dEdq_right(2:end, 1) = m*dx(:,1)./dx(:,3);
-%         dEdq_right(2:end, 2) = m*dx(:,2)./dx(:,3);
-%         dEdq_right(2:end, 3) = -0.5*m*(dx(:,1).*dx(:,1) + dx(:,2).*dx(:,2))./(dx(:,3).*dx(:,3));
+        A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
+        [A1, J1] = sample_points_for_rod(A1, 50);
+        for j =i+1:num_agents
+            A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
+            [A2, J2] = sample_points_for_rod(A2, 50);
+            [D,G] = soft_distance(20,A1, A2);
+
+            tol = Tols(i) + Tols(j);
+            B = B + -1*log(-tol + D);
+        end
+%         A1(:, 3) = zeros(size(A1,1),1);
+%         P = scene.terrain.BV;
+%         [D,G] = soft_distance(200,scene.terrain.BV, A1);
+%         tol = Tols(i);
+%         B = B + -1*log(-UserTols(i) + D);
+     
         
-%         dEdq = dEdq_left + dEdq_right;
-        
-        W = 0.5*(Tols - [2;2])'*(Tols - [2;2]);
-        W = 100*W;
-%         G(:,i) = reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
+        W = 0.5*(Tols - UserTols')'*(Tols - UserTols');
+        W = 10*W;
         
     end
-%     g = [reshape(G, size(G,1)*size(G,2),1); q_i(end) - 2];
     
     %find minimum energy curve
-    f = T+W;
+    f = T+W+B;
+    f
     
-    PV = reshape(q, 3, numel(q)/3)';
-    PE = e;
-    [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',2, 'PolySize', 4);
-    surf_anim.Vertices = CV;
-    drawnow;
+%     PV = reshape(q, 3, numel(q)/3)';
+%     PE = e;
+%     [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',2, 'PolySize', 4);
+%     surf_anim.Vertices = CV;
+%     drawnow;
     
 
 end
-
-
-
