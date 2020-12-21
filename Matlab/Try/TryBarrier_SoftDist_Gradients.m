@@ -23,7 +23,7 @@ for i = 1:numel(a)
     agent.xse = getfield(setup_params.agents, a{i}).xse;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 6;
+    agent.seg_per_waypoint = 4;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
@@ -98,38 +98,33 @@ axis equal;
 drawnow;
 
 %minimize here
-options = optimoptions('fmincon');
+options = optimoptions('fmincon', 'CheckGradients',true, 'SpecifyObjectiveGradient', true);
 options.MaxFunctionEvaluations = 1e5;
 q_i  = [reshape(v', numel(v),1); zeros(numel(scene.agents),1)];
-mu = 0.001;
-for i = 1:5
-    [q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,mu, UserTols, numel(scene.agents),scene, e, surf_anim),... 
+[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
                             [], options);
-    mu = mu/2;
-    
-    q = q_i(1:end-numel(scene.agents));
-    PV = reshape(q, 3, numel(q)/3)';
-    [CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',1, 'PolySize', 4);
-    surf_anim.Vertices = CV;
-    drawnow;
-end
-
+q = q_i(1:end-numel(scene.agents));
                         
+PV = reshape(q, 3, numel(q)/3)';
+[CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',1, 'PolySize', 4);
+surf_anim.Vertices = CV;
+drawnow;
 
-
-function [f,g] = path_energy(q_i, mu, UserTols, num_agents, scene, e, surf_anim)
+function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     q = q_i(1:end-num_agents);
     Q = reshape(q, numel(q)/num_agents, num_agents); %3*nodes x agents
-    G = zeros(size(Q));
     Tols = q_i(end-num_agents+1:end);
 
     T = 0;
     B = 0;
     W = 0;
     
-    g = zeros(size(q));
+    g = zeros(size(q_i));
+    GT = zeros(size(Q));
+    gW = zeros(num_agents,1);
+    GB = zeros(size(Q));
 
     for i=1:num_agents
         q_i = Q(:, i); %3*nodes
@@ -141,37 +136,59 @@ function [f,g] = path_energy(q_i, mu, UserTols, num_agents, scene, e, surf_anim)
 
         dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
         T = T + sum(0.5*m*sum(dx(:, 1:2).*dx(:,1:2),2)./dx(:,3)); %kinetic energy
+        dEdq_left = zeros(numel(q_i)/3, 3);
+        dEdq_right = zeros(numel(q_i)/3, 3);
+        
+        dEdq_left(1:end-1,1) = -m*dx(:,1)./dx(:,3);
+        dEdq_left(1:end-1,2) = -m*dx(:,2)./dx(:,3);
+        dEdq_left(1:end-1,3) = 0.5*m*(dx(:,1).*dx(:,1) + dx(:,2).*dx(:,2))./(dx(:,3).*dx(:,3));
+        
+        dEdq_right(2:end, 1) = m*dx(:,1)./dx(:,3);
+        dEdq_right(2:end, 2) = m*dx(:,2)./dx(:,3);
+        dEdq_right(2:end, 3) = -0.5*m*(dx(:,1).*dx(:,1) + dx(:,2).*dx(:,2))./(dx(:,3).*dx(:,3));
+        
+        dEdq = dEdq_left + dEdq_right;
+        
+        GT(:,i) = reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
         
         A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
         [A1, J1] = sample_points_for_rod(A1, 50);
         for j =i+1:num_agents
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
             [A2, J2] = sample_points_for_rod(A2, 50);
-            D = sqrt((A1(:,1) - A2(:,1)').^2 + (A1(:,2) - A2(:,2)').^2 + (A1(:,3) - A2(:,3)').^2); 
+            [D,G1] = soft_distance(100,A2, A1);
+            [D,G2] = soft_distance(100,A1, A2);
+            JG1 = J1'*G1;
+            JG2 = J2'*G2;
             
             tol = Tols(i) + Tols(j);
-            TolMatrix = tol*ones(size(D));
-            %B = B + sum(sum(-mu*log(-TolMatrix + D) + 10));
-            B = B + sum(sum(mu./(D - TolMatrix)));
+            B = B + -1*log(-tol + D);
+            GB(:,i) = GB(:,i)+ (-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+            GB(:,j) = GB(:,j)+ (-1/(-tol + D))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+            gW(i) = gW(i) + (1/(-tol+D));
+            gW(j) = gW(j) + (1/(-tol+D));
+            
+%             B = B + 1/D;
+%             GB(:,i) = GB(:,i)+ (-1/(D^2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+%             GB(:,j) = GB(:,j)+ (-1/(D^2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+
         end
-        A1(:, 3) = zeros(size(A1,1),1);
-        P = scene.terrain.BV;
-        D = sqrt((A1(:,1) - P(:,1)').^2 + (A1(:,2) - P(:,2)').^2 + (A1(:,3) - P(:,3)').^2); 
-        
-        TolMatrix = UserTols(i)*ones(size(D));
-        %B = B + sum(sum(-mu*log( -TolMatrix +D) + 10));
-        B = B + sum(sum(mu./(D - TolMatrix)));
-        
-        W = 0.5*(Tols - UserTols')'*(Tols - UserTols');
-        W = 10*W;
-        
+%         A1(:, 3) = zeros(size(A1,1),1);
+%         P = scene.terrain.BV;
+%         [D,G] = soft_distance(50,P, A1);
+%         tol = Tols(i);
+%         B = B + -1*log(-UserTols(i) + D);
     end
     
+    W = 1000*0.5*(Tols - UserTols')'*(Tols - UserTols');
+    gW = gW + 1000*(Tols - UserTols');
+    
     %find minimum energy curve
-    f = T+W+B;
-    T
-    B
-    W
+    f = T + B + W;
+    f
+    g(1:end-num_agents) =reshape(GB, size(GB,1)*size(GB,2),1);
+    g(1:end-num_agents) = g(1:end-num_agents) + reshape(GT, size(GT,1)*size(GT,2),1);
+    g(end-num_agents+1:end) = gW;
     
 %     PV = reshape(q, 3, numel(q)/3)';
 %     PE = e;

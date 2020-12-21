@@ -12,13 +12,12 @@ function [D, G] = soft_distance(alpha, X, V)
      D = -1./alpha.*log(diff_d);
      
      G = zeros(size(V));
-%      %loop over all mesh vertices
-%      for i=1:size(V,1)
-%          
-%         G(i, 1) = -(1./diff_d).*sum(diff_all_d(:,i).*(dx(:,i)./d(:,i)));
-%         G(i, 2) = -(1./diff_d).*sum(diff_all_d(:,i).*(dy(:,i)./d(:,i)));
-%         G(i, 3) = -(1./diff_d).*sum(diff_all_d(:,i).*(dz(:,i)./d(:,i)));
-%      end
+     %loop over all mesh vertices
+     for i=1:size(V,1)
+        G(i, 1) = -(1./diff_d).*sum(diff_all_d(:,i).*(dx(:,i)./d(:,i)));
+        G(i, 2) = -(1./diff_d).*sum(diff_all_d(:,i).*(dy(:,i)./d(:,i)));
+        G(i, 3) = -(1./diff_d).*sum(diff_all_d(:,i).*(dz(:,i)./d(:,i)));
+     end
      
                 
 end

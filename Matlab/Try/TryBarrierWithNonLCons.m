@@ -175,6 +175,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
             [D,G] = soft_distance(20,A1, A2);
 
             tol = Tols(i) + Tols(j);
+            
             B = B + -1*log(-tol + D);
         end
 %         A1(:, 3) = zeros(size(A1,1),1);

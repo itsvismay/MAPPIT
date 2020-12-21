@@ -1,5 +1,5 @@
 %read in from the scene file
-fname = "../../roomba_maze/scene_2/";
+fname = "../../three_agents/scene_1/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -15,6 +15,7 @@ Aeq = [];
 beq = [];
 A = [];
 b = [];
+UserTols = [];
 
 a = fieldnames(setup_params.agents);
 for i = 1:numel(a)
@@ -82,7 +83,8 @@ for i = 1:numel(a)
         zeros(size(A1,1), size(A,2)) A1];
     b = [b; b1];
     
-    scene.agents = [scene.agents agent];   
+    scene.agents = [scene.agents agent]; 
+    UserTols = [UserTols agent.radius];
 end
 Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
 A = [A zeros(size(A,1),numel(scene.agents))];
@@ -90,7 +92,7 @@ A = [A zeros(size(A,1),numel(scene.agents))];
 
 PV = v;
 PE = e;
-[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',2, 'PolySize', 4);
+[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
 surf_anim = tsurf(CF, CV); 
 axis equal;
 drawnow;
@@ -99,26 +101,26 @@ drawnow;
 options = optimoptions('fmincon');
 options.MaxFunctionEvaluations = 1e5;
 q_i  = [reshape(v', numel(v),1); zeros(numel(scene.agents),1)];
-[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x, numel(scene.agents), e, surf_anim),... 
+[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
                             [], options);
 q = q_i(1:end-numel(scene.agents));
                         
 PV = reshape(q, 3, numel(q)/3)';
-[CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',2, 'PolySize', 4);
+[CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',1, 'PolySize', 4);
 surf_anim.Vertices = CV;
 drawnow;
 
-function [f,g] = path_energy(q_i, num_agents, e, surf_anim)
+function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     q = q_i(1:end-num_agents);
     Q = reshape(q, numel(q)/num_agents, num_agents); %3*nodes x agents
     G = zeros(size(Q));
     Tols = q_i(end-num_agents+1:end);
 
     T = 0;
-    V = 0;
-    V2 = 0;
+    B = 0;
+    W = 0;
     
     g = zeros(size(q));
 
@@ -133,24 +135,34 @@ function [f,g] = path_energy(q_i, num_agents, e, surf_anim)
         dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
         T = T + sum(0.5*m*sum(dx(:, 1:2).*dx(:,1:2),2)./dx(:,3)); %kinetic energy
         
-        for i=1:num_agents
-            A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
-            [A1, J1] = sample_points_for_rod(A1, 50);
-            for j =1:num_agents
-                A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
-                [A2, J2] = sample_points_for_rod(A2, 50);
-                [D,G] = soft_distance(200,A1, A2);
-                
-            end
+        A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
+        [A1, J1] = sample_points_for_rod(A1, 50);
+        for j =i+1:num_agents
+            A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
+            [A2, J2] = sample_points_for_rod(A2, 50);
+            d = sqrt((A1(:,1) - A2(:,1)').^2 + (A1(:,2) - A2(:,2)').^2 + (A1(:,3) - A2(:,3)').^2); 
+            D = min(d(:));
+
+            tol = Tols(i) + Tols(j);
+            B = B + -1*log(-tol + D);
+            
         end
+        A1(:, 3) = zeros(size(A1,1),1);
+        P = scene.terrain.BV;
+        d = sqrt((A1(:,1) - P(:,1)').^2 + (A1(:,2) - P(:,2)').^2 + (A1(:,3) - P(:,3)').^2); 
+        D = min(d(:));
         
-        W = 0.5*(Tols - [1;1])'*(Tols - [1;1]);
-        W = 20*W;
+        tol = Tols(i);
+        B = B + -1*log(-UserTols(i) + D);
+     
+        
+        W = 0.5*(Tols - UserTols')'*(Tols - UserTols');
+        W = 10*W;
         
     end
     
     %find minimum energy curve
-    f = T+W;
+    f = T+W+B;
     f
     
 %     PV = reshape(q, 3, numel(q)/3)';
