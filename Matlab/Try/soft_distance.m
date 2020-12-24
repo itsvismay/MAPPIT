@@ -17,6 +17,9 @@ function [D, G] = soft_distance(alpha, X, V)
         G(i, 1) = -(1./diff_d).*sum(diff_all_d(:,i).*(dx(:,i)./d(:,i)));
         G(i, 2) = -(1./diff_d).*sum(diff_all_d(:,i).*(dy(:,i)./d(:,i)));
         G(i, 3) = -(1./diff_d).*sum(diff_all_d(:,i).*(dz(:,i)./d(:,i)));
+        if(sum(isnan(G(i,:)))>0)
+            G(i,:) = 1e-3*rand(3,1);
+        end
      end
      
                 

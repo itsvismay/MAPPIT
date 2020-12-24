@@ -1,5 +1,5 @@
 %read in from the scene file
-fname = "../../three_agents/scene_1/";
+fname = "../../agent_circle/scene_16/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -41,7 +41,7 @@ for i = 1:numel(a)
     
     %wiggles the rod start so that they aren't intersecting
     endtime = r1v(end,3);
-    r1v(:,3) = r1v(:,3)-0.5*i;%sort(rand(1,size(r1v,1))*(endtime));
+    r1v(:,3) = r1v(:,3)/i;%sort(rand(1,size(r1v,1))*(endtime));
     r1v(end,3) = endtime;
     agent.v = r1v;            
     v = [v;r1v];
@@ -98,9 +98,10 @@ axis equal;
 drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'CheckGradients',true, 'SpecifyObjectiveGradient', true);
-options.MaxFunctionEvaluations = 1e5;
-q_i  = [reshape(v', numel(v),1); zeros(numel(scene.agents),1)];
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true);
+options.MaxFunctionEvaluations = 1e6;
+options.MaxIterations = 1e4;
+q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
 [q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
@@ -156,12 +157,24 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
         for j =i+1:num_agents
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
             [A2, J2] = sample_points_for_rod(A2, 50);
-            [D,G1] = soft_distance(100,A2, A1);
-            [D,G2] = soft_distance(100,A1, A2);
+            dist_is_good = 0;
+            alpha_count = 10;
+            alpha_val = 50;
+            while dist_is_good==0
+                [D,G1] = soft_distance(alpha_val,A2, A1);
+                [D,G2] = soft_distance(alpha_val,A1, A2);
+                if(D>-1e-8)
+                    dist_is_good =1;
+                end
+                D
+                alpha_val = alpha_val+alpha_count;
+            end
             JG1 = J1'*G1;
             JG2 = J2'*G2;
             
             tol = Tols(i) + Tols(j);
+            A = -1*log(-tol + D);
+
             B = B + -1*log(-tol + D);
             GB(:,i) = GB(:,i)+ (-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
             GB(:,j) = GB(:,j)+ (-1/(-tol + D))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
