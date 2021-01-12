@@ -1,0 +1,27 @@
+{
+	"name": "scene_3",
+	"agents": {
+		"agent1":{
+			"id": 1,
+			"xse": [[8.75, 0, 0], 
+					[0, 8.75, 10]], 
+			"mesh": "agent_1.obj",
+			"animation_cycles": null,
+			"radius": 1
+		},
+		"agent2":{
+			"id": 2,
+			"xse": [[0, -8.75, 0],
+					[-8.75, 0, 10]],
+			"mesh": "agent_2.obj",
+			"animation_cycles": null,
+			"radius": 1
+		}
+	},
+	"obstacles": {},
+	"terrain": {
+		"mesh": "maze.obj"
+	},
+	"tol":0
+
+}

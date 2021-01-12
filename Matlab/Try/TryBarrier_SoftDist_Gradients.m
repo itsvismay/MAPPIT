@@ -1,12 +1,16 @@
 %read in from the scene file
-fname = "../../agent_circle/scene_16/";
+fname = "../../roomba_maze/scene_3/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
 scene.terrain.V = tV;
 scene.terrain.F = tF;
-scene.terrain.BV = tV(unique(boundary_faces(tF)),:);
+scene.terrain.BVind = unique(boundary_faces(tF));
+scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
+
+surf_anim = tsurf(scene.terrain.F, scene.terrain.V); 
+hold on;
 
 v = [];
 e = [];
@@ -23,21 +27,18 @@ for i = 1:numel(a)
     agent.xse = getfield(setup_params.agents, a{i}).xse;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 4;
+    agent.seg_per_waypoint = 10;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
     
+    
+    [r1e, r1v] = set_path(agent, scene);
     %edges
-    r1e = [(1:agent.segments)' (2:(agent.segments+1))'];
     agent.e = r1e;
     r1e = r1e + size(v,1);
-    e = [e; r1e];
     
-    % %vertices
-    r1v = [linspace(agent.xse(1,1),agent.xse(end,1), agent.segments+1)', ... %x
-            linspace(agent.xse(1,2),agent.xse(end,2),agent.segments+1)', ... %y
-            linspace(agent.xse(1,3),agent.xse(end,3),agent.segments+1)'];    %t
+    e = [e; r1e];
     
     %wiggles the rod start so that they aren't intersecting
     endtime = r1v(end,3);
@@ -94,6 +95,8 @@ PV = v;
 PE = e;
 [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
 surf_anim = tsurf(CF, CV); 
+hold on;
+surf_anim = tsurf(scene.terrain.F, scene.terrain.V); 
 axis equal;
 drawnow;
 
@@ -186,11 +189,11 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
 %             GB(:,j) = GB(:,j)+ (-1/(D^2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
 
         end
-%         A1(:, 3) = zeros(size(A1,1),1);
-%         P = scene.terrain.BV;
-%         [D,G] = soft_distance(50,P, A1);
-%         tol = Tols(i);
-%         B = B + -1*log(-UserTols(i) + D);
+        A1(:, 3) = zeros(size(A1,1),1);
+        P = scene.terrain.BV;
+        [D,G] = soft_distance(50,P, A1);
+        tol = Tols(i);
+        B = B + -1*log(-UserTols(i) + D);
     end
     
     W = 1000*0.5*(Tols - UserTols')'*(Tols - UserTols');
