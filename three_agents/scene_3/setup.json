@@ -1,29 +1,29 @@
 {
-	"name": "scene_1",
+	"name": "scene_3",
 	"agents": {
 		"agent1":{
 			"id": 1,
-			"xse": [[8.5, -5,  0], 
-					[8.5, 6, 10]], 
+			"xse": [[9.375, -9.375,  0], 
+					[9.375, 9.375, 10]], 
 			"mesh": "agent_1.obj",
 			"animation_cycles": null,
-            "radius":0.25
+            "radius":3
 		},
 		"agent2":{
 			"id": 2,
-			"xse": [[8,2, 0],
-					[9,-7,10]],
+			"xse": [[7.5, 7.5, 0],
+					[11.25,-11.25, 10]],
 			"mesh": "agent_2.obj",
 			"animation_cycles": null,
-            "radius":0.25
+            "radius":0.2
 		},
 		"agent3":{
 			"id": 3,
-			"xse": [[9,2,0],
-					[8,-7, 10]],
+			"xse": [[11.25,7.5,0],
+					[7.5,-11.25, 10]],
 			"mesh": "agent_3.obj",
 			"animation_cycles": null,
-            "radius":0.25
+            "radius":0.2
 		}
 	},
 	"obstacles": {},
@@ -33,3 +33,4 @@
 	"tol":2.05
 
 }
+

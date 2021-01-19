@@ -12,16 +12,16 @@ D2
 % FID = I1(2);
 % [D,P] = dijkstra(NODES, SEGMENTS, FID, SID);
 
-v = scene.terrain.V(P1,:);
-v(:,3) = linspace(0,10, size(v,1));
-rv = interp1(v(:,3), v(:,1:2), linspace(v(1,3),v(end,3),100));
-rv = [rv linspace(v(1,3),v(end,3),100)'];
-e = [(1:size(rv, 1)-1)' (2:size(rv, 1))'];
-PV = rv;
-PE = e;
-[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness', 0.5, 'PolySize', 10);
-surf_anim = tsurf(CF, CV); 
-hold on
+% v = scene.terrain.V(P1,:);
+% v(:,3) = linspace(0,10, size(v,1));
+% rv = interp1(v(:,3), v(:,1:2), linspace(v(1,3),v(end,3),100));
+% rv = [rv linspace(v(1,3),v(end,3),100)'];
+% e = [(1:size(rv, 1)-1)' (2:size(rv, 1))'];
+% PV = rv;
+% PE = e;
+% [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness', 0.5, 'PolySize', 10);
+% surf_anim = tsurf(CF, CV); 
+% hold on
 
 % v = scene.terrain.V(P2,:);
 % v(:,3) = linspace(0,10, size(v,1));

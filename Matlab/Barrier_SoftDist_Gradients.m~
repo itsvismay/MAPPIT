@@ -1,11 +1,16 @@
 %read in from the scene file
-fname = "../roomba_maze/scene_2/";
+fname = "../tunnel_maze/scene_1/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
 scene.terrain.V = tV;
 scene.terrain.F = tF;
+scene.terrain.BVind = unique(boundary_faces(tF));
+scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
+
+surf_anim = tsurf(scene.terrain.F, scene.terrain.V); 
+hold on;
 
 v = [];
 e = [];
@@ -14,6 +19,7 @@ Aeq = [];
 beq = [];
 A = [];
 b = [];
+UserTols = [];
 
 a = fieldnames(setup_params.agents);
 for i = 1:numel(a)
@@ -26,20 +32,17 @@ for i = 1:numel(a)
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
     
+    
+    [r1e, r1v] = set_path(agent, scene);
     %edges
-    r1e = [(1:agent.segments)' (2:(agent.segments+1))'];
     agent.e = r1e;
     r1e = r1e + size(v,1);
-    e = [e; r1e];
     
-    % %vertices
-    r1v = [linspace(agent.xse(1,1),agent.xse(end,1), agent.segments+1)', ... %x
-            linspace(agent.xse(1,2),agent.xse(end,2),agent.segments+1)', ... %y
-            linspace(agent.xse(1,3),agent.xse(end,3),agent.segments+1)'];    %t
+    e = [e; r1e];
     
     %wiggles the rod start so that they aren't intersecting
     endtime = r1v(end,3);
-    r1v(:,3) = sort(rand(1,size(r1v,1))*(endtime));
+    r1v(:,3) = r1v(:,3)/2;%sort(rand(1,size(r1v,1))*(endtime));
     r1v(end,3) = endtime;
     agent.v = r1v;            
     v = [v;r1v];
@@ -48,6 +51,9 @@ for i = 1:numel(a)
     %rest edge lenths
     r1el = sqrt(sum((v(r1e(:,2),:) - v(r1e(:,1))).^2,2));
     el = [el; r1el];
+    agent.rest_edge_lengths = r1el;
+    agent.rest_region_lengths = [0; r1el(1:size(r1el)-1) + r1el(2:size(r1el))];
+    
     
     %fix end points
     num_constraints = size(agent.xse,1)*2 +1;
@@ -81,30 +87,39 @@ for i = 1:numel(a)
         zeros(size(A1,1), size(A,2)) A1];
     b = [b; b1];
     
-    scene.agents = [scene.agents agent];   
+    scene.agents = [scene.agents agent]; 
+    UserTols = [UserTols agent.radius];
 end
+Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
+A = [A zeros(size(A,1),numel(scene.agents))];
+
 
 PV = v;
 PE = e;
-[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',2, 'PolySize', 4);
+[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
 surf_anim = tsurf(CF, CV); 
+hold on;
 axis equal;
 drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient',true);
-options.MaxFunctionEvaluations = 1e5;
-[q, fval, exitflag, output] = fmincon(@(x) path_energy(x, numel(scene.agents), e, surf_anim), reshape(v', numel(v),1), A,b,Aeq,beq,[],[], @(x)nonlinear_constraints(x, scene), options);
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true);
+options.MaxFunctionEvaluations = 1e6;
+options.MaxIterations = 1e4;
+q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
+[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
+                            q_i, ...
+                            A,b,Aeq,beq,[],[], ...
+                            [], options);
+qn = q_i(1:end-numel(scene.agents));
 
-PV = reshape(q, 3, numel(q)/3)';
-[CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',2, 'PolySize', 4);
+print_agents(fname+"agents.json", scene, qn)
+
+Q = reshape(qn, numel(qn)/numel(scene.agents), numel(scene.agents));
+ scene.agents(i).v = reshape(Q(:,i), 3, size(Q,1)/3)';
+PV = reshape(qn, 3, numel(qn)/3)';
+[CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',1, 'PolySize', 4);
 surf_anim.Vertices = CV;
 drawnow;
 
-
-% %PRINT AGENTS 
-print_agents(fname+"agents_test.json",scene, q);
-
-
-
-
+path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim)
