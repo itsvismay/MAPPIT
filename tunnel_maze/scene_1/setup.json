@@ -4,15 +4,16 @@
 		"agent1":{
 			"id": 1,
 			"xse": [[-1.02776, -5.5347, 0], 
-					[0.97224, -2.30613, 10]], 
+					[0.97224, -2.30613, 3]], 
 			"mesh": "agent_1.obj",
 			"animation_cycles": null,
-			"radius": 0.5
+			"radius": 0.5,
+			"desc": "watercooler"
 		},
 		"agent2":{
 			"id": 2,
 			"xse": [[-1.02776,5.5347 , 0], 
-					[-1.02776,-5.5347,10]], 
+					[-1.02776,-5.5347, 10]], 
 			"mesh": "agent_1.obj",
 			"animation_cycles": null,
 			"radius": 0.5

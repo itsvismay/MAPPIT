@@ -103,7 +103,7 @@ axis equal;
 drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true);
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'Display', 'iter','HessianApproximation','finite-difference', 'Use);
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e4;
 q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
@@ -122,4 +122,4 @@ PV = reshape(qn, 3, numel(qn)/3)';
 surf_anim.Vertices = CV;
 drawnow;
 
-path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim)
+%path_energy(q_i,UserTols, numel(scene.agents),scene, e, surf_anim)

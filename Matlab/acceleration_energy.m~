@@ -1,0 +1,77 @@
+function [a, g] = acceleration_energy(q_i)
+%   %angle between segments
+    dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
+    dx(:,1) = 0*dx(:,1);
+    left = dx(1:end-1,:);
+    right= dx(2:end,:);
+    
+    left_cross_right = cross(left, right, 2);
+    left_dot_right = dot(left, right, 2);
+    z = left_cross_right ./ vecnorm(left_cross_right,2,2);     
+    left_norm = sqrt(sum(left.^2,2));
+    right_norm = sqrt(sum(right.^2,2));
+    Y = dot(left_cross_right, z,2);
+    X = left_norm.*right_norm + left_dot_right;
+    angle = 2*atan2(Y,X);
+    
+    %bending energy
+    k = 100
+    a = 0.5*k*sum(angle.^2);
+    
+    g = zeros(size(q_i));
+    for r = 1:size(dx,1)-1
+        r_inds = [3*(r-1) + 1 : 3*(r-1)+9];
+        q1 = q_i(r_inds(1));
+        q2 = q_i(r_inds(2));
+        q3 = q_i(r_inds(3));
+        q4 = q_i(r_inds(4));
+        q5 = q_i(r_inds(5));
+        q6 = q_i(r_inds(6));
+        q7 = q_i(r_inds(7));
+        q8 = q_i(r_inds(8));
+        q9 = q_i(r_inds(9));
+        
+        V1 = [q6-q3 , q5-q2 , q4-q1];
+        V2 = [q9-q6 , q8-q5 , q7-q4];
+        
+        ang
+        gr = k*()*((cross(V2,zhat)./(V2norm.*V2norm)) - (cross(V1,zhat)./(V1norm.*V1norm)));;
+        g(r_inds) = g(r_inds) + gr';
+
+    end
+
+%     dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
+%     
+%     %three point constant acceleration assumption 2((x3 -x2/ t3 -t2) - (x2 - x1 / t2 - t1))/ t3 - t1
+%     v = dx(:,1:2)./dx(:,3);
+%     dvdt = 2*(v(2:end,:) - v(1:end-1,:))./(dx(2:end,3) + dx(1:end-1,3));
+%     a = sum(sum(dvdt.^2));
+%     
+%     g = zeros(size(q_i));
+%     for r = 1:size(dx,1)-1
+%         r_inds = [3*(r-1) + 1 : 3*(r-1)+9];
+%         q1 = q_i(r_inds(1));
+%         q2 = q_i(r_inds(2));
+%         q3 = q_i(r_inds(3));
+%         q4 = q_i(r_inds(4));
+%         q5 = q_i(r_inds(5));
+%         q6 = q_i(r_inds(6));
+%         q7 = q_i(r_inds(7));
+%         q8 = q_i(r_inds(8));
+%         q9 = q_i(r_inds(9));
+%         
+%         gr = [ (4*((2*(q1 - q4))/(q3 - q6) - (2*(q4 - q7))/(q6 - q9)))/((q3 - q6)*(q3 - q9)^2),...
+%                 (4*((2*(q2 - q5))/(q3 - q6) - (2*(q5 - q8))/(q6 - q9)))/((q3 - q6)*(q3 - q9)^2),...
+%                 - (2*((2*(q1 - q4))/(q3 - q6) - (2*(q4 - q7))/(q6 - q9))^2)/(q3 - q9)^3 - (2*((2*(q2 - q5))/(q3 - q6) - (2*(q5 - q8))/(q6 - q9))^2)/(q3 - q9)^3 - (4*((2*(q1 - q4))/(q3 - q6) - (2*(q4 - q7))/(q6 - q9))*(q1 - q4))/((q3 - q6)^2*(q3 - q9)^2) - (4*((2*(q2 - q5))/(q3 - q6) - (2*(q5 - q8))/(q6 - q9))*(q2 - q5))/((q3 - q6)^2*(q3 - q9)^2),...
+%                 -(2*(2/(q3 - q6) + 2/(q6 - q9))*((2*(q1 - q4))/(q3 - q6) - (2*(q4 - q7))/(q6 - q9)))/(q3 - q9)^2, ...
+%                 -(2*(2/(q3 - q6) + 2/(q6 - q9))*((2*(q2 - q5))/(q3 - q6) - (2*(q5 - q8))/(q6 - q9)))/(q3 - q9)^2, ...
+%                 (2*((2*(q1 - q4))/(q3 - q6) - (2*(q4 - q7))/(q6 - q9))*((2*(q1 - q4))/(q3 - q6)^2 + (2*(q4 - q7))/(q6 - q9)^2))/(q3 - q9)^2 + (2*((2*(q2 - q5))/(q3 - q6) - (2*(q5 - q8))/(q6 - q9))*((2*(q2 - q5))/(q3 - q6)^2 + (2*(q5 - q8))/(q6 - q9)^2))/(q3 - q9)^2, ...
+%                 (4*((2*(q1 - q4))/(q3 - q6) - (2*(q4 - q7))/(q6 - q9)))/((q3 - q9)^2*(q6 - q9)), ...
+%                 (4*((2*(q2 - q5))/(q3 - q6) - (2*(q5 - q8))/(q6 - q9)))/((q3 - q9)^2*(q6 - q9)), ...
+%                 (2*((2*(q1 - q4))/(q3 - q6) - (2*(q4 - q7))/(q6 - q9))^2)/(q3 - q9)^3 + (2*((2*(q2 - q5))/(q3 - q6) - (2*(q5 - q8))/(q6 - q9))^2)/(q3 - q9)^3 - (4*((2*(q1 - q4))/(q3 - q6) - (2*(q4 - q7))/(q6 - q9))*(q4 - q7))/((q3 - q9)^2*(q6 - q9)^2) - (4*((2*(q2 - q5))/(q3 - q6) - (2*(q5 - q8))/(q6 - q9))*(q5 - q8))/((q3 - q9)^2*(q6 - q9)^2)];
+%         
+%          g(r_inds) = g(r_inds) + gr';
+% 
+%     end
+        
+end

@@ -95,20 +95,17 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     gW = gW + 1000*(Tols - UserTols');
     
     %find minimum energy curve
-    f = f + T+ B + W + K;
-    T
-    B
-    W
-    K
-    g(1:end-num_agents) =reshape(GB, size(GB,1)*size(GB,2),1);
+    f = f + T+ B + W;% + K;
+   
+    %g(1:end-num_agents) =reshape(GB, size(GB,1)*size(GB,2),1);
     gkk = reshape(GK, size(GK,1)*size(GK,2),1);
     gtt = reshape(GT, size(GT,1)*size(GT,2),1);
     g(1:end-num_agents) = g(1:end-num_agents) + gkk;
     g(1:end-num_agents) = g(1:end-num_agents) + gtt;
     g(end-num_agents+1:end) = gW;
-%     
+    
     QQ = reshape(q, 3, numel(q)/3)';
-    GG = 10*reshape(gkk, 3, (numel(gkk))/3)';
+    GG = reshape(gkk, 3, (numel(gkk) - num_agents)/3)';
     Xquiver = QQ(:,1);
     Yquiver = QQ(:,2);
     Zquiver = QQ(:,3);
@@ -117,18 +114,20 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     Wquiver = GG(:,3);
     quiver3(Xquiver, Yquiver, Zquiver, Uquiver, Vquiver, Wquiver);
     
-%     GG = reshape(gtt, 3, (numel(gtt))/3)';
-%     Uquiver = GG(:,1);
-%     Vquiver = GG(:,2);
-%     Wquiver = GG(:,3);
-%     quiver3(Xquiver, Yquiver, Zquiver, Uquiver, Vquiver, Wquiver);
+    GG = reshape(gkk, 3, (numel(gkk) - num_agents)/3)';
+    Xquiver = QQ(:,1);
+    Yquiver = QQ(:,2);
+    Zquiver = QQ(:,3);
+    Uquiver = GG(:,1);
+    Vquiver = GG(:,2);
+    Wquiver = GG(:,3);
+    quiver3(Xquiver, Yquiver, Zquiver, Uquiver, Vquiver, Wquiver);
     
-   
+    
     PV = reshape(q, 3, numel(q)/3)';
     PE = e;
-    plot3(PV(:,1), PV(:,2), PV(:,3), '-ok', 'LineWidth',5);
-    %[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
-    %surf_anim.Vertices = CV;
+    [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
+    surf_anim.Vertices = CV;
     drawnow;
 end
 

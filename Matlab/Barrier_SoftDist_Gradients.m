@@ -42,7 +42,7 @@ for i = 1:numel(a)
     
     %wiggles the rod start so that they aren't intersecting
     endtime = r1v(end,3);
-    r1v(:,3) = r1v(:,3)/i;%sort(rand(1,size(r1v,1))*(endtime));
+    r1v(:,3) = r1v(:,3)/2;%sort(rand(1,size(r1v,1))*(endtime));
     r1v(end,3) = endtime;
     agent.v = r1v;            
     v = [v;r1v];
@@ -94,16 +94,16 @@ Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
 A = [A zeros(size(A,1),numel(scene.agents))];
 
 
-PV = v;
-PE = e;
-[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
-surf_anim = tsurf(CF, CV); 
-hold on;
-axis equal;
-drawnow;
+% PV = v;
+% PE = e;
+% [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
+% surf_anim = tsurf(CF, CV); 
+% hold on;
+% axis equal;
+% drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true);
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'Display', 'iter', 'UseParallel', true, 'Algorithm','trust-region-reflective');
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e4;
 q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
@@ -122,4 +122,4 @@ PV = reshape(qn, 3, numel(qn)/3)';
 surf_anim.Vertices = CV;
 drawnow;
 
-path_energy(q_i,UserTols, numel(scene.agents),scene, e, surf_anim)
+%path_energy(q_i,UserTols, numel(scene.agents),scene, e, surf_anim)
