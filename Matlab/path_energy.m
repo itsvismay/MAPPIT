@@ -42,45 +42,47 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
         
         A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
         [A1, J1] = sample_points_for_rod(A1, 50);
-%         for j =1+1:num_agents
-%             if j==i
-%                 continue;
-%             end
-%             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
-%             [A2, J2] = sample_points_for_rod(A2, 50);
-%             dist_is_good = 0;
-%             alpha_count = 10;
-%             alpha_val = 50;
-%             while dist_is_good==0
-%                 [D,G1] = soft_distance(alpha_val,A2, A1);
-%                 [D,G2] = soft_distance(alpha_val,A1, A2);
-%                 if(D>-1e-8)
-%                     dist_is_good =1;
-%                 end
-%                 alpha_val = alpha_val+alpha_count;
-%             end
-%             JG1 = J1'*G1;
-%             JG2 = J2'*G2;
-%             
-%             tol = Tols(i) + Tols(j);
-%             A = -1*log(-tol + D);
-% 
-% %             B = B + -1*log(-tol + D);
-% %             GB(:,i) = GB(:,i)+ (-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-% %             GB(:,j) = GB(:,j)+ (-1/(-tol + D))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
-% %             gW(i) = gW(i) + (1/(-tol+D));
-% %             gW(j) = gW(j) + (1/(-tol+D));
-%             
-% %             B = B + 1/D;
-% %             GB(:,i) = GB(:,i)+ (-1/(D^2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-% %             GB(:,j) = GB(:,j)+ (-1/(D^2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
-% 
-%         end
-%         A1(:, 3) = zeros(size(A1,1),1);
-%         P = scene.terrain.BV;
-%         [D,G] = soft_distance(50,P, A1);
-%         tol = Tols(i);
-%         B = B + -1*log(-UserTols(i) + D);
+        for j =1+1:num_agents
+            if j==i
+                continue;
+            end
+            A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
+            [A2, J2] = sample_points_for_rod(A2, 50);
+            dist_is_good = 0;
+            alpha_count = 10;
+            alpha_val = 50;
+            while dist_is_good==0
+                [D,G1] = soft_distance(alpha_val,A2, A1);
+                [D,G2] = soft_distance(alpha_val,A1, A2);
+                if(D>-1e-8)
+                    dist_is_good =1;
+                end
+                alpha_val = alpha_val+alpha_count;
+            end
+            JG1 = J1'*G1;
+            JG2 = J2'*G2;
+            
+            tol = Tols(i) + Tols(j);
+            A = -1*log(-tol + D);
+
+            B = B + -1*log(-tol + D);
+            GB(:,i) = GB(:,i)+ (-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+            GB(:,j) = GB(:,j)+ (-1/(-tol + D))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+            gW(i) = gW(i) + (1/(-tol+D));
+            gW(j) = gW(j) + (1/(-tol+D));
+            
+%             B = B + 1/D;
+%             GB(:,i) = GB(:,i)+ (-1/(D^2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+%             GB(:,j) = GB(:,j)+ (-1/(D^2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+
+        end
+        A1(:, 3) = zeros(size(A1,1),1);
+        [P, JP] = sample_points_for_rod(scene.terrain.V, scene.terrain.BF);
+        [D,GP] = soft_distance(50,P, A1);
+        JG1 = J1'*GP;
+        GB(:,i) = GB(:,i)+ (-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+        
+        B = B + -1*log(-UserTols(i) + D);
         
         %V_i = reshape(q_i, 3, numel(q_i)/3)';
         [ak, gk] = acceleration_energy(q_i);
@@ -107,29 +109,23 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     g(1:end-num_agents) = g(1:end-num_agents) + gtt;
     g(end-num_agents+1:end) = gW;
 %     
-    QQ = reshape(q, 3, numel(q)/3)';
-    GG = 10*reshape(gkk, 3, (numel(gkk))/3)';
-    Xquiver = QQ(:,1);
-    Yquiver = QQ(:,2);
-    Zquiver = QQ(:,3);
-    Uquiver = GG(:,1);
-    Vquiver = GG(:,2);
-    Wquiver = GG(:,3);
-    quiver3(Xquiver, Yquiver, Zquiver, Uquiver, Vquiver, Wquiver);
-    
-%     GG = reshape(gtt, 3, (numel(gtt))/3)';
+%     QQ = reshape(q, 3, numel(q)/3)';
+%     GG = reshape(gkk, 3, (numel(gkk))/3)';
+%     Xquiver = QQ(:,1);
+%     Yquiver = QQ(:,2);
+%     Zquiver = QQ(:,3);
 %     Uquiver = GG(:,1);
 %     Vquiver = GG(:,2);
 %     Wquiver = GG(:,3);
 %     quiver3(Xquiver, Yquiver, Zquiver, Uquiver, Vquiver, Wquiver);
     
    
-    PV = reshape(q, 3, numel(q)/3)';
-    PE = e;
-    plot3(PV(:,1), PV(:,2), PV(:,3), '-ok', 'LineWidth',5);
-    %[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
-    %surf_anim.Vertices = CV;
-    drawnow;
+%     PV = reshape(q, 3, numel(q)/3)';
+%     PE = e;
+%     plot3(PV(:,1), PV(:,2), PV(:,3), '-ok', 'LineWidth',5);
+%     %[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
+%     %surf_anim.Vertices = CV;
+%     drawnow;
 end
 
 
