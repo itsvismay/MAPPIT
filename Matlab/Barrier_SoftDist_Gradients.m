@@ -1,5 +1,5 @@
 %read in from the scene file
-fname = "../tunnel_maze/scene_1/";
+fname = "../three_agents/scene_3/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -10,8 +10,9 @@ scene.terrain.BVind = unique(scene.terrain.BF);
 scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
 
-% surf_anim = tsurf(scene.terrain.F, scene.terrain.V); 
-% hold on;
+surf_anim = tsurf(scene.terrain.F, scene.terrain.V); 
+hold on;
+axis equal;
 
 v = [];
 e = [];
@@ -43,7 +44,7 @@ for i = 1:numel(a)
     
     %wiggles the rod start so that they aren't intersecting
     endtime = r1v(end,3);
-    r1v(:,3) = r1v(:,3)/2;%sort(rand(1,size(r1v,1))*(endtime));
+    r1v(:,3) = r1v(:,3)/i;%sort(rand(1,size(r1v,1))*(endtime));
     r1v(end,3) = endtime;
     agent.v = r1v;            
     v = [v;r1v];
@@ -95,53 +96,16 @@ Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
 A = [A zeros(size(A,1),numel(scene.agents))];
 
 
-% PV = v;
-% PE = e;
-% [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
-% surf_anim = tsurf(CF, CV); 
-% hold on;
-% axis equal;
-% drawnow;
-
-A1 = scene.agents(1).v;
-[A1, J1] = sample_points_for_rod(A1, scene.agents(1).e);
-plot3(A1(:,1), A1(:,2), A1(:,3), '-ok')
+PV = v;
+PE = e;
+[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
+surf_anim = tsurf(CF, CV); 
 hold on;
-A1(:, 3) = zeros(size(A1,1),1);
-[P, JP] = sample_points_for_rod(scene.terrain.V, scene.terrain.BF);
-plot3(P(:,1), P(:,2), P(:,3), '*k')
-
-% [D,GP] = soft_distance(50,P, A1);
-% JG1 = J1'*GP;
-% gkk = (-1/(-scene.agents(1).radius + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-% QQ = A1;
-% GG = reshape(gkk, 3, (numel(gkk))/3)';
-% Xquiver = scene.agents(1).v(:,1);
-% Yquiver = scene.agents(1).v(:,2);
-% Zquiver = scene.agents(1).v(:,3);
-% Uquiver = GG(:,1);
-% Vquiver = GG(:,2);
-% Wquiver = GG(:,3);
-% quiver3(Xquiver, Yquiver, Zquiver, Uquiver, Vquiver, Wquiver);
-% plot3(scene.agents(1).v(:,1), scene.agents(1).v(:,2), scene.agents(1).v(:,3), '-ok', 'LineWidth',5);
-
-% min d from every point on surface to rod
-minX = min(scene.terrain.V(:,1));
-maxX = max(scene.terrain.V(:,1));
-minY = min(scene.terrain.V(:,2));
-maxY = max(scene.terrain.V(:,2));
-[X,Y]  = meshgrid(minX:0.1:maxX, minY:0.1:maxY);
-C = zeros(size(X));
-for i=1:size(X,1)
-    for j=1:size(X,2)
-        [D,GP] = soft_distance(50,P, [X(i,j), Y(i,j),0]);
-        C(i,j) = D;
-    end
-end
-surf(X,Y,zeros(size(X))-0.5,C);
+axis equal;
+drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'Display', 'iter', 'UseParallel', true, 'HessianApproximation', 'lbfgs');
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'Display', 'iter', 'UseParallel', true);
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e4;
 q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
@@ -149,10 +113,6 @@ q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
                             [], options);
-[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
-    q_i, ...
-    A,b,Aeq,beq,[],[], ...
-    [], options);
 qn = q_i(1:end-numel(scene.agents));
 
 print_agents(fname+"agents.json", scene, qn)
