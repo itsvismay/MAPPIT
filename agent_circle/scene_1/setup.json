@@ -71,6 +71,13 @@
 	"terrain": {
 		"mesh": "terrain.obj"
 	},
-	"tol":2.05
+	"Scene_Parameters":{
+		"K_agent" : 1,
+		"K_tol" : 10,
+		"K_accel" : 1,
+		"K_map" : 0,
+		"K_ke" : 1,
+		"K_pv" : 0
+	}
 
 }

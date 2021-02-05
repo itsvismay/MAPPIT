@@ -6,8 +6,8 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     
     %Weights
     K_agent = 1;
-    K_tol = 1000; %don't touch
-    K_accel = 0;
+    K_tol = 10; %don't touch
+    K_accel = 1;
     K_map = 0;
     K_ke = 1;
     K_pv = 0;
@@ -29,16 +29,21 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
 end
 
 function [e, g] = preferred_time_energy(Q, scene, K)
+    if K==0
+        e=0;
+        g = zeros(numel(Q),1);
+        return;
+    end
     GT = zeros(size(Q));
     e=0;
-    pv = 0.001;
+    pv = 5;
     for i=1:numel(scene.agents)
         q_i = Q(:, i); %3*nodes
         dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
-        v = dx(:,1:2)./dx(:,3);
-        % 0.5* (s  - m/pv)^2
         
         e = e + K*0.5*(q_i(end) - (sum(sqrt(dx(:,1).^2  + dx(:,2).^2))/pv) ).^2;
+
+%         e = e + K*0.5*(q_i(end).^2 - (sum((dx(:,1).^2  + dx(:,2).^2))/(pv*pv)) ).^2;
         
         dEdq = zeros(size(q_i));
         
@@ -51,13 +56,15 @@ function [e, g] = preferred_time_energy(Q, scene, K)
             q_i5 = q_i(r_inds(5));
             q_i6 = q_i(r_inds(6));
             
-            dEdq(r_inds) = dEdq(r_inds) + ...
+            dEdq(r_inds) = dEdq(r_inds) + ... 
             [ -(K*(2*q_i1 - 2*q_i4)*(q_i6 - ((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)/pv))/(2*pv*((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)),...
             -(K*(2*q_i2 - 2*q_i5)*(q_i6 - ((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)/pv))/(2*pv*((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)),...
             0,...
             (K*(2*q_i1 - 2*q_i4)*(q_i6 - ((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)/pv))/(2*pv*((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)),...
             (K*(2*q_i2 - 2*q_i5)*(q_i6 - ((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)/pv))/(2*pv*((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)),...
             (K*(2*q_i6 - (2*((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2))/pv))/2]';
+
+%                 [ (K*(2*q_i1 - 2*q_i4)*(((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)/pv^2 - q_i6^2))/pv^2, (K*(2*q_i2 - 2*q_i5)*(((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)/pv^2 - q_i6^2))/pv^2, 0, -(K*(2*q_i1 - 2*q_i4)*(((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)/pv^2 - q_i6^2))/pv^2, -(K*(2*q_i2 - 2*q_i5)*(((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)/pv^2 - q_i6^2))/pv^2, -2*K*q_i6*(((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)/pv^2 - q_i6^2)];
 
         end
         
@@ -66,8 +73,12 @@ function [e, g] = preferred_time_energy(Q, scene, K)
     end
     g = K*reshape(GT, size(GT,1)*size(GT,2),1);
 end
-
 function [e, g] = agent_agent_energy(Q, Tols, scene, K)
+    if K==0
+        e=0;
+        g = zeros(numel(Q),1);
+        return;
+    end
     num_agents = numel(scene.agents);
     GB = zeros(size(Q));
     gW = zeros(num_agents,1);
@@ -120,6 +131,11 @@ function [e, g] = tolerance_energy(Tols, UserTols, K)
     g = K*(Tols - UserTols');
 end
 function [e, g] = acceleration_energy(Q, scene, K)
+    if K==0
+        e=0;
+        g = zeros(numel(Q),1);
+        return;
+    end
     GK = zeros(size(Q));
     e=0;
     for i=1:numel(scene.agents)
@@ -151,9 +167,13 @@ function [e, g] = acceleration_energy(Q, scene, K)
     g = reshape(GK, size(GK,1)*size(GK,2),1); 
 end        
 function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
+    if K==0
+        e=0;
+        g = zeros(numel(Q),1);
+        return;
+    end
     GB = zeros(size(Q));
     e=0;
-    
     for i=1:numel(scene.agents)
         A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
         [A1, J1] = sample_points_for_rod(A1, scene.agents(i).e);
@@ -171,6 +191,11 @@ function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
     
 end
 function [e, g] = kinetic_energy(Q, scene, K)
+    if K==0
+        e=0;
+        g = zeros(numel(Q),1);
+        return;
+    end
     %various fun path energies, I'll use principle of least action becase I like it
     %kinetic energy of curve integrated along piecewise linear segment is 
     % 0.5*dx'*dx./dt

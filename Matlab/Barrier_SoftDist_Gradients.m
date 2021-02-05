@@ -1,5 +1,5 @@
 %read in from the scene file
-fname = "../three_agents/scene_3/";
+fname = "../agent_circle/scene_16/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -105,7 +105,7 @@ axis equal;
 drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'Display', 'iter', 'UseParallel', true);
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'Display', 'iter', 'UseParallel', true, 'HessianApproximation', 'lbfgs');
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e4;
 q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
