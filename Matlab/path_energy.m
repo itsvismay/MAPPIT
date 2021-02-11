@@ -27,7 +27,6 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     
     %plottings(surf_anim, q, e, g);
 end
-
 function [e, g] = preferred_time_energy(Q, scene, K)
     if K==0
         e=0;
