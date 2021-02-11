@@ -10,7 +10,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     K_accel = 1;
     K_map = 0;
     K_ke = 1;
-    K_pv = 1;
+    K_pv = 0;
     
     [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
     [e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
@@ -47,23 +47,40 @@ function [e, g] = preferred_time_energy(Q, scene, K)
         
         gradE = ones(size(q_i));
         gradE = gradE*K*(q_i(end) - (sum(sqrt(dx(:,1).^2  + dx(:,2).^2))/pv));
-        dedx2 = -(dx(:,1).*((dx(:,1).^2  + dx(:,2).^2).^(-1/2)))/pv;
-        dedx1 = (dx(:,1).*((dx(:,1).^2  + dx(:,2).^2).^(-1/2)))/pv;
-        dedy2 = -(dx(:,2).*((dx(:,1).^2  + dx(:,2).^2).^(-1/2)))/pv;
-        dedy1 = (dx(:,2).*((dx(:,1).^2  + dx(:,2).^2).^(-1/2)))/pv;
-
+        dedx2 = (dx(:,1).*((dx(:,1).^2  + dx(:,2).^2)^(-1/2)))/pv;
+        dedx1 = -(dx(:,1).*((dx(:,1).^2  + dx(:,2).^2)^(-1/2)))/pv;
+        dedy2 = (dx(:,2).*((dx(:,1).^2  + dx(:,2).^2)^(-1/2)))/pv;
+        dedy1 = -(dx(:,2).*((dx(:,1).^2  + dx(:,2).^2)^(-1/2)))/pv;
+        
         dEdq_left = zeros(numel(q_i)/3, 3);
         dEdq_right = zeros(numel(q_i)/3, 3);
-        dEdq_left(1:end-1,1) = dedx1;
-        dEdq_left(1:end-1,2) = dedy1;
-        dEdq_right(2:end, 1) = dedx2;
-        dEdq_right(2:end, 2) = dedy2;
-
-        dEdq = dEdq_left + dEdq_right;
-        flatdEdq = reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
-        gradE(1:end-1) = gradE(1:end-1).*flatdEdq(1:end-1);
+        dEdq_left(:,1) = dedx1;
         
-        GT(:,i) = gradE;
+        gradE(1:end-1) = gradE(1:end-1)*;
+
+        dEdq = zeros(size(q_i));
+        for j=1:size(dx,1)
+            r_inds = [3*(j-1) + 1 : 3*(j-1)+6];
+            q_i1 = q_i(r_inds(1));
+            q_i2 = q_i(r_inds(2));
+            q_i3 = q_i(r_inds(3));
+            q_i4 = q_i(r_inds(4));
+            q_i5 = q_i(r_inds(5));
+            q_i6 = q_i(r_inds(6));
+            
+            dEdq(r_inds) = dEdq(r_inds) + ... 
+            [ -(K*(2*q_i1 - 2*q_i4)*(q_i6 - ((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)/pv))/(2*pv*((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)),...
+            -(K*(2*q_i2 - 2*q_i5)*(q_i6 - ((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)/pv))/(2*pv*((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)),...
+            0,...
+            (K*(2*q_i1 - 2*q_i4)*(q_i6 - ((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)/pv))/(2*pv*((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)),...
+            (K*(2*q_i2 - 2*q_i5)*(q_i6 - ((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)/pv))/(2*pv*((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2)),...
+            (K*(2*q_i6 - (2*((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)^(1/2))/pv))/2]';
+
+%                 [ (K*(2*q_i1 - 2*q_i4)*(((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)/pv^2 - q_i6^2))/pv^2, (K*(2*q_i2 - 2*q_i5)*(((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)/pv^2 - q_i6^2))/pv^2, 0, -(K*(2*q_i1 - 2*q_i4)*(((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)/pv^2 - q_i6^2))/pv^2, -(K*(2*q_i2 - 2*q_i5)*(((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)/pv^2 - q_i6^2))/pv^2, -2*K*q_i6*(((q_i1 - q_i4)^2 + (q_i2 - q_i5)^2)/pv^2 - q_i6^2)];
+
+        end
+        
+        GT(:,i) = reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
         
     end
     g = K*reshape(GT, size(GT,1)*size(GT,2),1);

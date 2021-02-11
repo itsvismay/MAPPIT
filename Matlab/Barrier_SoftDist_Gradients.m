@@ -1,5 +1,5 @@
 %read in from the scene file
-fname = "../agent_circle/scene_16/";
+fname = "../agent_circle/scene_1/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
