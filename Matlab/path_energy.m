@@ -107,11 +107,11 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             tol = Tols(i) + Tols(j);
 
             e = e + -K*log(-tol + D);
-            if(ismember(j,scene.agents(i).friends))
-                e = e + -K*log(-D + 2);
-                GB(:,i) = GB(:,i)+ (-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-                GB(:,i) = GB(:,i)+ (-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
-            end
+%             if(ismember(j,scene.agents(i).friends))
+%                 e = e + -K*log(-D + 2);
+%                 GB(:,i) = GB(:,i)+ (-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+%                 GB(:,i) = GB(:,i)+ (-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+%             end
             
             GB(:,i) = GB(:,i)+ (-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
             GB(:,j) = GB(:,j)+ (-1/(-tol + D))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
