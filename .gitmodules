@@ -4,3 +4,6 @@
 [submodule "CrowdsPaper"]
 	path = CrowdsPaper
 	url = git@github.com:itsvismay/CrowdsPaper.git
+[submodule "external/libigl"]
+	path = external/libigl
+	url = https://github.com/libigl/libigl.git

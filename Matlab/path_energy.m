@@ -6,11 +6,11 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     
     %Weights
     K_agent = 1;
-    K_tol = 10; %don't touch
+    K_tol = 1; %don't touch
     K_accel = 1;
     K_map = 0;
     K_ke = 1;
-    K_pv = 1;
+    K_pv = 0;
     
     [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
     [e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
@@ -94,6 +94,8 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             while dist_is_good==0
                 [~,G1] = soft_distance(alpha_val,A2, A1);
                 [D,G2] = soft_distance(alpha_val,A1, A2);
+                %[~, G1] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
+                %[D,G2] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
                 if(D>-1e-8)
                     dist_is_good =1;
                 end
@@ -105,6 +107,11 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             tol = Tols(i) + Tols(j);
 
             e = e + -K*log(-tol + D);
+            if(ismember(j,scene.agents(i).friends))
+                e = e + -K*log(-D + 2);
+                GB(:,i) = GB(:,i)+ (-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+                GB(:,i) = GB(:,i)+ (-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+            end
             
             GB(:,i) = GB(:,i)+ (-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
             GB(:,j) = GB(:,j)+ (-1/(-tol + D))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);

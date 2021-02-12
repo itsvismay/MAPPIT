@@ -1,5 +1,6 @@
 %read in from the scene file
-fname = "../agent_circle/scene_1/";
+%addpath("../external/smooth-distances/build/");
+fname = "../three_agents/scene_3/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -33,7 +34,7 @@ for i = 1:numel(a)
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
-    
+    agent.friends = getfield(setup_params.agents, a{i}).friends;
     
     [r1e, r1v] = set_path(agent, scene);
     %edges
@@ -91,6 +92,7 @@ for i = 1:numel(a)
     
     scene.agents = [scene.agents agent]; 
     UserTols = [UserTols agent.radius];
+    
 end
 Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
 A = [A zeros(size(A,1),numel(scene.agents))];
