@@ -1,6 +1,6 @@
 %read in from the scene file
 addpath("../external/smooth-distances/build/");
-fname = "../agent_circle/scene_1/";
+fname = "../Scenes/complex_maze/one_agent/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -23,6 +23,7 @@ beq = [];
 A = [];
 b = [];
 UserTols = [];
+coefficients_matrix = zeros(6, numel(fieldnames(setup_params.agents)));
 
 a = fieldnames(setup_params.agents);
 for i = 1:numel(a)
@@ -30,11 +31,19 @@ for i = 1:numel(a)
     agent.xse = getfield(setup_params.agents, a{i}).xse;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 10;
+    agent.seg_per_waypoint = 50;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
-    %agent.friends = getfield(setup_params.agents, a{i}).friends;
+    agent.mass = getfield(setup_params.agents, a{i}).mass;
+    agent.friends = getfield(setup_params.agents, a{i}).friends;
+    coefficients_matrix(1, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_agent;
+    coefficients_matrix(2, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_tol;
+    coefficients_matrix(3, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_accel;
+    coefficients_matrix(4, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_map;
+    coefficients_matrix(5, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_ke;
+    coefficients_matrix(6, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_pv;
+        
     
     [r1e, r1v] = set_path(agent, scene);
     %edges
@@ -94,6 +103,7 @@ for i = 1:numel(a)
     UserTols = [UserTols agent.radius];
     
 end
+scene.coeff_matrix = coefficients_matrix;
 Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
 A = [A zeros(size(A,1),numel(scene.agents))];
 

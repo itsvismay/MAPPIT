@@ -5,12 +5,12 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     Tols = q_i(end-num_agents+1:end);
     
     %Weights
-    K_agent = 1;
-    K_tol = 1; %don't touch
-    K_accel = 1;
-    K_map = 0;
-    K_ke = 1;
-    K_pv = 0;
+    K_agent = scene.coeff_matrix(1,:);
+    K_tol =   scene.coeff_matrix(2,:); %don't touch
+    K_accel = scene.coeff_matrix(3,:);
+    K_map =   scene.coeff_matrix(4,:);
+    K_ke =    scene.coeff_matrix(5,:);
+    K_pv =    scene.coeff_matrix(6,:);
     
     [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
     [e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
@@ -25,10 +25,10 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     g(1:end-num_agents) = g(1:end-num_agents) + g_map + g_ke + g_accel + g_pv;
     g(end-num_agents+1:end) = g(end-num_agents+1:end) + g_tol;
     
-    %plottings(surf_anim, q, e, g);
+    plottings(surf_anim, q, e, g);
 end
 function [e, g] = preferred_time_energy(Q, scene, K)
-    if K==0
+    if sum(K)==0
         e=0;
         g = zeros(numel(Q),1);
         return;
@@ -40,12 +40,13 @@ function [e, g] = preferred_time_energy(Q, scene, K)
         q_i = Q(:, i); %3*nodes
         dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
         
-        e = e + K*0.5*(q_i(end) - (sum(sqrt(dx(:,1).^2  + dx(:,2).^2))/pv) ).^2;
+        e = e + K(i)*0.5*(q_i(end) - (sum(sqrt(dx(:,1).^2  + dx(:,2).^2))/pv) ).^2;
 
 %         e = e + K*0.5*(q_i(end).^2 - (sum((dx(:,1).^2  + dx(:,2).^2))/(pv*pv)) ).^2;
         
         gradE = ones(size(q_i));
-        gradE = gradE*K*(q_i(end) - (sum(sqrt(dx(:,1).^2  + dx(:,2).^2))/pv));
+        gradE = gradE*K(i)*(q_i(end) - (sum(sqrt(dx(:,1).^2  + dx(:,2).^2))/pv));
+        
         dedx2 = -(dx(:,1).*((dx(:,1).^2  + dx(:,2).^2).^(-1/2)))/pv;
         dedx1 = (dx(:,1).*((dx(:,1).^2  + dx(:,2).^2).^(-1/2)))/pv;
         dedy2 = -(dx(:,2).*((dx(:,1).^2  + dx(:,2).^2).^(-1/2)))/pv;
@@ -65,15 +66,15 @@ function [e, g] = preferred_time_energy(Q, scene, K)
         GT(:,i) = gradE;
         
     end
-    g = K*reshape(GT, size(GT,1)*size(GT,2),1);
+    g = reshape(GT, size(GT,1)*size(GT,2),1);
 end
 function [e, g] = agent_agent_energy(Q, Tols, scene, K)
-    if K==0
+    num_agents = numel(scene.agents);
+    if sum(K)==0
         e=0;
-        g = zeros(numel(Q),1);
+        g = zeros(numel(Q) + num_agents, 1);
         return;
     end
-    num_agents = numel(scene.agents);
     GB = zeros(size(Q));
     gW = zeros(num_agents,1);
     e=0;
@@ -106,17 +107,17 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             
             tol = Tols(i) + Tols(j);
 
-            e = e + -K*log(-tol + D);
-%             if(ismember(j,scene.agents(i).friends))
-%                 e = e + -K*log(-D + 2);
-%                 GB(:,i) = GB(:,i)+ (-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-%                 GB(:,i) = GB(:,i)+ (-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
-%             end
+            e = e + -K(i)*log(-tol + D);
+            if(ismember(j,scene.agents(i).friends))
+                e = e + -K(i)*log(-D + 2);
+                GB(:,i) = GB(:,i)+ K(i)*(-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+                GB(:,j) = GB(:,j)+ K(i)*(-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+            end
             
-            GB(:,i) = GB(:,i)+ (-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-            GB(:,j) = GB(:,j)+ (-1/(-tol + D))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
-            gW(i) = gW(i) + (1/(-tol+D));
-            gW(j) = gW(j) + (1/(-tol+D));
+            GB(:,i) = GB(:,i)+ K(i)*(-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+            GB(:,j) = GB(:,j)+ K(j)*(-1/(-tol + D))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+            gW(i) = gW(i) + K(i)*(1/(-tol+D));
+            gW(j) = gW(j) + K(j)*(1/(-tol+D));
             
 %             B = B + 1/D;
 %             GB(:,i) = GB(:,i)+ (-1/(D^2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
@@ -124,15 +125,15 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
 
         end        
     end
-    g(1:end-num_agents) = K*reshape(GB, size(GB,1)*size(GB,2),1);
-    g(end-num_agents+1:end) = K*gW;
+    g(1:end-num_agents) = reshape(GB, size(GB,1)*size(GB,2),1);
+    g(end-num_agents+1:end) = gW;
 end
 function [e, g] = tolerance_energy(Tols, UserTols, K)
-    e = K*0.5*(Tols - UserTols')'*(Tols - UserTols');
-    g = K*(Tols - UserTols');
+    e = 0.5*(K'.*(Tols - UserTols'))'*(Tols - UserTols');
+    g = K'.*(Tols - UserTols');
 end
 function [e, g] = acceleration_energy(Q, scene, K)
-    if K==0
+    if sum(K)==0
         e=0;
         g = zeros(numel(Q),1);
         return;
@@ -156,19 +157,19 @@ function [e, g] = acceleration_energy(Q, scene, K)
         angle = 2*atan2(Y,X);
         
         %bending energy
-        e = e + 0.5*K*sum((angle - 0).^2);
+        e = e + 0.5*K(i)*sum((angle - 0).^2);
 
         %vectorized gradient computation
         %end points have zero gradient (no bending energy applied)
         gr = [0 0 0; ...
-            K.*angle.*((cross(V2,Z)./(V2norm.*V2norm)) + (cross(V1,Z)./(V1norm.*V1norm))); ...
+            K(i).*angle.*((cross(V2,Z)./(V2norm.*V2norm)) + (cross(V1,Z)./(V1norm.*V1norm))); ...
             0 0 0]; 
         GK(:,i) = reshape(gr', numel(gr),1);
     end
     g = reshape(GK, size(GK,1)*size(GK,2),1); 
 end        
 function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
-    if K==0
+    if sum(K)==0
         e=0;
         g = zeros(numel(Q),1);
         return;
@@ -185,14 +186,14 @@ function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
         [D,GP] = soft_distance(100,P, A1);
         
         JG1 = J1'*GP;
-        GB(:,i) = (-1/(-UserTols(i) + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-        e = e + -K*log(-UserTols(i) + D);
+        GB(:,i) = K(i)*(-1/(-UserTols(i) + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+        e = e + -K(i)*log(-UserTols(i) + D);
     end
-    g = K*reshape(GB, size(GB,1)*size(GB,2),1);
+    g = reshape(GB, size(GB,1)*size(GB,2),1);
     
 end
 function [e, g] = kinetic_energy(Q, scene, K)
-    if K==0
+    if sum(K)==0
         e=0;
         g = zeros(numel(Q),1);
         return;
@@ -204,10 +205,10 @@ function [e, g] = kinetic_energy(Q, scene, K)
     e=0;
     for i=1:numel(scene.agents)
         q_i = Q(:, i); %3*nodes
-        m = 1;
+        m = scene.agents(i).mass;
         dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
 
-        e = e + K*sum(0.5*m*sum(dx(:, 1:2).*dx(:,1:2),2)./dx(:,3)); %kinetic energy
+        e = e + K(i)*sum(0.5*m*sum(dx(:, 1:2).*dx(:,1:2),2)./dx(:,3)); %kinetic energy
         dEdq_left = zeros(numel(q_i)/3, 3);
         dEdq_right = zeros(numel(q_i)/3, 3);
 
@@ -221,9 +222,9 @@ function [e, g] = kinetic_energy(Q, scene, K)
 
         dEdq = dEdq_left + dEdq_right;
         
-        GT(:,i) = reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
+        GT(:,i) = K(i)*reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
     end
-    g = K*reshape(GT, size(GT,1)*size(GT,2),1);
+    g = reshape(GT, size(GT,1)*size(GT,2),1);
 end
 function [s] = plottings(surf_anim, q, e, g)
 %     QQ = reshape(q, 3, numel(q)/3)';
