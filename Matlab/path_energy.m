@@ -25,7 +25,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     g(1:end-num_agents) = g(1:end-num_agents) + g_map + g_ke + g_accel + g_pv;
     g(end-num_agents+1:end) = g(end-num_agents+1:end) + g_tol;
     
-    plottings(surf_anim, q, e, g);
+    %plottings(surf_anim, q, e, g_full(1:end-3));
 end
 function [e, g] = preferred_time_energy(Q, scene, K)
     if sum(K)==0
@@ -83,7 +83,7 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
     for i=1:numel(scene.agents)
         A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
         [A1, J1] = sample_points_for_rod(A1, scene.agents(i).e);
-        for j =1+1:num_agents
+        for j =i+1:num_agents
             if j==i
                 continue;
             end
@@ -91,12 +91,13 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             [A2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             dist_is_good = 0;
             alpha_count = 10;
-            alpha_val = 50;
+            alpha_val = 10;
             while dist_is_good==0
-                [~,G1] = soft_distance(alpha_val,A2, A1);
-                [D,G2] = soft_distance(alpha_val,A1, A2);
-                %[~, G1] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
-                %[D,G2] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
+                %[~,G1] = soft_distance(alpha_val,A2, A1);
+                %[D,G2] = soft_distance(alpha_val,A1, A2);
+                [~, G1] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
+                [D, G2] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
+                
                 if(D>-1e-8)
                     dist_is_good =1;
                 end
@@ -106,16 +107,21 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             JG2 = J2'*G2;
             
             tol = Tols(i) + Tols(j);
-
-            e = e + -K(i)*log(-tol + D);
+            
+            fileID = fopen("abhisheks_distances.txt", 'a');
+            texts = sprintf('%f,%f \n',tol,D);
+            fprintf(fileID, texts)
+            fclose(fileID);
+            
+            e = e + -K(i)*log((-tol + D)^2);
             if(ismember(j,scene.agents(i).friends))
                 e = e + -K(i)*log(-D + 2);
                 GB(:,i) = GB(:,i)+ K(i)*(-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
                 GB(:,j) = GB(:,j)+ K(i)*(-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
             end
             
-            GB(:,i) = GB(:,i)+ K(i)*(-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-            GB(:,j) = GB(:,j)+ K(j)*(-1/(-tol + D))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+            GB(:,i) = GB(:,i)+ K(i)*(-2/((-tol + D).^2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+            GB(:,j) = GB(:,j)+ K(j)*(-2/((-tol + D).^2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
             gW(i) = gW(i) + K(i)*(1/(-tol+D));
             gW(j) = gW(j) + K(j)*(1/(-tol+D));
             
@@ -236,7 +242,7 @@ function [s] = plottings(surf_anim, q, e, g)
 %     Vquiver = GG(:,2);
 %     Wquiver = GG(:,3);
 %     quiver3(Xquiver, Yquiver, Zquiver, Uquiver, Vquiver, Wquiver);
-
+%     drawnow;
 
     PV = reshape(q, 3, numel(q)/3)';
     PE = e;

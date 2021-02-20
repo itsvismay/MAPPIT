@@ -1,9 +1,9 @@
-function [Dist,Path, CDATA] = mydijk(Q, A, s, t, BV, Bind)
-    A = set_edge_weights(Q, A, BV);
+function [Dist,Path, A, A_visited] = mydijk(Q, A, A_visited, s, t, BV, Bind)
+    A = set_edge_weights(Q, A, BV, A_visited);
     
     n = size(A, 1);
     Qlabel = linspace(1, size(Q,1), size(Q,1));
-    CDATA = full(sum(A))';
+    %CDATA = full(sum(A))';
     D = Inf*ones(n,1); 
     D(s) = 0;
     P = -1*ones(n,1);
@@ -25,12 +25,15 @@ function [Dist,Path, CDATA] = mydijk(Q, A, s, t, BV, Bind)
         end
     end
 
-
+    
     Dist = D(t);
     b = t;
     Path = [];
+    %unwind
     while P(b)>0 && b ~= s
         Path = [b Path];
+        A_visited(P(b), b) = 1e-3;
+        A_visited(b, P(b)) = 1e-3;
         b = P(b);
     end
     Path = [s Path];
@@ -38,14 +41,22 @@ function [Dist,Path, CDATA] = mydijk(Q, A, s, t, BV, Bind)
     
 end
 
-function [E] = set_edge_weights(Q, A, BV)
-    [ii,jj,ss] = find(A);
+function [E] = set_edge_weights(Q, A, BV, A_visited)
+    A_lt = tril(A);
+    [ii,jj,ss] = find(A_lt);
     for k=1:length(ii)
        %// A nonzero element of A: ss(k) = S(ii(k),jj(k))
        d = min_edge_to_boundary_dist(Q(ii(k),:), Q(jj(k),:), BV);
        ss(k) = d;
     end
-    E = sparse(ii,jj,ss);
+    ii = [ii; size(A,1)];
+    jj = [jj; size(A,2)];
+    ss = [ss; 0];
+    
+    spA = sparse(ii,jj,ss); %triangular matrix. needs to be made symmetric
+    E = A_visited.*(spA + spA');
+    
+    
 end
 
 function [d] = min_edge_to_boundary_dist(P1, P2, M)

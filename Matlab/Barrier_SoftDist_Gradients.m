@@ -1,6 +1,8 @@
 %read in from the scene file
 addpath("../external/smooth-distances/build/");
-fname = "../Scenes/complex_maze/one_agent/";
+fname = "../Scenes/three_agents/test/";
+%fname = "../Scenes/roomba_maze/scene_3/";
+
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -11,9 +13,9 @@ scene.terrain.BVind = unique(scene.terrain.BF);
 scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
 
-surf_anim = tsurf(scene.terrain.F, scene.terrain.V); 
-hold on;
-axis equal;
+% surf_anim = tsurf(scene.terrain.F, scene.terrain.V); 
+% hold on;
+% axis equal;
 
 v = [];
 e = [];
@@ -24,19 +26,22 @@ A = [];
 b = [];
 UserTols = [];
 coefficients_matrix = zeros(6, numel(fieldnames(setup_params.agents)));
-
+AdjM = adjacency_matrix(scene.terrain.F);
+AdjM_visited = AdjM;
 a = fieldnames(setup_params.agents);
 for i = 1:numel(a)
     agent.id = i;
     agent.xse = getfield(setup_params.agents, a{i}).xse;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 50;
+    agent.seg_per_waypoint = 20;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
     agent.mass = getfield(setup_params.agents, a{i}).mass;
     agent.friends = getfield(setup_params.agents, a{i}).friends;
+    agent.mesh = getfield(setup_params.agents, a{i}).mesh;
+    agent.animation_cycles = getfield(setup_params.agents, a{i}).animation_cycles;
     coefficients_matrix(1, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_agent;
     coefficients_matrix(2, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_tol;
     coefficients_matrix(3, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_accel;
@@ -45,7 +50,7 @@ for i = 1:numel(a)
     coefficients_matrix(6, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_pv;
         
     
-    [r1e, r1v] = set_path(agent, scene);
+    [r1e, r1v, AdjM, AdjM_visited] = set_path(AdjM, AdjM_visited, agent, scene);
     %edges
     agent.e = r1e;
     r1e = r1e + size(v,1);
@@ -66,6 +71,10 @@ for i = 1:numel(a)
     agent.rest_edge_lengths = r1el;
     agent.rest_region_lengths = [0; r1el(1:size(r1el)-1) + r1el(2:size(r1el))];
     
+    %sets up the agent bvh
+    [B,I] = build_distance_bvh(agent.v,[]);
+    agent.bvh.B = B;
+    agent.bvh.I = I;
     
     %fix end points
     num_constraints = size(agent.xse,1)*2 +1;
@@ -119,7 +128,7 @@ drawnow;
 %minimize here
 options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'Display', 'iter', 'UseParallel', true, 'HessianApproximation', 'lbfgs');
 options.MaxFunctionEvaluations = 1e6;
-options.MaxIterations = 1e4;
+options.MaxIterations = 1e3;
 q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
 [q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
                             q_i, ...
