@@ -42,6 +42,7 @@ for i = 1:numel(a)
     agent.friends = getfield(setup_params.agents, a{i}).friends;
     agent.mesh = getfield(setup_params.agents, a{i}).mesh;
     agent.animation_cycles = getfield(setup_params.agents, a{i}).animation_cycles;
+    agent.mesh_direction_forward_up = getfield(setup_params.agents, a{i}).mesh_direction_forward_up;
     coefficients_matrix(1, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_agent;
     coefficients_matrix(2, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_tol;
     coefficients_matrix(3, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_accel;

@@ -1,0 +1,12 @@
+{
+	"agent":{
+		"file": "agent.fbx",
+		"orientation_forward_up": ["Z", "Y"],
+		"radius": 0.5
+	},
+	"elephant":{
+		"file": "agent.fbx",
+		"orientation_forward_up": ["Z", "Y"],
+		"radius": 3
+	}
+}

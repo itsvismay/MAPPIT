@@ -1,0 +1,64 @@
+{
+	"name": "scene_3",
+	"agents": {
+		"agent1":{
+			"id": 1,
+			"xse": [[9.375, -9.375,  0], 
+					[9.375, 9.375, 10]], 
+			"mesh": "agent_1.obj",
+			"animation_cycles": null,
+			"friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 10,
+				"K_accel" : 1,
+				"K_map" : 0,
+				"K_ke" : 1,
+				"K_pv" : 0
+			}
+		},
+		"agent2":{
+			"id": 2,
+			"xse":[[11.25,7.5,0],
+					[7.5,-11.25, 10]], 
+			"mesh": "agent_2.obj",
+			"animation_cycles": null,
+			"friends": [3],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 10,
+				"K_accel" : 10,
+				"K_map" : 0,
+				"K_ke" : 1,
+				"K_pv" : 0
+			}
+		},
+		"agent3":{
+			"id": 3,
+			"xse": [[7.5, 7.5, 0],
+					[11.25,-11.25, 10]],
+			"mesh": "agent_3.obj",
+			"animation_cycles": null,
+			"friends": [2],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 10,
+				"K_accel" : 10,
+				"K_map" : 0,
+				"K_ke" : 1,
+				"K_pv" : 0
+			}
+		}
+	},
+	"obstacles": {},
+	"terrain": {
+		"mesh": "terrain.obj"
+	}
+
+}

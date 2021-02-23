@@ -2,6 +2,7 @@ import json
 import bpy
 import numpy as np
 from mathutils import Matrix, Vector
+import sys
 
 colors =[[0.19154,      0.78665,      0.56299],
           [ 1.0147,      0.31997,      0.20648],
@@ -104,7 +105,7 @@ colors =[[0.19154,      0.78665,      0.56299],
           [0.14355,      0.83488,      0.56275],
           [0.19705,      0.19373,       1.1504]]
 
-def assign_agent_color(agent_mesh, agent_json):
+def assign_mesh_color(agent_mesh, agent_json):
     i = int(agent_json["id"])
     color = colors[i]
     mat = bpy.data.materials.new('agent_material'+str(i))
@@ -112,17 +113,24 @@ def assign_agent_color(agent_mesh, agent_json):
     agent_mesh.active_material = mat
     mat.use_nodes = True
     tree = mat.node_tree
-
     # set principled BSDF
     tree.nodes["Principled BSDF"].inputs['Base Color'].default_value = (color[0], color[1], color[2], 1)
 
 
-def origin_to_bottom(ob, matrix=Matrix()):
+def origin_to_bottom(ob, meshFU, matrix=Matrix()):
     me = ob.data
     mw = ob.matrix_world
     local_verts = [matrix @ Vector(v[:]) for v in ob.bound_box]
     o = sum(local_verts, Vector()) / 8
-    o.z = min(v.z for v in local_verts)
+    if meshFU[0]=='X' or meshFU[0]=='-X':
+      print("HERE HERE HERE")
+      o.x = min(v.x for v in local_verts)
+    elif meshFU[0]=='Y' or meshFU[0]=='-Y':
+      print("HERE2 HERE2 HERE2")
+      o.y = min(v.y for v in local_verts)
+    else:
+      print("HERE3 HERE3 HERE3")
+      o.z = min(v.z for v in local_verts)
     o = matrix.inverted() @ o
     me.transform(Matrix.Translation(-o))
     mw.translation = mw @ o
@@ -145,6 +153,7 @@ def make_path_curve(name, coords_list):
     # make a new object with the curve
     obj = bpy.data.objects.new(name, crv)
     bpy.context.collection.objects.link(obj)
+    return obj
 
 def make_rod_curve(name, coords_list, r):
     # make a new curve
@@ -173,7 +182,8 @@ def make_rod_curve(name, coords_list, r):
     bpy.ops.object.convert(target='CURVE')
     obj.data.bevel_mode = "OBJECT"
     obj.data.bevel_object = bpy.data.objects["circle-"+name]
-    obj.hide_viewport = True
+    # obj.hide_viewport = True
+    return obj
 
 
 
@@ -182,12 +192,19 @@ def make_rod_curve(name, coords_list, r):
 # bpy.ops.wm.read_factory_settings(use_empty=True)
 # #------------------------
 
+print(sys.argv)
+render_rods = sys.argv[5]
+run_folder = sys.argv[4]#"eight_agents/agent_circle/"
 project_folder = "/Users/vismay/recode/crowds/"
-scene_folder = project_folder + "Scenes/three_agents/size_mass_asymmetric_collisions/"
-bpy.ops.wm.open_mainfile(filepath=project_folder+"Scenes/Blends/three_agents/three_agents_base.blend")
+blend_materials_folder = project_folder+"Scenes/blend_material/"
+scene_folder = project_folder + "Scenes/output_results/" + run_folder
+
+bpy.ops.wm.open_mainfile(filepath=blend_materials_folder + "scene_bases/three_agents_base.blend")
 
 f = open(scene_folder+"agents.json", "r")
 scene = json.loads(f.read())
+f1 = open(blend_materials_folder + "agent_models/agent_list.json", "r")
+agent_obj_list = json.loads(f1.read())
 
 #load agents curves
 for a in scene["agents"]:
@@ -208,9 +225,8 @@ for a in scene["agents"]:
     t = np.around(v[:,2], decimals=2)
 
     r = float(a["radius"])
-    print(r)
-    make_rod_curve("Rod-"+str(a["id"]), np.array([x, y, t], order='F').transpose(), r)
-
+    rod = make_rod_curve("Rod-"+str(a["id"]), np.array([x, y, t], order='F').transpose(), r)
+    assign_mesh_color(rod, a)
 
 #load agents objects
 for a in scene["agents"]:
@@ -222,6 +238,7 @@ for a in scene["agents"]:
 
     r = float(a["radius"])
 
+    meshFU=["-Y", "Z"]
     if a["animation_cycles"]:
         print("use walk cycle")
          # Manually do this after keyframing
@@ -231,23 +248,26 @@ for a in scene["agents"]:
         bpy.ops.import_scene.fbx( filepath = "/Users/vismay/Downloads/Walking.fbx")
         obj_object = bpy.context.selected_objects[0]
     elif a["mesh"]:
-        print("use mesh")
-        bpy.ops.import_scene.obj(filepath=scene_folder+a["mesh"])
+        model = a["mesh"]
+        #bpy.ops.import_scene.obj(filepath=blend_materials_folder+"agent_models/"+agent_obj_list[model]["file"])
+        bpy.ops.import_scene.fbx( filepath = blend_materials_folder+"agent_models/"+agent_obj_list[model]["file"])
+        meshFU = agent_obj_list[model]["orientation_forward_up"]
     else:
         print("use default unit cube")
         bpy.ops.mesh.primitive_cube_add(size=2, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
 
     obj_object = bpy.context.selected_objects[0] ####<--Fix
-    assign_agent_color(obj_object, a)
+    for c in obj_object.children:
+      assign_mesh_color(c, a)
     bpy.context.view_layer.objects.active = obj_object
-    origin_to_bottom(obj_object, matrix=obj_object.matrix_world)
+    #origin_to_bottom(obj_object, meshFU, matrix=obj_object.matrix_world)
     # Keyframe the walk cycle along the path curve
     for k in range(len(t)):
         # print(int(100*x[k]),int(100*y[k]), int(100*t[k]))
         cur_frame = bpy.context.scene.frame_current
         if k < len(t)-1:
             direction_vector = Vector((x[k+1] - x[k], y[k+1] - y[k], 0))
-            next_rot_euler = direction_vector.to_track_quat('-Z', 'Y').to_euler()
+            next_rot_euler = direction_vector.to_track_quat(meshFU[0], meshFU[1]).to_euler()
             curr_rot = obj_object.rotation_euler
             dx = next_rot_euler.x - curr_rot.x
             dy = next_rot_euler.y - curr_rot.y
@@ -275,7 +295,12 @@ for a in scene["agents"]:
 #    #add cube to act as pseudo car to animate along path
 #    # Import FBX
 
-bpy.ops.wm.save_mainfile(filepath='./test.blend')
+if(render_rods):
+  bpy.ops.wm.save_mainfile(filepath=project_folder + "Scenes/Blends/" + run_folder + "with_rods.blend")
+else:
+  bpy.ops.wm.save_mainfile(filepath=project_folder + "Scenes/Blends/" + run_folder + "no_rods.blend")
+
+exit()
 
 
     

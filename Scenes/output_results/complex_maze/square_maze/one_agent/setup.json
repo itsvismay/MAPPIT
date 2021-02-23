@@ -1,0 +1,28 @@
+{
+	"name": "scene_1",
+	"agents": {
+		"agent1":{
+			"id": 1,
+			"xse": [[-46.875, -9.375, 0], 
+					[46.875, -40.625, 10]], 
+			"mesh": "agent_1.obj",
+			"animation_cycles": null,
+			"friends": [],
+            "radius": 1,
+            "mass": 1,
+            "energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 1,
+				"K_accel" : 0,
+				"K_map" : 10,
+				"K_ke" : 1,
+				"K_pv" : 0
+			}
+		}
+	},
+	"obstacles": {},
+	"terrain": {
+		"mesh": "terrain.obj"
+	}
+
+}
