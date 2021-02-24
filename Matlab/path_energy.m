@@ -5,14 +5,16 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     Tols = q_i(end-num_agents+1:end);
     
     %Weights
-    K_agent = scene.coeff_matrix(1,:);
-    K_tol =   scene.coeff_matrix(2,:); %don't touch
-    K_accel = scene.coeff_matrix(3,:);
-    K_map =   scene.coeff_matrix(4,:);
-    K_ke =    scene.coeff_matrix(5,:);
-    K_pv =    scene.coeff_matrix(6,:);
+    K_agent = 0*scene.coeff_matrix(1,:);
+    K_tol =   1*scene.coeff_matrix(2,:); %don't touch
+    K_accel = 0*scene.coeff_matrix(3,:);
+    K_map =   0*scene.coeff_matrix(4,:);
+    K_ke =    1*scene.coeff_matrix(5,:);
+    K_pv =    0*scene.coeff_matrix(6,:);
     
-    [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
+    g_full = zeros(size(q_i));
+    e_agent = 0;
+    %[e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
     [e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
     [e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
     [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
@@ -91,12 +93,12 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             [A2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             dist_is_good = 0;
             alpha_count = 10;
-            alpha_val = 10;
+            alpha_val = 150;
             while dist_is_good==0
-                %[~,G1] = soft_distance(alpha_val,A2, A1);
-                %[D,G2] = soft_distance(alpha_val,A1, A2);
-                [~, G1] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
-                [D, G2] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
+                [~,G1] = soft_distance(alpha_val,A2, A1);
+                [D,G2] = soft_distance(alpha_val,A1, A2);
+                %[~, G1] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
+                %[D, G2] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
                 
                 if(D>-1e-8)
                     dist_is_good =1;

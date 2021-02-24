@@ -1,6 +1,6 @@
 %read in from the scene file
 addpath("../external/smooth-distances/build/");
-fname = "../Scenes/three_agents/test/";
+fname = "../Scenes/output_results/three_agents/test/";
 %fname = "../Scenes/roomba_maze/scene_3/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
@@ -34,7 +34,7 @@ for i = 1:numel(a)
     agent.xse = getfield(setup_params.agents, a{i}).xse;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 20;
+    agent.seg_per_waypoint = 10;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
@@ -42,7 +42,6 @@ for i = 1:numel(a)
     agent.friends = getfield(setup_params.agents, a{i}).friends;
     agent.mesh = getfield(setup_params.agents, a{i}).mesh;
     agent.animation_cycles = getfield(setup_params.agents, a{i}).animation_cycles;
-    agent.mesh_direction_forward_up = getfield(setup_params.agents, a{i}).mesh_direction_forward_up;
     coefficients_matrix(1, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_agent;
     coefficients_matrix(2, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_tol;
     coefficients_matrix(3, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_accel;
@@ -134,7 +133,7 @@ q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
 [q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
-                            [], options);
+                            @(x)nonlinear_constraints(x, scene), options);
 qn = q_i(1:end-numel(scene.agents));
 
 print_agents(fname+"agents.json", scene, qn)

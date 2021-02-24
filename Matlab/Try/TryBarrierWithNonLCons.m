@@ -116,7 +116,7 @@ function [c, ceq] = nonlinear_constraints(q_i, scene)
     c = zeros(numel(scene.agents),1);
     w = zeros(numel(scene.agents),1);
     r = zeros(numel(scene.agents),1)
-    ;
+    
     num_agents = numel(scene.agents);
     q = q_i(1:end-numel(scene.agents));
    
