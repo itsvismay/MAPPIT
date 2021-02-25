@@ -14,9 +14,9 @@ scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
 
 global Kw Kt Ka
-Kw = 10; %tolerancee
+Kw = 1; %tolerancee
 Kt = 1; % kinetic
-Ka = 1; %agent-agent
+Ka = 10; %agent-agent
 
 v = [];
 e = [];
@@ -36,7 +36,7 @@ for i = 1:numel(a)
     agent.mass = getfield(setup_params.agents, a{i}).mass;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 10;
+    agent.seg_per_waypoint = 6;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
@@ -115,7 +115,7 @@ axis equal;
 drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', false, 'HessianApproximation', 'lbfgs');
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', true);
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e3;
 q_i  = [reshape(v', numel(v),1);  -1e-8*ones(numel(scene.agents),1)];
@@ -171,7 +171,7 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
             [A2,E2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             dist_is_good = 0;
-            alpha_count = 5;
+            alpha_count = 10;
             alpha_val = 50;
             while dist_is_good==0
                 [~,G1] = soft_distance(alpha_val,A2, A1);
