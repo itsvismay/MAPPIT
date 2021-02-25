@@ -5,16 +5,15 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     Tols = q_i(end-num_agents+1:end);
     
     %Weights
-    K_agent = 0*scene.coeff_matrix(1,:);
-    K_tol =   1*scene.coeff_matrix(2,:); %don't touch
-    K_accel = 0*scene.coeff_matrix(3,:);
-    K_map =   0*scene.coeff_matrix(4,:);
-    K_ke =    1*scene.coeff_matrix(5,:);
-    K_pv =    0*scene.coeff_matrix(6,:);
+    K_agent = scene.coeff_matrix(1,:);
+    K_tol =   scene.coeff_matrix(2,:); %don't touch
+    K_accel = scene.coeff_matrix(3,:);
+    K_map =   scene.coeff_matrix(4,:);
+    K_ke =    scene.coeff_matrix(5,:);
+    K_pv =    scene.coeff_matrix(6,:);
     
-    g_full = zeros(size(q_i));
-    e_agent = 0;
-    %[e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
+
+    [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
     [e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
     [e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
     [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
@@ -84,22 +83,23 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
    
     for i=1:numel(scene.agents)
         A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
-        [A1, J1] = sample_points_for_rod(A1, scene.agents(i).e);
+        [A1, E1, J1] = sample_points_for_rod(A1, scene.agents(i).e);
         for j =i+1:num_agents
             if j==i
                 continue;
             end
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
-            [A2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
+            [A2,E2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             dist_is_good = 0;
-            alpha_count = 10;
-            alpha_val = 150;
+            alpha_count =2;
+            alpha_val = 5;
             while dist_is_good==0
                 [~,G1] = soft_distance(alpha_val,A2, A1);
                 [D,G2] = soft_distance(alpha_val,A1, A2);
-                %[~, G1] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
-                %[D, G2] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
-                
+                %[~, G2] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
+                %[D, G1] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
+                %[~,G2] = smooth_min_distance(A1,[],scene.agents(i).bvh.B, scene.agents(i).bvh.I,alpha_val,A2,[],alpha_val);
+                %[D,G1] = smooth_min_distance(A2,[],scene.agents(j).bvh.B, scene.agents(j).bvh.I,alpha_val,A1,[],alpha_val);
                 if(D>-1e-8)
                     dist_is_good =1;
                 end
@@ -110,20 +110,15 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             
             tol = Tols(i) + Tols(j);
             
-            fileID = fopen("abhisheks_distances.txt", 'a');
-            texts = sprintf('%f,%f \n',tol,D);
-            fprintf(fileID, texts)
-            fclose(fileID);
-            
-            e = e + -K(i)*log((-tol + D)^2);
+            e = e + -K(i)*log(-tol + D);
             if(ismember(j,scene.agents(i).friends))
                 e = e + -K(i)*log(-D + 2);
                 GB(:,i) = GB(:,i)+ K(i)*(-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
                 GB(:,j) = GB(:,j)+ K(i)*(-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
             end
             
-            GB(:,i) = GB(:,i)+ K(i)*(-2/((-tol + D).^2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-            GB(:,j) = GB(:,j)+ K(j)*(-2/((-tol + D).^2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+            GB(:,i) = GB(:,i)+ K(i)*(-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+            GB(:,j) = GB(:,j)+ K(j)*(-1/(-tol + D))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
             gW(i) = gW(i) + K(i)*(1/(-tol+D));
             gW(j) = gW(j) + K(j)*(1/(-tol+D));
             
@@ -186,7 +181,7 @@ function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
     e=0;
     for i=1:numel(scene.agents)
         A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
-        [A1, J1] = sample_points_for_rod(A1, scene.agents(i).e);
+        [A1,E1, J1] = sample_points_for_rod(A1, scene.agents(i).e);
         
         A1(:, 3) = zeros(size(A1,1),1);
         %[P, ~] = sample_points_for_rod(scene.terrain.V, scene.terrain.BF);

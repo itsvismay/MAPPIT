@@ -1,6 +1,8 @@
 %read in from the scene file
 addpath("../external/smooth-distances/build/");
-fname = "../Scenes/output_results/three_agents/test/";
+fname = "../Scenes/output_results/eight_agents/agent_circle/";
+%fname = "../Scenes/output_results/three_agents/test/";
+
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -12,9 +14,9 @@ scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
 
 global Kw Kt Ka
-Kw = 100;
-Kt = 1;
-Ka = 1;
+Kw = 10; %tolerancee
+Kt = 1; % kinetic
+Ka = 1; %agent-agent
 
 v = [];
 e = [];
@@ -34,7 +36,7 @@ for i = 1:numel(a)
     agent.mass = getfield(setup_params.agents, a{i}).mass;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 6;
+    agent.seg_per_waypoint = 10;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
@@ -113,14 +115,14 @@ axis equal;
 drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', true);
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', false, 'HessianApproximation', 'lbfgs');
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e3;
 q_i  = [reshape(v', numel(v),1);  -1e-8*ones(numel(scene.agents),1)];
 [q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x, UserTols, numel(scene.agents), scene, e, surf_anim),... 
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
-                            @(x)nonlinear_constraints(x, scene), options);
+                            [], options);
 q = q_i(1:end-numel(scene.agents));
                         
 PV = reshape(q, 3, numel(q)/3)';
@@ -128,91 +130,103 @@ PV = reshape(q, 3, numel(q)/3)';
 surf_anim.Vertices = CV;
 drawnow;
 
-function [c, ceq, gc, gceq] = nonlinear_constraints(q_i, scene)
-    global Kw Kt Ka;
-    ceq = [];
-    gceq = [];
-    
-    num_agents = numel(scene.agents);
-    q = q_i(1:end-numel(scene.agents));
-   
-    Q = reshape(q, numel(q)/num_agents, num_agents);  
-    Tols = q_i(end-num_agents+1:end);
-    %intersection constraints
-    c = [0;0;0];
-    gc = [zeros(numel(Q) + num_agents, 1)...
-          zeros(numel(Q) + num_agents, 1)...
-          zeros(numel(Q) + num_agents, 1)];
-
-    GB = zeros(size(Q));
-    gW = zeros(num_agents,1);
-    interaction_count = 1;
-    for i=1:numel(scene.agents)
-        A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
-        [A1, J1] = sample_points_for_rod(A1, scene.agents(i).e);
-        for j =i+1:num_agents
-            if j==i
-                continue;
-            end
-            A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
-            [A2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
-            dist_is_good = 0;
-            alpha_count = 10;
-            alpha_val = 20;
-            while dist_is_good==0
-                % vismay code
-                [~,G1] = soft_distance(alpha_val,A2, A1);
-                [D,G2] = soft_distance(alpha_val,A1, A2);
-                % abhisheks code
-                %[~, G1] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
-                %[D, G2] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
-                if(D>-1e-8)
-                    dist_is_good =1;
-                end
-                alpha_val = alpha_val+alpha_count;
-            end
-                        
-            tol = 1 + 1;
-            c(interaction_count) = tol - D;
-            
-            JG1 = J1'*G1;
-            JG2 = J2'*G2;
-            GB(:,i) = GB(:,i)+ -1*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-            GB(:,j) = GB(:,j)+ -1*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
-            gW(i) = gW(i) + 1;
-            gW(j) = gW(j) + 1;
-            
-            g_col = zeros(numel(Q) + num_agents, 1);
-            g_col(1:end-num_agents) = reshape(GB, size(GB,1)*size(GB,2),1);
-            g_col(end-num_agents+1:end) = gW;
-            gc(:, interaction_count) = g_col;
-
-            interaction_count = interaction_count + 1;
-            GB = 0*GB;
-            gW = 0*gW;
-
-        end        
-    end
-   c
-end
-
 function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     global Kw Kt Ka;
 
     q = q_i(1:end-num_agents);
     Q = reshape(q, numel(q)/num_agents, num_agents); %3*nodes x agents
-    Tols = q_i(end-num_agents+1:end);
+    Tols = q_i(end-num_agents+1:end);   
 
-    T = 0;
-    W = 0;
+    [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, Ka);
+    [e_tol, g_tol] = tolerance_energy(Tols, UserTols, Kw);
+    [e_ke, g_ke] = kinetic_energy(Q, scene, Kt);
     
-    g = zeros(size(q_i));
+    f = e_agent + e_tol + e_ke;
+    
+    g = g_full;
+    g(1:end-num_agents) = g(1:end-num_agents) + g_ke;
+    g(end-num_agents+1:end) = g(end-num_agents+1:end) + g_tol;
+    
+end
+
+function [e, g] = agent_agent_energy(Q, Tols, scene, K)
+    num_agents = numel(scene.agents);
+    if sum(K)==0
+        e=0;
+        g = zeros(numel(Q) + num_agents, 1);
+        return;
+    end
+    GB = zeros(size(Q));
+    gW = zeros(num_agents,1);
+    e=0;
+    g = zeros(numel(Q) + num_agents, 1);
+   
+    for i=1:numel(scene.agents)
+        A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
+        [A1, E1, J1] = sample_points_for_rod(A1, scene.agents(i).e);
+        for j =i+1:num_agents
+            if j==i
+                continue;
+            end
+            A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
+            [A2,E2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
+            dist_is_good = 0;
+            alpha_count = 5;
+            alpha_val = 50;
+            while dist_is_good==0
+                [~,G1] = soft_distance(alpha_val,A2, A1);
+                [D,G2] = soft_distance(alpha_val,A1, A2);
+                %[~, G2] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
+                %[D, G1] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
+                %[~,G2] = smooth_min_distance(A1,[],scene.agents(i).bvh.B, scene.agents(i).bvh.I,alpha_val,A2,[],alpha_val);
+                %[D,G1] = smooth_min_distance(A2,[],scene.agents(j).bvh.B, scene.agents(j).bvh.I,alpha_val,A1,[],alpha_val);
+                if(D>-1e-8)
+                    dist_is_good =1;
+                end
+                alpha_val = alpha_val+alpha_count;
+            end
+            JG1 = J1'*G1;
+            JG2 = J2'*G2;
+            
+            tol = Tols(i) + Tols(j);
+            
+            e = e + -K*log(-tol + D);
+        
+            GB(:,i) = GB(:,i)+ K*(-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+            GB(:,j) = GB(:,j)+ K*(-1/(-tol + D))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+            gW(i) = gW(i) + K*(1/(-tol+D));
+            gW(j) = gW(j) + K*(1/(-tol+D));
+            
+%             B = B + 1/D;
+%             GB(:,i) = GB(:,i)+ (-1/(D^2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+%             GB(:,j) = GB(:,j)+ (-1/(D^2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+
+        end        
+    end
+    g(1:end-num_agents) = reshape(GB, size(GB,1)*size(GB,2),1);
+    g(end-num_agents+1:end) = gW;
+end
+function [e, g] = tolerance_energy(Tols, UserTols, K)
+    e = 0.5*(K*(Tols - UserTols'))'*(Tols - UserTols');
+    g = K*(Tols - UserTols');
+end
+function [e, g] = kinetic_energy(Q, scene, K)
+    if sum(K)==0
+        e=0;
+        g = zeros(numel(Q),1);
+        return;
+    end
+    %various fun path energies, I'll use principle of least action becase I like it
+    %kinetic energy of curve integrated along piecewise linear segment is 
+    % 0.5*dx'*dx./dt
     GT = zeros(size(Q));
-    for i=1:num_agents
+    e=0;
+    for i=1:numel(scene.agents)
         q_i = Q(:, i); %3*nodes
-        m = 1; %scene.agents(i).mass;
+        m = scene.agents(i).mass;
         dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
-        T = T + Kt*sum(0.5*m*sum(dx(:, 1:2).*dx(:,1:2),2)./dx(:,3)); %kinetic energy
+
+        e = e + K*sum(0.5*m*sum(dx(:, 1:2).*dx(:,1:2),2)./dx(:,3)); %kinetic energy
         dEdq_left = zeros(numel(q_i)/3, 3);
         dEdq_right = zeros(numel(q_i)/3, 3);
 
@@ -226,24 +240,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
 
         dEdq = dEdq_left + dEdq_right;
         
-        GT(:,i) = Kt*reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
-        
+        GT(:,i) = K*reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
     end
-    
-    W = 0.5*(Kw.*(Tols - UserTols'))'*(Tols - UserTols');
-    
-    gT = reshape(GT, size(GT,1)*size(GT,2),1);
-    gW = Kw.*(Tols - UserTols');
-    g(1:end-num_agents) = gT;
-    g(end-num_agents+1:end) = gW;
-    %find minimum energy curve
-    f = T+W;
-    
-%     PV = reshape(q, 3, numel(q)/3)';
-%     PE = e;
-%     [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
-%     surf_anim.Vertices = CV;
-%     drawnow;
-    
-
+    g = reshape(GT, size(GT,1)*size(GT,2),1);
 end

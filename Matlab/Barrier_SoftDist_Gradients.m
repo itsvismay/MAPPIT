@@ -1,6 +1,6 @@
 %read in from the scene file
 addpath("../external/smooth-distances/build/");
-fname = "../Scenes/output_results/three_agents/test/";
+fname = "../Scenes/output_results/eight_agents/agent_circle/";
 %fname = "../Scenes/roomba_maze/scene_3/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
@@ -72,7 +72,7 @@ for i = 1:numel(a)
     agent.rest_region_lengths = [0; r1el(1:size(r1el)-1) + r1el(2:size(r1el))];
     
     %sets up the agent bvh
-    [B,I] = build_distance_bvh(agent.v,[]);
+    [B,I] = build_distance_bvh(agent.v, []);
     agent.bvh.B = B;
     agent.bvh.I = I;
     
@@ -126,14 +126,14 @@ axis equal;
 drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'Display', 'iter', 'UseParallel', true, 'HessianApproximation', 'lbfgs');
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'Display', 'iter', 'UseParallel', false, 'HessianApproximation', 'lbfgs');
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e3;
 q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
 [q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
-                            @(x)nonlinear_constraints(x, scene), options);
+                            [], options);
 qn = q_i(1:end-numel(scene.agents));
 
 print_agents(fname+"agents.json", scene, qn)

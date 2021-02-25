@@ -1,6 +1,6 @@
 %read in from the scene file
 addpath("../external/smooth-distances/build/");
-fname = "../Scenes/output_results/three_agents/test/";
+fname = "../Scenes/output_results/eight_agents/agent_circle/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -113,7 +113,7 @@ axis equal;
 drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', true);
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', false, 'HessianApproximation', 'lbfgs');
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e3;
 q_i  = [reshape(v', numel(v),1);  -1e-8*ones(numel(scene.agents),1)];
@@ -151,23 +151,23 @@ function [c, ceq, gc, gceq] = nonlinear_constraints(q_i, scene)
     interaction_count = 1;
     for i=1:numel(scene.agents)
         A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
-        [A1, J1] = sample_points_for_rod(A1, scene.agents(i).e);
+        [A1, E1, J1] = sample_points_for_rod(A1, scene.agents(i).e);
         for j =i+1:num_agents
             if j==i
                 continue;
             end
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
-            [A2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
+            [A2, E2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             dist_is_good = 0;
-            alpha_count = 10;
-            alpha_val = 20;
+            alpha_count = 1;
+            alpha_val = 1;
             while dist_is_good==0
                 % vismay code
-                %[~,G1] = soft_distance(alpha_val,A2, A1);
-                %[D,G2] = soft_distance(alpha_val,A1, A2);
+                [~,G1] = soft_distance(alpha_val,A2, A1);
+                [D,G2] = soft_distance(alpha_val,A1, A2);
                 % abhisheks code
-                [~, G1] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
-                [D, G2] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
+                %[~, G2] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
+                %[D, G1] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
                 if(D>-1e-8)
                     dist_is_good =1;
                 end
@@ -195,7 +195,7 @@ function [c, ceq, gc, gceq] = nonlinear_constraints(q_i, scene)
             interaction_count = interaction_count + 1;
         end        
     end
-   c
+   
 end
 
 function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)

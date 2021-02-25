@@ -1,4 +1,4 @@
-function [P,J] = sample_points_for_rod(X, E, varargin)
+function [P,Edges,J] = sample_points_for_rod(X, E, varargin)
     s = 10; %5 samples per edge
     %for each edge
     P = zeros(s*(size(X,1)-1)+1, 3);
@@ -21,6 +21,6 @@ function [P,J] = sample_points_for_rod(X, E, varargin)
     P(end,:) = X(end,:);
     J(end,end-1) = 0;
     J(end,end) = 1;
-    
+    Edges = [(1:size(P,1)-1)' (2:size(P,1))'];
   
 end
