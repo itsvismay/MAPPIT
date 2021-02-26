@@ -108,12 +108,14 @@ A = [A zeros(size(A,1),numel(scene.agents))];
 PV = v;
 PE = e;
 [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
+figure;
 surf_anim = tsurf(CF, CV); 
 axis equal;
 drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', false, 'HessianApproximation', 'lbfgs');
+% options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', false, 'HessianApproximation', 'lbfgs');
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', false);
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e3;
 q_i  = [reshape(v', numel(v),1);  -1e-8*ones(numel(scene.agents),1)];
@@ -151,23 +153,25 @@ function [c, ceq, gc, gceq] = nonlinear_constraints(q_i, scene)
     interaction_count = 1;
     for i=1:numel(scene.agents)
         A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
-        [A1, E1, J1] = sample_points_for_rod(A1, scene.agents(i).e);
+        [A11, ~, J1] = sample_points_for_rod(A1, scene.agents(i).e);
         for j =i+1:num_agents
             if j==i
                 continue;
             end
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
-            [A2, E2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
+            [A22, ~, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             dist_is_good = 0;
             alpha_count = 1;
-            alpha_val = 1;
+            alpha_val = 10;
             while dist_is_good==0
                 % vismay code
-                [~,G1] = soft_distance(alpha_val,A2, A1);
-                [D,G2] = soft_distance(alpha_val,A1, A2);
+                % [~,G1] = soft_distance(alpha_val,A22, A11);
+                % [D,G2] = soft_distance(alpha_val,A11, A22);
                 % abhisheks code
-                %[~, G2] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
-                %[D, G1] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
+                [B1,I1] = build_distance_bvh(A1,scene.agents(i).e);
+                [B2,I2] = build_distance_bvh(A2,scene.agents(j).e);
+                [~, G2] = smooth_min_distance(A1,scene.agents(i).e,B1,I1,alpha_val,A22,[],alpha_val);
+                [D, G1] = smooth_min_distance(A2,scene.agents(j).e,B2,I2,alpha_val,A11,[],alpha_val);
                 if(D>-1e-8)
                     dist_is_good =1;
                 end
@@ -195,7 +199,14 @@ function [c, ceq, gc, gceq] = nonlinear_constraints(q_i, scene)
             interaction_count = interaction_count + 1;
         end        
     end
-   
+    % Do a smooth maximum of tol-D
+    % TODO: What's a good way to modify alpha here?
+    alpha = 10;
+    exp_weights = exp(alpha*c);
+    total = sum(exp_weights);
+    gc = (gc.*exp_weights')./total;
+    gc = sum(gc,2);
+    c = 1/alpha*log(total);
 end
 
 function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
