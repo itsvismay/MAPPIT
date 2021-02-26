@@ -170,8 +170,8 @@ function [c, ceq, gc, gceq] = nonlinear_constraints(q_i, scene)
                 % abhisheks code
                 [B1,I1] = build_distance_bvh(A1,scene.agents(i).e);
                 [B2,I2] = build_distance_bvh(A2,scene.agents(j).e);
-                [~, G2] = smooth_min_distance(A1,scene.agents(i).e,B1,I1,alpha_val,A22,[],alpha_val);
-                [D, G1] = smooth_min_distance(A2,scene.agents(j).e,B2,I2,alpha_val,A11,[],alpha_val);
+                [~, G1] = smooth_min_distance(A2,scene.agents(j).e,B2,I2,alpha_val,A11,[],alpha_val);
+                [D, G2] = smooth_min_distance(A1,scene.agents(i).e,B1,I1,alpha_val,A22,[],alpha_val);
                 if(D>-1e-8)
                     dist_is_good =1;
                 end
