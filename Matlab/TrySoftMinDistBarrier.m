@@ -14,9 +14,9 @@ scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
 
 global Kw Kt Ka
-Kw = 1; %tolerancee
+Kw = 10; %tolerancee
 Kt = 1; % kinetic
-Ka = 10; %agent-agent
+Ka = 1; %agent-agent
 
 v = [];
 e = [];
@@ -36,7 +36,7 @@ for i = 1:numel(a)
     agent.mass = getfield(setup_params.agents, a{i}).mass;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 6;
+    agent.seg_per_waypoint = 8;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
@@ -106,6 +106,9 @@ end
 Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
 A = [A zeros(size(A,1),numel(scene.agents))];
 
+% A = [A zeros(size(A,1),numel(scene.agents));
+%      zeros(numel(scene.agents), size(A,2)) -speye(numel(scene.agents))];
+% b = [b; -1e-7*ones(numel(scene.agents),1)];
 
 PV = v;
 PE = e;
@@ -171,8 +174,8 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
             [A2,E2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             dist_is_good = 0;
-            alpha_count = 10;
-            alpha_val = 50;
+            alpha_count = 2;
+            alpha_val = 1;
             while dist_is_good==0
                 [~,G1] = soft_distance(alpha_val,A2, A1);
                 [D,G2] = soft_distance(alpha_val,A1, A2);
@@ -189,7 +192,14 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             JG2 = J2'*G2;
             
             tol = Tols(i) + Tols(j);
-            
+%             if sum(sum(isnan(G1)))
+%                 tol
+%                 D
+%             end
+%             if (D - tol < 0)
+%                 tol
+%                 D
+%             end
             e = e + -K*log(-tol + D);
         
             GB(:,i) = GB(:,i)+ K*(-1/(-tol + D))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);

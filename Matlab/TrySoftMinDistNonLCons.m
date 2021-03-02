@@ -1,6 +1,7 @@
 %read in from the scene file
 addpath("../external/smooth-distances/build/");
 fname = "../Scenes/output_results/eight_agents/agent_circle/";
+fname = "../Scenes/output_results/three_agents/test/";
 setup_params = jsondecode(fileread(fname+"setup.json"));
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -12,8 +13,8 @@ scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
 
 global Kw Kt Ka
-Kw = 100;
-Kt = 1;
+Kw = 0;
+Kt = 10;
 Ka = 1;
 
 v = [];
@@ -160,14 +161,14 @@ function [c, ceq, gc, gceq] = nonlinear_constraints(q_i, scene)
             [A2, E2, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             dist_is_good = 0;
             alpha_count = 1;
-            alpha_val = 1;
+            alpha_val = 10;
             while dist_is_good==0
                 % vismay code
-                [~,G1] = soft_distance(alpha_val,A2, A1);
-                [D,G2] = soft_distance(alpha_val,A1, A2);
+                %[~,G1] = soft_distance(alpha_val,A2, A1);
+                %[D,G2] = soft_distance(alpha_val,A1, A2);
                 % abhisheks code
-                %[~, G2] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
-                %[D, G1] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
+                [~, G2] = smooth_min_distance(A1,[],alpha_val,A2,[],alpha_val);
+                [D, G1] = smooth_min_distance(A2,[],alpha_val,A1,[],alpha_val);
                 if(D>-1e-8)
                     dist_is_good =1;
                 end
