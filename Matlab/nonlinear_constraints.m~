@@ -76,7 +76,7 @@ function [c, ceq, gc, gceq] = nonlinear_constraints(q_i, UserTols, scene)
     end
     % Do a smooth maximum of tol-D
     % TODO: What's a good way to modify alpha here?
-    alpha = 5;
+    alpha = 1;
     exp_weights = exp(alpha*c);
     total = sum(exp_weights);
     gc = (gc.*exp_weights)./total;

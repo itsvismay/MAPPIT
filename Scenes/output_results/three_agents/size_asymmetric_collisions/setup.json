@@ -8,7 +8,7 @@
 			"mesh": "agent_1.obj",
 			"animation_cycles": null,
 			"friends": [],
-            "radius": 3,
+            "radius": 5,
             "mass": 1,
             "energy_coefficients":{
 				"K_agent" : 1,

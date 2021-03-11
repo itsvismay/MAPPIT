@@ -1,11 +1,17 @@
 %read in from the scene file
 addpath("../external/smooth-distances/build/");
 %fname = "../Scenes/output_results/eight_agents/agent_circle/";
-%fname = "../Scenes/output_results/three_agents/test/";
+% fname = "../Scenes/output_results/three_agents/friends_asymmetric_grouping/";
+% fname = "../Scenes/output_results/three_agents/mass_asymmetric_collisions/";
+% fname = "../Scenes/output_results/three_agents/no_collisions/";
+% 
+% fname = "../Scenes/output_results/three_agents/size_asymmetric_collisions/";
+% fname = "../Scenes/output_results/three_agents/size_mass_asymmetric_collisions/";
+% fname = "../Scenes/output_results/three_agents/symmetric_collisions/";
+%fname = "../Scenes/roomba_maze/scene_3/";
 fname = "../Scenes/output_results/scaling_tests/10_agents/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
-
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
 scene.terrain.V = tV;
@@ -15,10 +21,9 @@ scene.terrain.BVind = unique(scene.terrain.BF);
 scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
 
-global Kw Kt Ka
-Kw = 100;
-Kt = 1;
-Ka = 1;
+% surf_anim = tsurf(scene.terrain.F, scene.terrain.V); 
+% hold on;
+% axis equal;
 
 v = [];
 e = [];
@@ -28,21 +33,30 @@ beq = [];
 A = [];
 b = [];
 UserTols = [];
+coefficients_matrix = zeros(6, numel(fieldnames(setup_params.agents)));
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
-
 a = fieldnames(setup_params.agents);
 for i = 1:numel(a)
     agent.id = i;
     agent.xse = getfield(setup_params.agents, a{i}).xse;
-    agent.mass = getfield(setup_params.agents, a{i}).mass;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 10;
+    agent.seg_per_waypoint = 6;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
-    
+    agent.mass = getfield(setup_params.agents, a{i}).mass;
+    agent.friends = getfield(setup_params.agents, a{i}).friends;
+    agent.mesh = getfield(setup_params.agents, a{i}).mesh;
+    agent.animation_cycles = getfield(setup_params.agents, a{i}).animation_cycles;
+    coefficients_matrix(1, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_agent;
+    coefficients_matrix(2, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_tol;
+    coefficients_matrix(3, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_accel;
+    coefficients_matrix(4, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_map;
+    coefficients_matrix(5, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_ke;
+    coefficients_matrix(6, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_pv;
+        
     
     [r1e, r1v, AdjM, AdjM_visited] = set_path(AdjM, AdjM_visited, agent, scene);
     %edges
@@ -53,7 +67,8 @@ for i = 1:numel(a)
     
     %wiggles the rod start so that they aren't intersecting
     endtime = r1v(end,3);
-    r1v(:,3) = sort(rand(1,size(r1v,1))*(endtime));%r1v(:,3)/i;%
+   
+    r1v(:,3) = r1v(:,3)/(i);% sort(rand(1,size(r1v,1))*(endtime));%%
     r1v(end,3) = endtime;
     agent.v = r1v;            
     v = [v;r1v];
@@ -66,7 +81,7 @@ for i = 1:numel(a)
     agent.rest_region_lengths = [0; r1el(1:size(r1el)-1) + r1el(2:size(r1el))];
     
     %sets up the agent bvh
-    [B,I] = build_distance_bvh(agent.v,[]);
+    [B,I] = build_distance_bvh(agent.v, []);
     agent.bvh.B = B;
     agent.bvh.I = I;
     
@@ -102,88 +117,42 @@ for i = 1:numel(a)
         zeros(size(A1,1), size(A,2)) A1];
     b = [b; b1];
     
-    scene.agents = [scene.agents agent];   
+    scene.agents = [scene.agents agent]; 
     UserTols = [UserTols agent.radius];
+    
 end
+scene.coeff_matrix = coefficients_matrix;
 Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
 A = [A zeros(size(A,1),numel(scene.agents))];
 
 
 PV = v;
 PE = e;
-[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 10);
-figure;
+[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
 surf_anim = tsurf(CF, CV); 
+hold on;
 axis equal;
 drawnow;
 
 %minimize here
-% options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', false, 'HessianApproximation', 'lbfgs');
 options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', false);
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e3;
-q_i  = [reshape(v', numel(v),1);  -1e-8*ones(numel(scene.agents),1)];
-TRUEQI = q_i;
-[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x, UserTols, numel(scene.agents), scene, e, surf_anim),... 
+otions.StepTolerance = 1e-4;
+q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
+[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
                             @(x)nonlinear_constraints(x, UserTols, scene), options);
-q = q_i(1:end-numel(scene.agents));
-                        
-PV = reshape(q, 3, numel(q)/3)';
-[CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',1, 'PolySize', 10);
+qn = q_i(1:end-numel(scene.agents));
+
+print_agents(fname+"agents.json", scene, qn)
+
+Q = reshape(qn, numel(qn)/numel(scene.agents), numel(scene.agents));
+ scene.agents(i).v = reshape(Q(:,i), 3, size(Q,1)/3)';
+PV = reshape(qn, 3, numel(qn)/3)';
+[CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',0.75, 'PolySize', 4);
 surf_anim.Vertices = CV;
 drawnow;
 
-
-function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
-    global Kw Kt Ka;
-
-    q = q_i(1:end-num_agents);
-    Q = reshape(q, numel(q)/num_agents, num_agents); %3*nodes x agents
-    Tols = q_i(end-num_agents+1:end);
-
-    T = 0;
-    W = 0;
-    
-    g = zeros(size(q_i));
-    GT = zeros(size(Q));
-    for i=1:num_agents
-        q_i = Q(:, i); %3*nodes
-        m = 1; %scene.agents(i).mass;
-        dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
-        T = T + Kt*sum(0.5*m*sum(dx(:, 1:2).*dx(:,1:2),2)./dx(:,3)); %kinetic energy
-        dEdq_left = zeros(numel(q_i)/3, 3);
-        dEdq_right = zeros(numel(q_i)/3, 3);
-
-        dEdq_left(1:end-1,1) = -m*dx(:,1)./dx(:,3);
-        dEdq_left(1:end-1,2) = -m*dx(:,2)./dx(:,3);
-        dEdq_left(1:end-1,3) = 0.5*m*(dx(:,1).*dx(:,1) + dx(:,2).*dx(:,2))./(dx(:,3).*dx(:,3));
-
-        dEdq_right(2:end, 1) = m*dx(:,1)./dx(:,3);
-        dEdq_right(2:end, 2) = m*dx(:,2)./dx(:,3);
-        dEdq_right(2:end, 3) = -0.5*m*(dx(:,1).*dx(:,1) + dx(:,2).*dx(:,2))./(dx(:,3).*dx(:,3));
-
-        dEdq = dEdq_left + dEdq_right;
-        
-        GT(:,i) = Kt*reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
-        
-    end
-    
-    W = 0.5*(Kw.*(Tols - UserTols'))'*(Tols - UserTols');
-    
-    gT = reshape(GT, size(GT,1)*size(GT,2),1);
-    gW = Kw.*(Tols - UserTols');
-    g(1:end-num_agents) = gT;
-    g(end-num_agents+1:end) = gW;
-    %find minimum energy curve
-    f = T+W;
-    
-%     PV = reshape(q, 3, numel(q)/3)';
-%     PE = e;
-%     [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
-%     surf_anim.Vertices = CV;
-%     drawnow;
-    
-
-end
+%path_energy(q_i,UserTols, numel(scene.agents),scene, e, surf_anim)

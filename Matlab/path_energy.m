@@ -5,28 +5,28 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     Tols = q_i(end-num_agents+1:end);
     
     %Weights
-    K_agent = scene.coeff_matrix(1,:);
+    %K_agent = scene.coeff_matrix(1,:);
     K_tol =   scene.coeff_matrix(2,:); %don't touch
     K_accel = scene.coeff_matrix(3,:);
-    K_map =   scene.coeff_matrix(4,:);
+    %K_map =   scene.coeff_matrix(4,:);
     K_ke =    scene.coeff_matrix(5,:);
-    K_pv =    scene.coeff_matrix(6,:);
+    K_pv =    0*scene.coeff_matrix(6,:);
     
-
-    [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
+    g_full = zeros(size(q_i));
+    %[e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
     [e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
     [e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
-    [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
+    %[e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
     [e_ke, g_ke] = kinetic_energy(Q, scene, K_ke);
     [e_pv, g_pv] = preferred_time_energy(Q, scene, K_pv);
     
-    f = e_agent + e_tol + e_map + e_ke + e_accel + e_pv;
+    f = e_tol + e_ke + e_accel + e_pv;
     
     g = g_full;
-    g(1:end-num_agents) = g(1:end-num_agents) + g_map + g_ke + g_accel + g_pv;
+    g(1:end-num_agents) = g(1:end-num_agents) + g_ke + g_accel + g_pv;
     g(end-num_agents+1:end) = g(end-num_agents+1:end) + g_tol;
     
-    %plottings(surf_anim, q, e, g_full(1:end-3));
+    plottings(surf_anim, q, e, g_full(1:end-3));
 end
 function [e, g] = preferred_time_energy(Q, scene, K)
     if sum(K)==0
@@ -241,12 +241,12 @@ function [s] = plottings(surf_anim, q, e, g)
 %     quiver3(Xquiver, Yquiver, Zquiver, Uquiver, Vquiver, Wquiver);
 %     drawnow;
 
-    PV = reshape(q, 3, numel(q)/3)';
-    PE = e;
-%     plot3(PV(:,1), PV(:,2), PV(:,3), '-ok', 'LineWidth',5);
-    [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
-    surf_anim.Vertices = CV;
-    drawnow;
+%     PV = reshape(q, 3, numel(q)/3)';
+%     PE = e;
+% %     plot3(PV(:,1), PV(:,2), PV(:,3), '-ok', 'LineWidth',5);
+%     [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',0.75, 'PolySize', 4);
+%     surf_anim.Vertices = CV;
+%     drawnow;
 end
 
 
