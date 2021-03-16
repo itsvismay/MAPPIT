@@ -68,7 +68,7 @@ for i = 1:numel(a)
     %wiggles the rod start so that they aren't intersecting
     endtime = r1v(end,3);
    
-    r1v(:,3) = r1v(:,3)/(i);% sort(rand(1,size(r1v,1))*(endtime));%%
+    r1v(:,3) =  sort(rand(1,size(r1v,1))*(endtime));%%r1v(:,3)/(i);
     r1v(end,3) = endtime;
     agent.v = r1v;            
     v = [v;r1v];

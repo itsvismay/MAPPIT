@@ -193,13 +193,13 @@ def make_rod_curve(name, coords_list, r):
 # #------------------------
 
 print(sys.argv)
-render_rods = sys.argv[5]
-run_folder = sys.argv[4]#"eight_agents/agent_circle/"
+render_rods = False
+run_folder = "scaling_tests/10_agents/"#"eight_agents/agent_circle/"
 project_folder = "/Users/vismay/recode/crowds/"
 blend_materials_folder = project_folder+"Scenes/blend_material/"
 scene_folder = project_folder + "Scenes/output_results/" + run_folder
 
-bpy.ops.wm.open_mainfile(filepath=blend_materials_folder + "scene_bases/three_agents_base.blend")
+bpy.ops.wm.open_mainfile(filepath=blend_materials_folder + "scene_bases/scaling_test_base.blend")
 
 f = open(scene_folder+"agents.json", "r")
 scene = json.loads(f.read())
