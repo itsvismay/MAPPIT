@@ -31,6 +31,41 @@ b = [];
 UserTols = [];
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
+nLayer = 5;
+nTotalVer = nLayer * length(scene.terrain.V(:,1));
+
+% build up 3d graph
+% find all the edges in 2d graph
+A_lt = tril(AdjM);
+[edge_s,edge_t] = find(A_lt);
+edge = zeros(length(edge_s),2);
+edge(:,1) = edge_s;
+edge(:,2) = edge_t;
+    
+% set the num of layer and get the spacetime graph 
+% (vertices: VV and edges: EE)
+time = linspace(0,1,nLayer)';
+[ver,EE] = spacetime_graph(scene.terrain.V,edge,time);
+VV = zeros(length(ver),3);
+VV(:,1) = ver(:,1);
+VV(:,2) = ver(:,2);
+VV(:,3) = ver(:,4);
+tsurf(EE,VV);
+    
+% adjacency matrix of 3d graph
+newA = adjacency_matrix(EE);
+
+% make the graph directed along the time dimension
+[ii,jj,ss] = find(newA);
+for k=1:length(ii)
+   s_temp = ii(k);
+   t_temp = jj(k);
+   if VV(s_temp,3) > VV(t_temp,3)
+       %newA(s_temp, t_temp) = 0;
+   end
+end
+
+newA_visited = newA;
 
 a = fieldnames(setup_params.agents);
 
@@ -54,7 +89,8 @@ for i = 1:numel(a)
     % 3d dijkstra
     % P1 contains all vertices on the path 
     % (note: the index of P1 corresponds to the one in 3d graph VV)
-    [D1, P1, VV, EE] = mydijk3d(scene.terrain.V, AdjM, AdjM_visited, I1(1), I1(2), scene.terrain.BV, scene.terrain.BVind);
+    I1(2) = I1(2) + (nLayer-1)*vPerLayer;
+    [D1, P1, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, I1(1), I1(2), scene.terrain.BV, scene.terrain.BVind);
     
     disp(P1);
     % visualization

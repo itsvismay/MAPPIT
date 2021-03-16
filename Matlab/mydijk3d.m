@@ -1,48 +1,7 @@
-function [Dist, Path, VV, EE] = mydijk3d(Q, A, A_visited, s, t, BV, Bind)
-    % adjacency matrix of 2d graph
-    A = set_edge_weights(Q, A, BV, A_visited);
-    
-    % build up 3d graph
-    % find all the edges in 2d graph
-    A_lt = tril(A);
-    [edge_s,edge_t] = find(A_lt);
-    edge = zeros(length(edge_s),2);
-    edge(:,1) = edge_s;
-    edge(:,2) = edge_t;
-    
-    % set the num of layer and get the spacetime graph 
-    % (vertices: VV and edges: EE)
-    nLayer = 2;
-    time = linspace(0,10,nLayer)';
-    [ver,EE] = spacetime_graph(Q,edge,time);
-    VV = zeros(length(ver),3);
-    VV(:,1) = ver(:,1);
-    VV(:,2) = ver(:,2);
-    VV(:,3) = ver(:,4);
-    tsurf(EE,VV);
-    
-    % adjacency matrix of 3d graph
-    newA = adjacency_matrix(EE);
-    vPerLayer = length(ver) / nLayer;
-    
-    newA_visited = newA;
-    
+function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, Bind)
     % set the edge weights
-    newA = set_edge_weights(VV, newA, BV, newA_visited);
+    newA = set_edge_weights_directed(VV, newA, BV, newA_visited);
     
-     % make the graph directed along the time dimension
-    [ii,jj,ss] = find(newA);
-    for k=1:length(ii)
-       s_temp = ii(k);
-       t_temp = jj(k);
-       if VV(s_temp,3) > VV(t_temp,3)
-           %newA(s_temp, t_temp) = 0;
-       end
-    end
-    
-    % replace the orginal end point with the one on the top layer
-    t = t + (nLayer-1)*vPerLayer;
-   
     % 3d dijkstra
     n = size(newA, 1);
     Qlabel = linspace(1, size(VV,1), size(VV,1));
@@ -72,20 +31,34 @@ function [Dist, Path, VV, EE] = mydijk3d(Q, A, A_visited, s, t, BV, Bind)
     Dist = D(t);
     b = t;
     Path = [];
+    
+    [xx,vv] = find(newA(:,b));
+    for num=1:length(xx)
+        newA_visited(xx(num),b) = 1e-3;
+        newA_visited(b,xx(num)) = 1e-3;
+    end
+
     %unwind
     while P(b)>0 && b ~= s
         Path = [b Path];
-        newA_visited(P(b), b) = 1e-3;
-        newA_visited(b, P(b)) = 1e-3;
+        %% vertices based
+        [xx,vv] = find(newA(:,P(b)));
+        for num=1:length(xx)
+            newA_visited(xx(num),P(b)) = 1e-3;
+            newA_visited(P(b), xx(num)) = 1e-3;
+        end
         b = P(b);
+        %% edges based
+%         newA_visited(b,P(b)) = 1e-3;
+%         newA_visited(P(b),b) = 1e-3;
+%         b = P(b);
     end
     Path = [s Path];
     
 end
 
-function [E] = set_edge_weights(Q, A, BV, A_visited)
-    A_lt = tril(A);
-    [ii,jj,ss] = find(A_lt);
+function [E] = set_edge_weights_directed(Q, A, BV, A_visited)
+    [ii,jj,ss] = find(A);
     for k=1:length(ii)
        %// A nonzero element of A: ss(k) = S(ii(k),jj(k))
        d = min_edge_to_boundary_dist(Q(ii(k),:), Q(jj(k),:), BV);
@@ -95,8 +68,8 @@ function [E] = set_edge_weights(Q, A, BV, A_visited)
     jj = [jj; size(A,2)];
     ss = [ss; 0];
     
-    spA = sparse(ii,jj,ss); %triangular matrix. needs to be made symmetric
-    E = A_visited.*(spA + spA');
+    spA = sparse(ii,jj,ss);
+    E = A_visited.*spA;
     
 end
 
