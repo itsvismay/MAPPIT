@@ -31,7 +31,8 @@ b = [];
 UserTols = [];
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
-nLayer = 5;
+
+nLayer = 1;
 nTotalVer = nLayer * length(scene.terrain.V(:,1));
 
 % build up 3d graph
@@ -89,7 +90,7 @@ for i = 1:numel(a)
     % 3d dijkstra
     % P1 contains all vertices on the path 
     % (note: the index of P1 corresponds to the one in 3d graph VV)
-    I1(2) = I1(2) + (nLayer-1)*vPerLayer;
+    I1(2) = I1(2) + (nLayer-1)*(nTotalVer/nLayer);
     [D1, P1, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, I1(1), I1(2), scene.terrain.BV, scene.terrain.BVind);
     
     disp(P1);
@@ -116,7 +117,7 @@ end
 
 PV = v;
 PE = e;
-[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',0.1, 'PolySize', 10);
+[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',0.5, 'PolySize', 10);
 figure;
 surf_anim = tsurf(CF, CV); 
 axis equal;
