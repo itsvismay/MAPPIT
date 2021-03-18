@@ -32,7 +32,7 @@ UserTols = [];
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
 
-nLayer = 1;
+nLayer = 2;
 nTotalVer = nLayer * length(scene.terrain.V(:,1));
 
 % build up 3d graph
