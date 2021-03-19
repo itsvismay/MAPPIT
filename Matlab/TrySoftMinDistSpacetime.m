@@ -32,9 +32,8 @@ UserTols = [];
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
 
-nLayer = 2;
+nLayer = 10;
 nTotalVer = nLayer * length(scene.terrain.V(:,1));
-
 % build up 3d graph
 % find all the edges in 2d graph
 A_lt = tril(AdjM);
@@ -76,7 +75,7 @@ for i = 1:numel(a)
     agent.mass = getfield(setup_params.agents, a{i}).mass;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 10;
+    agent.seg_per_waypoint = 50;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
@@ -86,17 +85,17 @@ for i = 1:numel(a)
     t = [agent.xse(end,1),agent.xse(end,2),0];
     [I1, minD, VI] = snap_points([s; t], scene.terrain.V);
     agent.xse(:, 1:2) = VI(:, 1:2);
-    
     % 3d dijkstra
     % P1 contains all vertices on the path 
     % (note: the index of P1 corresponds to the one in 3d graph VV)
     I1(2) = I1(2) + (nLayer-1)*(nTotalVer/nLayer);
+    I1
     [D1, P1, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, I1(1), I1(2), scene.terrain.BV, scene.terrain.BVind);
     
-    disp(P1);
-    % visualization
+    % P1 are the indexes from djikstra's path
+    % read out the vertex values into vv
     vv = VV(P1,:);
-    vv(:,3) = linspace(0,10, size(vv,1));
+    vv(:,3) = linspace(0,agent.xse(end,end), size(vv,1));
     r1e = [(1:agent.segments)' (2:(agent.segments+1))'];
     r1v = interp1(vv(:,3), vv(:,1:2), linspace(agent.xse(1,3),agent.xse(end,3),agent.segments+1));
     r1v = [r1v linspace(agent.xse(1,3),agent.xse(end,3),agent.segments+1)'];
@@ -109,7 +108,7 @@ for i = 1:numel(a)
     
     % vertices
     endtime = r1v(end,3);
-    r1v(:,3) = sort(rand(1,size(r1v,1))*(endtime));%r1v(:,3)/i;%
+    %r1v(:,3) = sort(rand(1,size(r1v,1))*(endtime));%r1v(:,3)/i;%
     r1v(end,3) = endtime;
     agent.v = r1v;            
     v = [v;r1v];

@@ -2,7 +2,8 @@
 addpath("../external/smooth-distances/build/");
 %fname = "../Scenes/output_results/eight_agents/agent_circle/";
 %fname = "../Scenes/output_results/three_agents/test/";
-fname = "../Scenes/output_results/scaling_tests/10_agents/";
+%fname = "../Scenes/output_results/scaling_tests/10_agents/";
+fname = "../Scenes/output_results/scaling_tests/test/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
 
@@ -28,8 +29,45 @@ beq = [];
 A = [];
 b = [];
 UserTols = [];
+
+%% SETUP DIJIKSTRAS
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
+nLayer = 3;
+nTotalVer = nLayer * length(scene.terrain.V(:,1));
+% build up 3d graph
+% find all the edges in 2d graph
+A_lt = tril(AdjM);
+[edge_s,edge_t] = find(A_lt);
+edge = zeros(length(edge_s),2);
+edge(:,1) = edge_s;
+edge(:,2) = edge_t;
+    
+% set the num of layer and get the spacetime graph 
+% (vertices: VV and edges: EE)
+time = linspace(0,1,nLayer)';
+[ver,EE] = spacetime_graph(scene.terrain.V,edge,time);
+VV = zeros(length(ver),3);
+VV(:,1) = ver(:,1);
+VV(:,2) = ver(:,2);
+VV(:,3) = ver(:,4);
+tsurf(EE,VV);
+    
+% adjacency matrix of 3d graph
+newA = adjacency_matrix(EE);
+
+% make the graph directed along the time dimension
+[ii,jj,ss] = find(newA);
+for k=1:length(ii)
+   s_temp = ii(k);
+   t_temp = jj(k);
+   if VV(s_temp,3) > VV(t_temp,3)
+       %newA(s_temp, t_temp) = 0;
+   end
+end
+
+newA_visited = newA;
+%%
 
 a = fieldnames(setup_params.agents);
 for i = 1:numel(a)
@@ -38,13 +76,13 @@ for i = 1:numel(a)
     agent.mass = getfield(setup_params.agents, a{i}).mass;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 10;
+    agent.seg_per_waypoint = 50;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
     
     
-    [r1e, r1v, AdjM, AdjM_visited] = set_path(AdjM, AdjM_visited, agent, scene);
+    [r1e, r1v, AdjM, AdjM_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer);
     %edges
     agent.e = r1e;
     r1e = r1e + size(v,1);
