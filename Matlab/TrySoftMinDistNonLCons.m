@@ -1,9 +1,9 @@
 %read in from the scene file
 addpath("../external/smooth-distances/build/");
 %fname = "../Scenes/output_results/eight_agents/agent_circle/";
-%fname = "../Scenes/output_results/three_agents/test/";
+fname = "../Scenes/output_results/three_agents/test/";
 %fname = "../Scenes/output_results/scaling_tests/10_agents/";
-fname = "../Scenes/output_results/scaling_tests/test/";
+%fname = "../Scenes/output_results/scaling_tests/test/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
 
@@ -17,9 +17,9 @@ scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
 
 global Kw Kt Ka
-Kw = 100;
-Kt = 1;
-Ka = 1;
+Kw = 0;
+Kt = 1000;%kinetic
+Ka = 0;
 
 v = [];
 e = [];
@@ -33,7 +33,7 @@ UserTols = [];
 %% SETUP DIJIKSTRAS
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
-nLayer = 3;
+nLayer = 4;
 nTotalVer = nLayer * length(scene.terrain.V(:,1));
 % build up 3d graph
 % find all the edges in 2d graph
@@ -46,15 +46,8 @@ edge(:,2) = edge_t;
 % set the num of layer and get the spacetime graph 
 % (vertices: VV and edges: EE)
 time = linspace(0,1,nLayer)';
-[ver,EE] = spacetime_graph(scene.terrain.V,edge,time);
-VV = zeros(length(ver),3);
-VV(:,1) = ver(:,1);
-VV(:,2) = ver(:,2);
-VV(:,3) = ver(:,4);
-tsurf(EE,VV);
-    
-% adjacency matrix of 3d graph
-newA = adjacency_matrix(EE);
+[VV,EE, newA] = spacetime_graph(scene.terrain.V,edge,time);
+
 
 % make the graph directed along the time dimension
 [ii,jj,ss] = find(newA);
@@ -82,7 +75,8 @@ for i = 1:numel(a)
     agent.radius = getfield(setup_params.agents, a{i}).radius;
     
     
-    [r1e, r1v, AdjM, AdjM_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer);
+    %[r1e, r1v, newA, newA_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer);
+    [r1e, r1v, newA, newA_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer);
     %edges
     agent.e = r1e;
     r1e = r1e + size(v,1);
@@ -90,9 +84,15 @@ for i = 1:numel(a)
     e = [e; r1e];
     
     %wiggles the rod start so that they aren't intersecting
+    starttime = r1v(1,3);
     endtime = r1v(end,3);
-    r1v(:,3) = sort(rand(1,size(r1v,1))*(endtime));%r1v(:,3)/i;%
-    r1v(end,3) = endtime;
+    %r1v(:,3) = ones();%sort(rand(1,size(r1v,1))*(endtime));%r1v(:,3)/i;%
+    % smoothing_eps = k*[1,2,3....]
+    %adds time to make sure no div by 0 (flat paths)
+    smoothing_eps = 1e-1*linspace(1,size(r1v,1), size(r1v,1))'; 
+    r1v(:,3) = r1v(:,3) + smoothing_eps;
+    r1v(1,3) = starttime;
+    %r1v(end,3) = endtime;
     agent.v = r1v;            
     v = [v;r1v];
     
@@ -116,7 +116,7 @@ for i = 1:numel(a)
     Aeq_vals = ones(1,num_constraints);
     
     A1eq = sparse(Aeq_rows, Aeq_cols, Aeq_vals, num_constraints, numel(r1v));
-    b1eq = [agent.xse(1,:)'; reshape(agent.xse(2:end,1:2)', 1, [])'];
+    b1eq = [r1v(1,:)'; reshape(r1v(end,1:2)', 1, [])'];
     
     Aeq = [Aeq zeros(size(Aeq,1), size(A1eq,2)); 
             zeros(size(A1eq,1), size(Aeq,2)) A1eq];
@@ -149,7 +149,7 @@ A = [A zeros(size(A,1),numel(scene.agents))];
 
 PV = v;
 PE = e;
-[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 10);
+[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',0.5, 'PolySize', 10);
 figure;
 surf_anim = tsurf(CF, CV); 
 axis equal;
@@ -169,7 +169,7 @@ TRUEQI = q_i;
 q = q_i(1:end-numel(scene.agents));
                         
 PV = reshape(q, 3, numel(q)/3)';
-[CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',1, 'PolySize', 10);
+[CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',0.25, 'PolySize', 10);
 surf_anim.Vertices = CV;
 drawnow;
 
@@ -219,7 +219,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     
 %     PV = reshape(q, 3, numel(q)/3)';
 %     PE = e;
-%     [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
+%     [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',0.25, 'PolySize', 4);
 %     surf_anim.Vertices = CV;
 %     drawnow;
     

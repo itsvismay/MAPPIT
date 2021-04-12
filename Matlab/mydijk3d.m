@@ -35,8 +35,8 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
     %Vertex Based
     [xx,vv] = find(newA(:,b));
     for num=1:length(xx)
-        newA_visited(xx(num),b) = 1e-7;
-        newA_visited(b,xx(num)) = 1e-7;
+        newA_visited(xx(num),b) = 0;
+        newA_visited(b,xx(num)) = 0;
     end
 
     %unwind
@@ -45,8 +45,8 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
         %% vertices based
         [xx,vv] = find(newA(:,P(b)));
         for num=1:length(xx)
-            newA_visited(xx(num),P(b)) = 1e-7;
-            newA_visited(P(b), xx(num)) = 1e-7;
+            newA_visited(xx(num),P(b)) = 0;
+            newA_visited(P(b), xx(num)) = 0;
         end
         b = P(b);
         %% edges based
@@ -55,6 +55,7 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
 %         b = P(b);
     end
     Path = [s Path];
+    
     
 end
 

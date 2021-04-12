@@ -1,7 +1,0 @@
-function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene)
-%SET_PATH3D Summary of this function goes here
-%   Detailed explanation goes here
-outputArg1 = inputArg1;
-outputArg2 = inputArg2;
-end
-

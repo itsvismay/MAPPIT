@@ -1,0 +1,1129 @@
+{
+    "name": "scene_40",
+    "agents": {
+        "agent1": {
+            "id": 1,
+            "xse": [
+                [
+                    44.99999972721245,
+                    0.0,
+                    0.0
+                ],
+                [
+                    -44.99999972721245,
+                    5.510910562756249e-15,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent2": {
+            "id": 2,
+            "xse": [
+                [
+                    44.445975057352115,
+                    7.0395508841370145,
+                    0.0
+                ],
+                [
+                    -44.445975057352115,
+                    -7.039550884137009,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent3": {
+            "id": 3,
+            "xse": [
+                [
+                    42.79754297384553,
+                    13.905764662576644,
+                    0.0
+                ],
+                [
+                    -42.79754297384554,
+                    -13.905764662576638,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent4": {
+            "id": 4,
+            "xse": [
+                [
+                    40.09529334542107,
+                    20.429572364436645,
+                    0.0
+                ],
+                [
+                    -40.09529334542107,
+                    -20.429572364436645,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent5": {
+            "id": 5,
+            "xse": [
+                [
+                    36.40576452618287,
+                    26.450336192820792,
+                    0.0
+                ],
+                [
+                    -36.40576452618287,
+                    -26.450336192820785,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent6": {
+            "id": 6,
+            "xse": [
+                [
+                    31.81980496050471,
+                    31.819804960504708,
+                    0.0
+                ],
+                [
+                    -31.81980496050472,
+                    -31.819804960504708,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent7": {
+            "id": 7,
+            "xse": [
+                [
+                    26.450336192820796,
+                    36.405764526182864,
+                    0.0
+                ],
+                [
+                    -26.450336192820796,
+                    -36.405764526182864,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent8": {
+            "id": 8,
+            "xse": [
+                [
+                    20.42957236443665,
+                    40.09529334542106,
+                    0.0
+                ],
+                [
+                    -20.429572364436655,
+                    -40.09529334542106,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent9": {
+            "id": 9,
+            "xse": [
+                [
+                    13.905764662576646,
+                    42.79754297384553,
+                    0.0
+                ],
+                [
+                    -13.905764662576651,
+                    -42.79754297384553,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent10": {
+            "id": 10,
+            "xse": [
+                [
+                    7.039550884137017,
+                    44.445975057352115,
+                    0.0
+                ],
+                [
+                    -7.039550884137023,
+                    -44.44597505735211,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent11": {
+            "id": 11,
+            "xse": [
+                [
+                    2.7554552813781247e-15,
+                    44.99999972721245,
+                    0.0
+                ],
+                [
+                    -8.266365844134373e-15,
+                    -44.99999972721245,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent12": {
+            "id": 12,
+            "xse": [
+                [
+                    -7.039550884137012,
+                    44.445975057352115,
+                    0.0
+                ],
+                [
+                    7.039550884137006,
+                    -44.445975057352115,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent13": {
+            "id": 13,
+            "xse": [
+                [
+                    -13.90576466257664,
+                    42.79754297384554,
+                    0.0
+                ],
+                [
+                    13.905764662576635,
+                    -42.79754297384554,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent14": {
+            "id": 14,
+            "xse": [
+                [
+                    -20.429572364436645,
+                    40.09529334542107,
+                    0.0
+                ],
+                [
+                    20.42957236443664,
+                    -40.09529334542107,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent15": {
+            "id": 15,
+            "xse": [
+                [
+                    -26.450336192820785,
+                    36.40576452618287,
+                    0.0
+                ],
+                [
+                    26.45033619282078,
+                    -36.40576452618287,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent16": {
+            "id": 16,
+            "xse": [
+                [
+                    -31.819804960504708,
+                    31.81980496050471,
+                    0.0
+                ],
+                [
+                    31.819804960504708,
+                    -31.81980496050472,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent17": {
+            "id": 17,
+            "xse": [
+                [
+                    -36.405764526182864,
+                    26.450336192820796,
+                    0.0
+                ],
+                [
+                    36.405764526182864,
+                    -26.450336192820796,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent18": {
+            "id": 18,
+            "xse": [
+                [
+                    -40.09529334542106,
+                    20.429572364436652,
+                    0.0
+                ],
+                [
+                    40.09529334542106,
+                    -20.429572364436655,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent19": {
+            "id": 19,
+            "xse": [
+                [
+                    -42.79754297384553,
+                    13.905764662576647,
+                    0.0
+                ],
+                [
+                    42.79754297384553,
+                    -13.905764662576653,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent20": {
+            "id": 20,
+            "xse": [
+                [
+                    -44.44597505735211,
+                    7.039550884137019,
+                    0.0
+                ],
+                [
+                    44.44597505735211,
+                    -7.039550884137025,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent21": {
+            "id": 21,
+            "xse": [
+                [
+                    -44.99999972721245,
+                    5.510910562756249e-15,
+                    0.0
+                ],
+                [
+                    44.99999972721245,
+                    -1.1021821125512499e-14,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent22": {
+            "id": 22,
+            "xse": [
+                [
+                    -44.445975057352115,
+                    -7.039550884137009,
+                    0.0
+                ],
+                [
+                    44.445975057352115,
+                    7.039550884137003,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent23": {
+            "id": 23,
+            "xse": [
+                [
+                    -42.79754297384554,
+                    -13.905764662576638,
+                    0.0
+                ],
+                [
+                    42.79754297384554,
+                    13.905764662576633,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent24": {
+            "id": 24,
+            "xse": [
+                [
+                    -40.09529334542107,
+                    -20.429572364436645,
+                    0.0
+                ],
+                [
+                    40.09529334542107,
+                    20.429572364436638,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent25": {
+            "id": 25,
+            "xse": [
+                [
+                    -36.40576452618287,
+                    -26.450336192820785,
+                    0.0
+                ],
+                [
+                    36.40576452618287,
+                    26.45033619282078,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent26": {
+            "id": 26,
+            "xse": [
+                [
+                    -31.81980496050472,
+                    -31.819804960504708,
+                    0.0
+                ],
+                [
+                    31.81980496050472,
+                    31.8198049605047,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent27": {
+            "id": 27,
+            "xse": [
+                [
+                    -26.450336192820796,
+                    -36.405764526182864,
+                    0.0
+                ],
+                [
+                    26.4503361928208,
+                    36.40576452618286,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent28": {
+            "id": 28,
+            "xse": [
+                [
+                    -20.429572364436655,
+                    -40.09529334542106,
+                    0.0
+                ],
+                [
+                    20.429572364436662,
+                    40.095293345421055,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent29": {
+            "id": 29,
+            "xse": [
+                [
+                    -13.905764662576651,
+                    -42.79754297384553,
+                    0.0
+                ],
+                [
+                    13.905764662576658,
+                    42.79754297384552,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent30": {
+            "id": 30,
+            "xse": [
+                [
+                    -7.039550884137023,
+                    -44.44597505735211,
+                    0.0
+                ],
+                [
+                    7.039550884137028,
+                    44.44597505735211,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent31": {
+            "id": 31,
+            "xse": [
+                [
+                    -8.266365844134373e-15,
+                    -44.99999972721245,
+                    0.0
+                ],
+                [
+                    1.3777276406890623e-14,
+                    44.99999972721245,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent32": {
+            "id": 32,
+            "xse": [
+                [
+                    7.039550884137006,
+                    -44.445975057352115,
+                    0.0
+                ],
+                [
+                    -7.03955088413696,
+                    44.44597505735212,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent33": {
+            "id": 33,
+            "xse": [
+                [
+                    13.905764662576635,
+                    -42.79754297384554,
+                    0.0
+                ],
+                [
+                    -13.905764662576631,
+                    42.79754297384554,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent34": {
+            "id": 34,
+            "xse": [
+                [
+                    20.42957236443664,
+                    -40.09529334542107,
+                    0.0
+                ],
+                [
+                    -20.42957236443667,
+                    40.09529334542105,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent35": {
+            "id": 35,
+            "xse": [
+                [
+                    26.45033619282078,
+                    -36.40576452618287,
+                    0.0
+                ],
+                [
+                    -26.450336192820775,
+                    36.40576452618288,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent36": {
+            "id": 36,
+            "xse": [
+                [
+                    31.819804960504708,
+                    -31.81980496050472,
+                    0.0
+                ],
+                [
+                    -31.819804960504673,
+                    31.819804960504747,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent37": {
+            "id": 37,
+            "xse": [
+                [
+                    36.405764526182864,
+                    -26.450336192820796,
+                    0.0
+                ],
+                [
+                    -36.40576452618286,
+                    26.4503361928208,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent38": {
+            "id": 38,
+            "xse": [
+                [
+                    40.09529334542106,
+                    -20.429572364436655,
+                    0.0
+                ],
+                [
+                    -40.09529334542108,
+                    20.429572364436627,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent39": {
+            "id": 39,
+            "xse": [
+                [
+                    42.79754297384553,
+                    -13.905764662576653,
+                    0.0
+                ],
+                [
+                    -42.79754297384552,
+                    13.905764662576662,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent40": {
+            "id": 40,
+            "xse": [
+                [
+                    44.44597505735211,
+                    -7.039550884137025,
+                    0.0
+                ],
+                [
+                    -44.44597505735211,
+                    7.0395508841370695,
+                    44.224002838134766
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 0,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        }
+    },
+    "obstacles": {},
+    "terrain": {
+        "mesh": "terrain.obj"
+    }
+}

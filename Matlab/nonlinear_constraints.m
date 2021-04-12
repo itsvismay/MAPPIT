@@ -85,7 +85,6 @@ function [c, ceq, gc, gceq] = nonlinear_constraints(q_i, UserTols, scene)
         exp_weights;
     end
     c = 1/alpha*log(total);
-    c
-    
+   c
 end
 

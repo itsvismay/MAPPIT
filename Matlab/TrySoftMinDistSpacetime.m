@@ -32,28 +32,22 @@ UserTols = [];
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
 
-nLayer = 10;
+nLayer = 20;
 nTotalVer = nLayer * length(scene.terrain.V(:,1));
 % build up 3d graph
-% find all the edges in 2d graph
+% find all the edges [[i,j],...] in 2d graph
 A_lt = tril(AdjM);
 [edge_s,edge_t] = find(A_lt);
 edge = zeros(length(edge_s),2);
 edge(:,1) = edge_s;
 edge(:,2) = edge_t;
+
     
 % set the num of layer and get the spacetime graph 
 % (vertices: VV and edges: EE)
-time = linspace(0,1,nLayer)';
-[ver,EE] = spacetime_graph(scene.terrain.V,edge,time);
-VV = zeros(length(ver),3);
-VV(:,1) = ver(:,1);
-VV(:,2) = ver(:,2);
-VV(:,3) = ver(:,4);
-tsurf(EE,VV);
-    
-% adjacency matrix of 3d graph
-newA = adjacency_matrix(EE);
+time = linspace(0, 1, nLayer)';
+[VV,EE, newA] = spacetime_graph(scene.terrain.V,edge,time);
+
 
 % make the graph directed along the time dimension
 [ii,jj,ss] = find(newA);
@@ -68,7 +62,7 @@ end
 newA_visited = newA;
 
 a = fieldnames(setup_params.agents);
-
+PATHS = [];
 for i = 1:numel(a)
     agent.id = i;
     agent.xse = getfield(setup_params.agents, a{i}).xse;
@@ -81,34 +75,15 @@ for i = 1:numel(a)
     agent.radius = getfield(setup_params.agents, a{i}).radius;
     
     % set_path
-    s = [agent.xse(1,1),agent.xse(1,2),0];
-    t = [agent.xse(end,1),agent.xse(end,2),0];
-    [I1, minD, VI] = snap_points([s; t], scene.terrain.V);
-    agent.xse(:, 1:2) = VI(:, 1:2);
-    % 3d dijkstra
-    % P1 contains all vertices on the path 
-    % (note: the index of P1 corresponds to the one in 3d graph VV)
-    I1(2) = I1(2) + (nLayer-1)*(nTotalVer/nLayer);
-    I1
-    [D1, P1, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, I1(1), I1(2), scene.terrain.BV, scene.terrain.BVind);
-    
-    % P1 are the indexes from djikstra's path
-    % read out the vertex values into vv
-    vv = VV(P1,:);
-    vv(:,3) = linspace(0,agent.xse(end,end), size(vv,1));
-    r1e = [(1:agent.segments)' (2:(agent.segments+1))'];
-    r1v = interp1(vv(:,3), vv(:,1:2), linspace(agent.xse(1,3),agent.xse(end,3),agent.segments+1));
-    r1v = [r1v linspace(agent.xse(1,3),agent.xse(end,3),agent.segments+1)'];
+    [r1e, r1v, newA, newA_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer);
     
     % edges
     agent.e = r1e;
     r1e = r1e + size(v,1);
-    
     e = [e; r1e];
     
     % vertices
     endtime = r1v(end,3);
-    %r1v(:,3) = sort(rand(1,size(r1v,1))*(endtime));%r1v(:,3)/i;%
     r1v(end,3) = endtime;
     agent.v = r1v;            
     v = [v;r1v];
@@ -116,8 +91,16 @@ end
 
 PV = v;
 PE = e;
-[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',0.5, 'PolySize', 10);
+[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',0.75, 'PolySize', 10);
 figure;
 surf_anim = tsurf(CF, CV); 
 axis equal;
 drawnow;
+hold on;
+[ii,jj,ss] = find(newA_visited);
+EEE = []
+for k=1:length(ii)
+    EEE = [EEE; ii(k), jj(k)];
+end
+tsurf(EEE, VV);
+
