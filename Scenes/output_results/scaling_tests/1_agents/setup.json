@@ -23,7 +23,7 @@
             "energy_coefficients": {
                 "K_agent": 0,
                 "K_tol": 100,
-                "K_accel": 0,
+                "K_accel": 1,
                 "K_map": 0,
                 "K_ke": 1,
                 "K_pv": 0

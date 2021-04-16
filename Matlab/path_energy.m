@@ -1,30 +1,38 @@
-function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
+function [f] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     
     q = q_i(1:end-num_agents);
     Q = reshape(q, numel(q)/num_agents, num_agents); %3*nodes x agents
+    
+    q_i = Q(:, 1); %3*nodes
+    m = 1;%scene.agents(i).mass;
+    dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
+    f = 0.5*sum(sqrt(sum(dx(:, 1:3).^2,2)));
+    return;
+    
+    
     Tols = q_i(end-num_agents+1:end);
     
     %Weights
-    K_agent = 1*scene.coeff_matrix(1,:);
-    K_tol =   1*scene.coeff_matrix(2,:); %don't touch
+    K_agent = 0*scene.coeff_matrix(1,:);
+    K_tol =   0*scene.coeff_matrix(2,:); %don't touch
     K_accel = 0*scene.coeff_matrix(3,:);
     K_map =   0*scene.coeff_matrix(4,:);
     K_ke =    1*scene.coeff_matrix(5,:);
     K_pv =    0*scene.coeff_matrix(6,:);
     
     g_full = zeros(size(q_i));
-    [e_agent, g_agent] = agent_agent_energy(Q, Tols, scene, K_agent);
-    [e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
-    [e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
-    [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
+%     [e_agent, g_agent] = agent_agent_energy(Q, Tols, scene, K_agent);
+%     [e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
+     [e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
+%     [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
     [e_ke, g_ke] = kinetic_energy(Q, scene, K_ke);
-    [e_pv, g_pv] = preferred_time_energy(Q, scene, K_pv);
+%     [e_pv, g_pv] = preferred_time_energy(Q, scene, K_pv);
     
-    f = e_agent + e_map + e_tol + e_ke + e_accel + e_pv;
+    f = e_ke + e_accel; %e_agent + e_map + e_tol + e_ke + e_accel + e_pv;
     
-    g = g_full + g_agent;
-    g(1:end-num_agents) = g(1:end-num_agents) + g_ke + g_accel + g_pv + g_map;
-    g(end-num_agents+1:end) = g(end-num_agents+1:end) + g_tol;
+    g = g_full;% + g_agent;
+    g(1:end-num_agents) = g(1:end-num_agents) + g_ke + g_accel;% + g_pv + g_map;
+   %g(end-num_agents+1:end) = g(end-num_agents+1:end) + g_tol;
     
     plottings(surf_anim, q, e, g_full(1:end-3));
 end
@@ -212,6 +220,7 @@ function [e, g] = kinetic_energy(Q, scene, K)
         dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
 
         e = e + K(i)*sum(0.5*m*sum(dx(:, 1:2).*dx(:,1:2),2)./dx(:,3)); %kinetic energy
+        
         dEdq_left = zeros(numel(q_i)/3, 3);
         dEdq_right = zeros(numel(q_i)/3, 3);
 

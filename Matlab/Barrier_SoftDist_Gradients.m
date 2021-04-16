@@ -2,8 +2,8 @@
 addpath("../external/smooth-distances/build/");
 %fname = "../Scenes/output_results/eight_agents/agent_circle/";
 %fname = "../Scenes/output_results/three_agents/test/";
-%fname = "../Scenes/output_results/scaling_tests/10_agents/";
-fname = "../Scenes/output_results/scaling_tests/test/";
+fname = "../Scenes/output_results/scaling_tests/1_agents/";
+%fname = "../Scenes/output_results/scaling_tests/test/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
 
@@ -30,7 +30,7 @@ coefficients_matrix = zeros(6, numel(fieldnames(setup_params.agents)));
 %% SETUP DIJIKSTRAS
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
-nLayer = 20;
+nLayer = 2;
 nTotalVer = nLayer * length(scene.terrain.V(:,1));
 % build up 3d graph
 % find all the edges in 2d graph
@@ -66,7 +66,7 @@ for i = 1:numel(a)
     agent.mass = getfield(setup_params.agents, a{i}).mass;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 50;
+    agent.seg_per_waypoint = 20;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
@@ -165,13 +165,15 @@ surf_anim = tsurf(CF, CV);
 hold on;
 axis equal;
 drawnow;
+qn = reshape(v', numel(v),1);
+print_agents(fname+"initial.json", scene, qn)
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'Display', 'iter', 'UseParallel', false);
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', false, 'Display', 'iter', 'UseParallel', false);
 options.MaxFunctionEvaluations = 1e6;
-options.MaxIterations = 1e3;
+options.MaxIterations = 1000;
 q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
-[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
+[q_i, fval,exitflag,output,lambda, grad,hessian] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
                             [], options);
