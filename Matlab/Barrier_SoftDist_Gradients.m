@@ -2,7 +2,7 @@
 addpath("../external/smooth-distances/build/");
 %fname = "../Scenes/output_results/eight_agents/agent_circle/";
 %fname = "../Scenes/output_results/three_agents/test/";
-fname = "../Scenes/output_results/scaling_tests/1_agents/";
+fname = "../Scenes/output_results/scaling_tests/8_agents/";
 %fname = "../Scenes/output_results/scaling_tests/test/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
@@ -20,8 +20,10 @@ scene.agents = [];
 v = [];
 e = [];
 el = [];
-Aeq = [];
-beq = [];
+Aeq1 = [];
+beq1 = [];
+Aeq2 = [];
+beq2 = [];
 A = [];
 b = [];
 UserTols = [];
@@ -30,7 +32,7 @@ coefficients_matrix = zeros(6, numel(fieldnames(setup_params.agents)));
 %% SETUP DIJIKSTRAS
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
-nLayer = 2;
+nLayer = 15;
 nTotalVer = nLayer * length(scene.terrain.V(:,1));
 % build up 3d graph
 % find all the edges in 2d graph
@@ -66,7 +68,8 @@ for i = 1:numel(a)
     agent.mass = getfield(setup_params.agents, a{i}).mass;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 20;
+    i
+    agent.seg_per_waypoint = 50;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
@@ -116,20 +119,31 @@ for i = 1:numel(a)
     agent.bvh.B = B;
     agent.bvh.I = I;
     
-    %fix end points
-    num_constraints = size(agent.xse,1)*2 +1;
-    Aeq_rows = [1:num_constraints];
-    Aeq_cols = [1:3 reshape([3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 1; 
-                3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 2], 1,[])];
-    Aeq_vals = ones(1,num_constraints);
+    %fix end points constraint set 1
+        num_constraints = size(agent.xse,1)*3;
+        Aeq_rows = [1:num_constraints];
+        Aeq_cols = [1:3 reshape([3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 1; 
+                                3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 2 ;
+                                3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 3], 1,[])];
+        Aeq_vals = ones(1,num_constraints);
+        A1eq = sparse(Aeq_rows, Aeq_cols, Aeq_vals, num_constraints, numel(r1v));
+        b1eq = [r1v(1,:)'; reshape(r1v(end,:)', 1, [])'];
+        Aeq1 = [Aeq1 zeros(size(Aeq1,1), size(A1eq,2)); 
+                zeros(size(A1eq,1), size(Aeq1,2)) A1eq];
+        beq1 = [beq1; b1eq];
     
-    A1eq = sparse(Aeq_rows, Aeq_cols, Aeq_vals, num_constraints, numel(r1v));
-    b1eq = [r1v(1,:)'; reshape(r1v(end,1:2)', 1, [])'];
-    
-    Aeq = [Aeq zeros(size(Aeq,1), size(A1eq,2)); 
-            zeros(size(A1eq,1), size(Aeq,2)) A1eq];
+    %fix end points constraint set 2
+        num_constraints = size(agent.xse,1)*2 +1;
+        Aeq_rows = [1:num_constraints];
+        Aeq_cols = [1:3 reshape([3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 1; 
+                                3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 2], 1,[])];
+        Aeq_vals = ones(1,num_constraints);
+        A1eq = sparse(Aeq_rows, Aeq_cols, Aeq_vals, num_constraints, numel(r1v));
+        b1eq = [r1v(1,:)'; reshape(r1v(end,1:2)', 1, [])'];
         
-    beq = [beq; b1eq];
+        Aeq2 = [Aeq2 zeros(size(Aeq2,1), size(A1eq,2)); 
+                zeros(size(A1eq,1), size(Aeq2,2)) A1eq];
+        beq2 = [beq2; b1eq];
 
     %time is monotonic constraints 
     %t_i+1 - t_i > 0 --> in this format --> A1*q <= 0
@@ -151,13 +165,12 @@ for i = 1:numel(a)
     scene.agents = [scene.agents agent];   
     UserTols = [UserTols agent.radius];
 end
-Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
+Aeq1 = [Aeq1 zeros(size(Aeq1,1),numel(scene.agents))];
+Aeq2 = [Aeq2 zeros(size(Aeq2,1),numel(scene.agents))];
 A = [A zeros(size(A,1),numel(scene.agents))];
 scene.coeff_matrix = coefficients_matrix;
 
 %%
-
-
 PV = v;
 PE = e;
 [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1, 'PolySize', 4);
@@ -166,26 +179,40 @@ hold on;
 axis equal;
 drawnow;
 qn = reshape(v', numel(v),1);
-print_agents(fname+"initial.json", scene, qn)
-
-%minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', false, 'Display', 'iter', 'UseParallel', false);
-options.MaxFunctionEvaluations = 1e6;
-options.MaxIterations = 1000;
 q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
-[q_i, fval,exitflag,output,lambda, grad,hessian] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
+%print_agents(fname+"initial.json", scene, qn)
+
+options = optimoptions('fmincon', ...
+                    'Algorithm', 'interior-point', ...
+                    'SpecifyObjectiveGradient', true, ...
+                    'Display', 'iter', ...
+                    'UseParallel', true, ...
+                    'HessianApproximation', 'bfgs',...
+                    'OutputFcn',@outfun);
+                
+options.MaxFunctionEvaluations = 1e6;
+options.MaxIterations = 10;
+options.StepTolerance = 1e-5;
+options.OptimalityTolerance = 1e-5;
+options.MaxIterations = 1e3;
+
+                        
+%minimize with KE here
+%user constraint set 2
+[q_i, fval,exitflag,output,lambda, grad,hessian] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim, 2),... 
                             q_i, ...
-                            A,b,Aeq,beq,[],[], ...
+                            [],[],Aeq2,beq2,[],[], ...
                             [], options);
 qn = q_i(1:end-numel(scene.agents));
-
-print_agents(fname+"agents.json", scene, qn)
-
 Q = reshape(qn, numel(qn)/numel(scene.agents), numel(scene.agents));
- scene.agents(i).v = reshape(Q(:,i), 3, size(Q,1)/3)';
+scene.agents(i).v = reshape(Q(:,i), 3, size(Q,1)/3)';
 PV = reshape(qn, 3, numel(qn)/3)';
 [CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness',1, 'PolySize', 4);
 surf_anim.Vertices = CV;
 drawnow;
+
+
+
+print_agents(fname+"agents.json", scene, qn)
 
 %path_energy(q_i,UserTols, numel(scene.agents),scene, e, surf_anim)

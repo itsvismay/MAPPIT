@@ -1,17 +1,12 @@
 %read in from the scene file
 addpath("../external/smooth-distances/build/");
 %fname = "../Scenes/output_results/eight_agents/agent_circle/";
-% fname = "../Scenes/output_results/three_agents/friends_asymmetric_grouping/";
-% fname = "../Scenes/output_results/three_agents/mass_asymmetric_collisions/";
-% fname = "../Scenes/output_results/three_agents/no_collisions/";
-% 
-% fname = "../Scenes/output_results/three_agents/size_asymmetric_collisions/";
-% fname = "../Scenes/output_results/three_agents/size_mass_asymmetric_collisions/";
-% fname = "../Scenes/output_results/three_agents/symmetric_collisions/";
-%fname = "../Scenes/roomba_maze/scene_3/";
-fname = "../Scenes/output_results/scaling_tests/10_agents/";
+%fname = "../Scenes/output_results/three_agents/test/";
+fname = "../Scenes/output_results/scaling_tests/2_agents/";
+%fname = "../Scenes/output_results/scaling_tests/test/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
+
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
 scene.terrain.V = tV;
@@ -21,31 +16,64 @@ scene.terrain.BVind = unique(scene.terrain.BF);
 scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
 
-% surf_anim = tsurf(scene.terrain.F, scene.terrain.V); 
-% hold on;
-% axis equal;
 
 v = [];
 e = [];
 el = [];
-Aeq = [];
-beq = [];
+Aeq1 = [];
+beq1 = [];
+Aeq2 = [];
+beq2 = [];
 A = [];
 b = [];
 UserTols = [];
 coefficients_matrix = zeros(6, numel(fieldnames(setup_params.agents)));
+
+%% SETUP DIJIKSTRAS
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
+nLayer = 15;
+nTotalVer = nLayer * length(scene.terrain.V(:,1));
+% build up 3d graph
+% find all the edges in 2d graph
+A_lt = tril(AdjM);
+[edge_s,edge_t] = find(A_lt);
+edge = zeros(length(edge_s),2);
+edge(:,1) = edge_s;
+edge(:,2) = edge_t;
+    
+% set the num of layer and get the spacetime graph 
+% (vertices: VV and edges: EE)
+time = linspace(0,1,nLayer)';
+[VV,EE, newA] = spacetime_graph(scene.terrain.V,edge,time);
+
+
+% make the graph directed along the time dimension
+[ii,jj,ss] = find(newA);
+for k=1:length(ii)
+   s_temp = ii(k);
+   t_temp = jj(k);
+   if VV(s_temp,3) > VV(t_temp,3)
+       %newA(s_temp, t_temp) = 0;
+   end
+end
+
+newA_visited = newA;
+%%
+
 a = fieldnames(setup_params.agents);
 for i = 1:numel(a)
     agent.id = i;
     agent.xse = getfield(setup_params.agents, a{i}).xse;
+    agent.mass = getfield(setup_params.agents, a{i}).mass;
     agent.max_time = agent.xse(end, end);
     agent.waypoints = size(agent.xse,1)-1;
-    agent.seg_per_waypoint = 6;
+    i
+    agent.seg_per_waypoint = 50;
     agent.segments = agent.seg_per_waypoint*agent.waypoints;
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
+    
     agent.mass = getfield(setup_params.agents, a{i}).mass;
     agent.friends = getfield(setup_params.agents, a{i}).friends;
     agent.mesh = getfield(setup_params.agents, a{i}).mesh;
@@ -56,9 +84,10 @@ for i = 1:numel(a)
     coefficients_matrix(4, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_map;
     coefficients_matrix(5, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_ke;
     coefficients_matrix(6, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_pv;
-        
     
-    [r1e, r1v, AdjM, AdjM_visited] = set_path(AdjM, AdjM_visited, agent, scene);
+    
+    %[r1e, r1v, newA, newA_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer);
+    [r1e, r1v, newA, newA_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer);
     %edges
     agent.e = r1e;
     r1e = r1e + size(v,1);
@@ -66,10 +95,15 @@ for i = 1:numel(a)
     e = [e; r1e];
     
     %wiggles the rod start so that they aren't intersecting
+    starttime = r1v(1,3);
     endtime = r1v(end,3);
-   
-    r1v(:,3) =  sort(rand(1,size(r1v,1))*(endtime));%%r1v(:,3)/(i);
-    r1v(end,3) = endtime;
+    %r1v(:,3) = ones();%sort(rand(1,size(r1v,1))*(endtime));%r1v(:,3)/i;%
+    % smoothing_eps = k*[1,2,3....]
+    %adds time to make sure no div by 0 (flat paths)
+    smoothing_eps = 1e-1*linspace(1,size(r1v,1), size(r1v,1))'; 
+    r1v(:,3) = r1v(:,3) + smoothing_eps;
+    r1v(1,3) = starttime;
+    %r1v(end,3) = endtime;
     agent.v = r1v;            
     v = [v;r1v];
     
@@ -81,24 +115,35 @@ for i = 1:numel(a)
     agent.rest_region_lengths = [0; r1el(1:size(r1el)-1) + r1el(2:size(r1el))];
     
     %sets up the agent bvh
-    [B,I] = build_distance_bvh(agent.v, []);
+    [B,I] = build_distance_bvh(agent.v,[]);
     agent.bvh.B = B;
     agent.bvh.I = I;
     
-    %fix end points
-    num_constraints = size(agent.xse,1)*2 +1;
-    Aeq_rows = [1:num_constraints];
-    Aeq_cols = [1:3 reshape([3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 1; 
-                3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 2], 1,[])];
-    Aeq_vals = ones(1,num_constraints);
+    %fix end points constraint set 1
+        num_constraints = size(agent.xse,1)*3;
+        Aeq_rows = [1:num_constraints];
+        Aeq_cols = [1:3 reshape([3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 1; 
+                                3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 2 ;
+                                3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 3], 1,[])];
+        Aeq_vals = ones(1,num_constraints);
+        A1eq = sparse(Aeq_rows, Aeq_cols, Aeq_vals, num_constraints, numel(r1v));
+        b1eq = [r1v(1,:)'; reshape(r1v(end,:)', 1, [])'];
+        Aeq1 = [Aeq1 zeros(size(Aeq1,1), size(A1eq,2)); 
+                zeros(size(A1eq,1), size(Aeq1,2)) A1eq];
+        beq1 = [beq1; b1eq];
     
-    A1eq = sparse(Aeq_rows, Aeq_cols, Aeq_vals, num_constraints, numel(r1v));
-    b1eq = [agent.xse(1,:)'; reshape(agent.xse(2:end,1:2)', 1, [])'];
-    
-    Aeq = [Aeq zeros(size(Aeq,1), size(A1eq,2)); 
-            zeros(size(A1eq,1), size(Aeq,2)) A1eq];
+    %fix end points constraint set 2
+        num_constraints = size(agent.xse,1)*2 +1;
+        Aeq_rows = [1:num_constraints];
+        Aeq_cols = [1:3 reshape([3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 1; 
+                                3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 2], 1,[])];
+        Aeq_vals = ones(1,num_constraints);
+        A1eq = sparse(Aeq_rows, Aeq_cols, Aeq_vals, num_constraints, numel(r1v));
+        b1eq = [r1v(1,:)'; reshape(r1v(end,1:2)', 1, [])'];
         
-    beq = [beq; b1eq];
+        Aeq2 = [Aeq2 zeros(size(Aeq2,1), size(A1eq,2)); 
+                zeros(size(A1eq,1), size(Aeq2,2)) A1eq];
+        beq2 = [beq2; b1eq];
 
     %time is monotonic constraints 
     %t_i+1 - t_i > 0 --> in this format --> A1*q <= 0
@@ -117,13 +162,13 @@ for i = 1:numel(a)
         zeros(size(A1,1), size(A,2)) A1];
     b = [b; b1];
     
-    scene.agents = [scene.agents agent]; 
+    scene.agents = [scene.agents agent];   
     UserTols = [UserTols agent.radius];
-    
 end
-scene.coeff_matrix = coefficients_matrix;
-Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
+Aeq1 = [Aeq1 zeros(size(Aeq1,1),numel(scene.agents))];
+Aeq2 = [Aeq2 zeros(size(Aeq2,1),numel(scene.agents))];
 A = [A zeros(size(A,1),numel(scene.agents))];
+scene.coeff_matrix = coefficients_matrix;
 
 
 PV = v;
@@ -135,14 +180,14 @@ axis equal;
 drawnow;
 
 %minimize here
-options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', false);
+options = optimoptions('fmincon', 'SpecifyObjectiveGradient', true, 'SpecifyConstraintGradient',true, 'Display', 'iter', 'UseParallel', true);
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e3;
 otions.StepTolerance = 1e-4;
 q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
-[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
+[q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim, 2),... 
                             q_i, ...
-                            A,b,Aeq,beq,[],[], ...
+                            A,b,Aeq2,beq2,[],[], ...
                             @(x)nonlinear_constraints(x, UserTols, scene), options);
 qn = q_i(1:end-numel(scene.agents));
 
