@@ -2,7 +2,7 @@
 addpath("../external/smooth-distances/build/");
 %fname = "../Scenes/output_results/eight_agents/agent_circle/";
 %fname = "../Scenes/output_results/three_agents/test/";
-fname = "../Scenes/output_results/scaling_tests/2_agents/";
+fname = "../Scenes/output_results/scaling_tests/8_agents/";
 %fname = "../Scenes/output_results/scaling_tests/test/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
