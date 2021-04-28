@@ -2,7 +2,7 @@
 addpath("../external/smooth-distances/build/");
 %fname = "../Scenes/output_results/eight_agents/agent_circle/";
 %fname = "../Scenes/output_results/three_agents/test/";
-fname = "../Scenes/output_results/scaling_tests/8_agents/";
+fname = "../Scenes/output_results/scaling_tests/2_agents/";
 %fname = "../Scenes/output_results/scaling_tests/test/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
@@ -165,9 +165,9 @@ for i = 1:numel(a)
     scene.agents = [scene.agents agent];   
     UserTols = [UserTols agent.radius];
 end
-Aeq1 = [Aeq1 zeros(size(Aeq1,1),numel(scene.agents))];
-Aeq2 = [Aeq2 zeros(size(Aeq2,1),numel(scene.agents))];
-A = [A zeros(size(A,1),numel(scene.agents))];
+%Aeq1 = [Aeq1 zeros(size(Aeq1,1),numel(scene.agents))];
+%Aeq2 = [Aeq2 zeros(size(Aeq2,1),numel(scene.agents))];
+%A = [A zeros(size(A,1),numel(scene.agents))];
 scene.coeff_matrix = coefficients_matrix;
 
 %%
@@ -206,8 +206,8 @@ options = optimoptions('fmincon','Algorithm','interior-point',...
 %user constraint set 2
 
 [q_i, fval,exitflag,output,lambda, grad,hessian] = fmincon(@(x) path_energy_hessian(x,UserTols, numel(scene.agents),scene, e, surf_anim, 1),... 
-                            q_i, ...
-                            [],[],Aeq2,beq2,[],[], ...
+                            qn, ...
+                            [],[],Aeq1,beq1,[],[], ...
                             [], options);
 qn = q_i(1:end-numel(scene.agents));
 Q = reshape(qn, numel(qn)/numel(scene.agents), numel(scene.agents));

@@ -203,7 +203,7 @@ options.MaxIterations = 1e3;
                             q_i, ...
                             [],[],Aeq2,beq2,[],[], ...
                             [], options);
-qn = q_i(1:end-numel(scene.agents));
+qn = q_i;% q_i(1:end-numel(scene.agents));
 Q = reshape(qn, numel(qn)/numel(scene.agents), numel(scene.agents));
 scene.agents(i).v = reshape(Q(:,i), 3, size(Q,1)/3)';
 PV = reshape(qn, 3, numel(qn)/3)';
