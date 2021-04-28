@@ -1,4 +1,4 @@
-function [f, g, H] = path_energy_hessian(q_i, UserTols, num_agents, scene, e, surf_anim, constraint_set)
+function [f, g] = path_energy_hessian(q_i, UserTols, num_agents, scene, e, surf_anim, constraint_set)
     
     q = q_i;% q_i(1:end-num_agents);
     Q = reshape(q, numel(q)/num_agents, num_agents); %3*nodes x agents
@@ -23,7 +23,7 @@ function [f, g, H] = path_energy_hessian(q_i, UserTols, num_agents, scene, e, su
 %      [e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
 %      [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
      [e_ke, g_ke] = kinetic_energy(Q, scene, K_ke, constraint_set);
-     [e_ke, H_ke] = kinetic_energy_with_hessian(Q, scene, K_ke, constraint_set);
+     %[e_ke, H_ke] = kinetic_energy_with_hessian(Q, scene, K_ke, constraint_set);
 %      [e_pv, g_pv] = preferred_time_energy(Q, scene, K_pv);
 %      [e_rg, g_rg] = regularizer_energy(Q, scene, K_reg);
     
@@ -33,12 +33,12 @@ function [f, g, H] = path_energy_hessian(q_i, UserTols, num_agents, scene, e, su
     %g(1:end-num_agents) = g(1:end-num_agents) + g_ke + g_accel + g_pv + g_map + g_rg;
     %g(end-num_agents+1:end) = g(end-num_agents+1:end) + g_tol;
     
-    for ii=1:num_agents
-        H_full(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1)) = H_ke(:,:,ii);
-        %H_full(end-ii+1,end-ii+1) = 1; %assign the last block to identity
-    end
+%     for ii=1:num_agents
+%         H_full(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1)) = H_ke(:,:,ii);
+%         %H_full(end-ii+1,end-ii+1) = 1; %assign the last block to identity
+%     end
     
-    H = H_full;
+%     H = H_full;
     
     plottings(surf_anim, q, e, g_full(1:end-3));
 end
@@ -299,51 +299,6 @@ function [e, g] = kinetic_energy(Q, scene, K, constraint_set)
     end
     g = reshape(GT, size(GT,1)*size(GT,2),1);
 end
-
-function [e, HT] = kinetic_energy_with_hessian(Q, scene, K, constraint_set)
-    if sum(K)==0
-        e=0;
-        HT = zeros(size(Q,1), size(Q,1), size(Q,2));
-        return;
-    end
-    HT = zeros(size(Q,1), size(Q,1), size(Q,2));
-    e=0;
-    for i=1:numel(scene.agents)
-
-        q_i = Q(:, i); %3*nodes
-        m = scene.agents(i).mass;
-        dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
-        
-        d2Edq2 = zeros(numel(q_i),numel(q_i));
-         
-        if constraint_set == 1
-            %spring energy
-            e = e + K(i)*sum(0.5*m*sum(dx(:, 1:3).*dx(:,1:3),2)); %kinetic energy
-            
-            for kk=1:numel(q_i)/3-1
-                d2Edq2((kk-1)*3+1,(kk-1)*3+1) = d2Edq2((kk-1)*3+1,(kk-1)*3+1) + m;
-                d2Edq2((kk-1)*3+2,(kk-1)*3+2) = d2Edq2((kk-1)*3+2,(kk-1)*3+2) + m;
-                d2Edq2((kk-1)*3+3,(kk-1)*3+3) = d2Edq2((kk-1)*3+3,(kk-1)*3+3) + m;
-                
-                d2Edq2((kk-1)*3+1,(kk-1)*3+4) = d2Edq2((kk-1)*3+1,(kk-1)*3+4) - m;
-                d2Edq2((kk-1)*3+2,(kk-1)*3+5) = d2Edq2((kk-1)*3+2,(kk-1)*3+5) - m;
-                d2Edq2((kk-1)*3+3,(kk-1)*3+6) = d2Edq2((kk-1)*3+3,(kk-1)*3+6) - m;
-                
-                d2Edq2((kk-1)*3+4,(kk-1)*3+1) = d2Edq2((kk-1)*3+4,(kk-1)*3+1) - m;
-                d2Edq2((kk-1)*3+5,(kk-1)*3+2) = d2Edq2((kk-1)*3+5,(kk-1)*3+2) - m;
-                d2Edq2((kk-1)*3+6,(kk-1)*3+3) = d2Edq2((kk-1)*3+6,(kk-1)*3+3) - m;
-                
-                d2Edq2((kk-1)*3+4,(kk-1)*3+4) = d2Edq2((kk-1)*3+4,(kk-1)*3+4) + m;
-                d2Edq2((kk-1)*3+5,(kk-1)*3+5) = d2Edq2((kk-1)*3+5,(kk-1)*3+5) + m;
-                d2Edq2((kk-1)*3+6,(kk-1)*3+6) = d2Edq2((kk-1)*3+6,(kk-1)*3+6) + m;
-            end
-        end
-               
-        HT(:,:,i) = d2Edq2;
-            
-    end
-end
-
 function [s] = plottings(surf_anim, q, e, g)
 %     QQ = reshape(q, 3, numel(q)/3)';
 %     GG = reshape(g, 3, (numel(g))/3)';

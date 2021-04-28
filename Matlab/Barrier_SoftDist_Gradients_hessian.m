@@ -6,7 +6,7 @@ fname = "../Scenes/output_results/scaling_tests/2_agents/";
 %fname = "../Scenes/output_results/scaling_tests/test/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
-
+global scene;
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
 scene.terrain.V = tV;
@@ -169,6 +169,8 @@ end
 %Aeq2 = [Aeq2 zeros(size(Aeq2,1),numel(scene.agents))];
 %A = [A zeros(size(A,1),numel(scene.agents))];
 scene.coeff_matrix = coefficients_matrix;
+global num_agents
+num_agents = numel(scene.agents);
 
 %%
 PV = v;
@@ -200,16 +202,15 @@ q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
 options = optimoptions('fmincon','Algorithm','interior-point',...
     "SpecifyConstraintGradient",true,...
     "SpecifyObjectiveGradient",true,...
-    'HessianFcn',@path_energy_hessian);
+    'HessianFcn',@hessfcn);
 
 %minimize with KE here
 %user constraint set 2
-
 [q_i, fval,exitflag,output,lambda, grad,hessian] = fmincon(@(x) path_energy_hessian(x,UserTols, numel(scene.agents),scene, e, surf_anim, 1),... 
                             qn, ...
-                            [],[],Aeq1,beq1,[],[], ...
+                            A,b,Aeq1,beq1,[],[], ...
                             [], options);
-qn = q_i(1:end-numel(scene.agents));
+qn = q_i;%q_i(1:end-numel(scene.agents));
 Q = reshape(qn, numel(qn)/numel(scene.agents), numel(scene.agents));
 scene.agents(i).v = reshape(Q(:,i), 3, size(Q,1)/3)';
 PV = reshape(qn, 3, numel(qn)/3)';
