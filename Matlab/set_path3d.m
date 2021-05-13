@@ -1,4 +1,4 @@
-function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, VV, EE, nLayer, nTotalVer)
+function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, VV, EE, nLayer, nTotalVer, segments)
 %SET_PATH3D Summary of this function goes here
 %   Detailed explanation goes here
 % set_path
@@ -17,7 +17,7 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
     % read out the vertex values into vv
     % P1 are the indexes from djikstra's path
     % read out the vertex values into vv
-    if(agent.segments < length(P1))
+    if(segments < length(P1))
         sprintf("add more segments");
         return
     end
@@ -25,8 +25,8 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
     vv = VV(P1,:);
     vv(:,3) = vv(:,3)*agent.xse(end, end);
     
-    re = [(1:agent.segments)' (2:(agent.segments+1))'];
-    rv = interpolate_rod_segments(vv, agent.segments);
+    re = [(1:segments)' (2:(segments+1))'];
+    rv = interpolate_rod_segments(vv, segments);
     %re = [(1:size(vv,1)-1)' (2:size(vv,1))'];
     %rv = vv;
 end

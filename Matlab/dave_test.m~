@@ -3,10 +3,10 @@ global nverts;
 global nsegments;
 
 %tend
-tn = 19.8;
+tn = 10;
 %start point and end point
 p0 = [0 0 0];
-pn = [1 1 tn]; %x, y, sum(1/dt)*segments
+pn = [1 1 1000]; %x, y, sum(1/dt) 
 
 %curve discretization is staggered
 %store 2d positions at nodes and reciprocal time on each section

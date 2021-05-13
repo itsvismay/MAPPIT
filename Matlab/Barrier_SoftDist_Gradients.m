@@ -2,7 +2,7 @@
 addpath("../external/smooth-distances/build/");
 %fname = "../Scenes/output_results/eight_agents/agent_circle/";
 %fname = "../Scenes/output_results/three_agents/test/";
-fname = "../Scenes/output_results/scaling_tests/8_agents/";
+fname = "../Scenes/output_results/scaling_tests/1_agents/";
 %fname = "../Scenes/output_results/scaling_tests/test/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
@@ -87,7 +87,7 @@ for i = 1:numel(a)
     
     
     %[r1e, r1v, newA, newA_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer);
-    [r1e, r1v, newA, newA_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer);
+    [r1e, r1v, newA, newA_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer, agent.segments);
     %edges
     agent.e = r1e;
     r1e = r1e + size(v,1);
