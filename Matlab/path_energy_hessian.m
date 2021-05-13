@@ -1,6 +1,6 @@
 function [f, g] = path_energy_hessian(q_i, UserTols, num_agents, scene, e, surf_anim, constraint_set)
     
-    q = q_i;% q_i(1:end-num_agents);
+    q = q_i;
     Q = reshape(q, numel(q)/num_agents, num_agents); %3*nodes x agents
     g_full = zeros(size(q_i));
 
@@ -17,17 +17,10 @@ function [f, g] = path_energy_hessian(q_i, UserTols, num_agents, scene, e, surf_
     K_pv =    0*scene.coeff_matrix(6,:);
     K_reg =   1;
     
-
-%      [e_agent, g_agent] = agent_agent_energy(Q, Tols, scene, K_agent);
-%      [e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
-%      [e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
-%      [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
      [e_ke, g_ke] = kinetic_energy(Q, scene, K_ke, constraint_set);
-     %[e_ke, H_ke] = kinetic_energy_with_hessian(Q, scene, K_ke, constraint_set);
-%      [e_pv, g_pv] = preferred_time_energy(Q, scene, K_pv);
-%      [e_rg, g_rg] = regularizer_energy(Q, scene, K_reg);
+
     
-    f = e_ke;%e_rg + e_agent + e_map + e_tol + e_ke + e_accel + e_pv;
+    f = e_ke;
 
     g = g_full + g_ke;% + g_agent;
     %g(1:end-num_agents) = g(1:end-num_agents) + g_ke + g_accel + g_pv + g_map + g_rg;

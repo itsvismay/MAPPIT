@@ -2,7 +2,7 @@
 addpath("../external/smooth-distances/build/");
 %fname = "../Scenes/output_results/eight_agents/agent_circle/";
 %fname = "../Scenes/output_results/three_agents/test/";
-fname = "../Scenes/output_results/scaling_tests/8_agents/";
+fname = "../Scenes/output_results/scaling_tests/2_agents/";
 %fname = "../Scenes/output_results/scaling_tests/test/";
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
@@ -87,7 +87,7 @@ for i = 1:numel(a)
     
     
     %[r1e, r1v, newA, newA_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer);
-    [r1e, r1v, newA, newA_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer);
+    [r1e, r1v, newA, newA_visited] = set_path3d(newA, newA_visited, agent, scene, VV, EE, nLayer, nTotalVer, agent.segments);
     %edges
     agent.e = r1e;
     r1e = r1e + size(v,1);
@@ -138,12 +138,12 @@ for i = 1:numel(a)
         Aeq_cols = [1:3 reshape([3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 1; 
                                 3*agent.seg_per_waypoint*linspace(1,agent.waypoints,agent.waypoints) + 2], 1,[])];
         Aeq_vals = ones(1,num_constraints);
-        A1eq = sparse(Aeq_rows, Aeq_cols, Aeq_vals, num_constraints, numel(r1v));
-        b1eq = [r1v(1,:)'; reshape(r1v(end,1:2)', 1, [])'];
+        A2eq = sparse(Aeq_rows, Aeq_cols, Aeq_vals, num_constraints, numel(r1v));
+        b2eq = [r1v(1,:)'; reshape(r1v(end,1:2)', 1, [])'];
         
-        Aeq2 = [Aeq2 zeros(size(Aeq2,1), size(A1eq,2)); 
-                zeros(size(A1eq,1), size(Aeq2,2)) A1eq];
-        beq2 = [beq2; b1eq];
+        Aeq2 = [Aeq2 zeros(size(Aeq2,1), size(A2eq,2)); 
+                zeros(size(A2eq,1), size(Aeq2,2)) A2eq];
+        beq2 = [beq2; b2eq];
 
     %time is monotonic constraints 
     %t_i+1 - t_i > 0 --> in this format --> A1*q <= 0
@@ -181,23 +181,6 @@ hold on;
 axis equal;
 drawnow;
 qn = reshape(v', numel(v),1);
-q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
-%print_agents(fname+"initial.json", scene, qn)
-
-% options = optimoptions('fmincon', ...
-%                     'Algorithm', 'interior-point', ...
-%                     'SpecifyObjectiveGradient', true, ...
-%                     'Display', 'iter', ...
-%                     'UseParallel', true, ...
-%                     'HessianApproximation', 'bfgs',...
-%                     'OutputFcn',@outfun);
-%                 
-% options.MaxFunctionEvaluations = 1e6;
-% options.MaxIterations = 10;
-% options.StepTolerance = 1e-5;
-% options.OptimalityTolerance = 1e-5;
-% options.MaxIterations = 1e3;
-
 
 options = optimoptions('fmincon','Algorithm','interior-point',...
     "SpecifyConstraintGradient",true,...
@@ -206,9 +189,9 @@ options = optimoptions('fmincon','Algorithm','interior-point',...
 
 %minimize with KE here
 %user constraint set 2
-[q_i, fval,exitflag,output,lambda, grad,hessian] = fmincon(@(x) path_energy_hessian(x,UserTols, numel(scene.agents),scene, e, surf_anim, 1),... 
+[q_i, fval,exitflag,output,lambda, grad,hessian] = fmincon(@(x) path_energy_hessian(x,UserTols, numel(scene.agents),scene, e, surf_anim, 2),... 
                             qn, ...
-                            A,b,Aeq1,beq1,[],[], ...
+                            A,b,Aeq2,beq2,[],[], ...
                             [], options);
 qn = q_i;%q_i(1:end-numel(scene.agents));
 Q = reshape(qn, numel(qn)/numel(scene.agents), numel(scene.agents));
