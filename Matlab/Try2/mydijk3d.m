@@ -1,9 +1,11 @@
-function [Dist,Path, A, A_visited] = mydijk(Q, A, A_visited, s, t, BV, Bind)
-    A = set_edge_weights(Q, A, BV, A_visited);
+function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, Bind)
+    % set the edge weights
+    newA = set_edge_weights_directed(VV, newA, BV, newA_visited);
     
-    n = size(A, 1);
-    Qlabel = linspace(1, size(Q,1), size(Q,1));
-    %CDATA = full(sum(A))';
+    % 3d dijkstra
+    n = size(newA, 1);
+    Qlabel = linspace(1, size(VV,1), size(VV,1));
+    
     D = Inf*ones(n,1); 
     D(s) = 0;
     P = -1*ones(n,1);
@@ -13,11 +15,11 @@ function [Dist,Path, A, A_visited] = mydijk(Q, A, A_visited, s, t, BV, Bind)
         u = Qlabel(ind);
         Qlabel(ind) = [];
     
-        [neighbors,kA,Aj] = find(A(:,u));
+        [neighbors,kA,Aj] = find(newA(:,u));
         for vi = neighbors'
-            edge_weight = 1.0/A(vi, u);%min_edge_to_boundary_dist(Q(u,:), Q(vi,:), BV);
+            edge_weight = 1.0/newA(vi, u);%min_edge_to_boundary_dist(Q(u,:), Q(vi,:), BV);
             
-            alt_dist = D(u) + edge_weight*norm(Q(u,:) - Q(vi,:));
+            alt_dist = D(u) + edge_weight*norm(VV(u,:) - VV(vi,:));
             if alt_dist < D(vi)
                 D(vi) = alt_dist;
                 P(vi) = u;
@@ -29,21 +31,36 @@ function [Dist,Path, A, A_visited] = mydijk(Q, A, A_visited, s, t, BV, Bind)
     Dist = D(t);
     b = t;
     Path = [];
+    
+    %Vertex Based
+    [xx,vv] = find(newA(:,b));
+    for num=1:length(xx)
+        newA_visited(xx(num),b) = 0;
+        newA_visited(b,xx(num)) = 0;
+    end
+
     %unwind
     while P(b)>0 && b ~= s
         Path = [b Path];
-        A_visited(P(b), b) = 1e-3;
-        A_visited(b, P(b)) = 1e-3;
+        %% vertices based
+        [xx,vv] = find(newA(:,P(b)));
+        for num=1:length(xx)
+            newA_visited(xx(num),P(b)) = 0;
+            newA_visited(P(b), xx(num)) = 0;
+        end
         b = P(b);
+        %% edges based
+%         newA_visited(b,P(b)) = 1e-3;
+%         newA_visited(P(b),b) = 1e-3;
+%         b = P(b);
     end
     Path = [s Path];
-       
+    
     
 end
 
-function [E] = set_edge_weights(Q, A, BV, A_visited)
-    A_lt = tril(A);
-    [ii,jj,ss] = find(A_lt);
+function [E] = set_edge_weights_directed(Q, A, BV, A_visited)
+    [ii,jj,ss] = find(A);
     for k=1:length(ii)
        %// A nonzero element of A: ss(k) = S(ii(k),jj(k))
        d = min_edge_to_boundary_dist(Q(ii(k),:), Q(jj(k),:), BV);
@@ -53,9 +70,8 @@ function [E] = set_edge_weights(Q, A, BV, A_visited)
     jj = [jj; size(A,2)];
     ss = [ss; 0];
     
-    spA = sparse(ii,jj,ss); %triangular matrix. needs to be made symmetric
-    E = A_visited.*(spA + spA');
-    
+    spA = sparse(ii,jj,ss);
+    E = A_visited.*spA;
     
 end
 
@@ -73,5 +89,6 @@ function [d] = min_edge_to_boundary_dist(P1, P2, M)
         sqrt(sum((M - s2).^2, 2)) ...
         sqrt(sum((M - s3).^2, 2)) ...
         sqrt(sum((M - P2).^2, 2))];
-    d = rand*min(min(D)) + 1e-7;
+    %d = rand*min(min(D)) + 1e-7;
+    d = min(min(D)) + 1e-7;
 end

@@ -73,5 +73,6 @@ function [d] = min_edge_to_boundary_dist(P1, P2, M)
         sqrt(sum((M - s2).^2, 2)) ...
         sqrt(sum((M - s3).^2, 2)) ...
         sqrt(sum((M - P2).^2, 2))];
-    d = rand*min(min(D)) + 1e-7;
+    %d = rand*min(min(D)) + 1e-7;
+    d = min(min(D)) + 1e-7;
 end
