@@ -11,6 +11,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     K_map =   0*scene.coeff_matrix(4,:);
     K_ke =    1*scene.coeff_matrix(5,:);
     K_pv =    0*scene.coeff_matrix(6,:);
+    K_reg =   1;
     
     [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
     [e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
@@ -18,14 +19,50 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
     [e_ke, g_ke] = kinetic_energy(Q, scene, K_ke);
     [e_pv, g_pv] = preferred_time_energy(Q, scene, K_pv);
+    [e_rg, g_rg] = regularizer_energy(Q, scene, K_reg);
     
-    f = e_agent + e_tol + e_map + e_ke + e_accel + e_pv;
+    f = e_agent + e_tol + e_map + e_ke + e_accel + e_pv + e_rg;
     
     g = g_full;
-    g(1:end-num_agents) = g(1:end-num_agents) + g_map + g_ke + g_accel + g_pv;
+    g(1:end-num_agents) = g(1:end-num_agents) + g_map + g_ke + g_accel + g_pv + g_rg;
     g(end-num_agents+1:end) = g(end-num_agents+1:end) + g_tol;
     
     plottings(surf_anim, q, e, g_full(1:end-3));
+end
+
+function [e, g] = regularizer_energy(Q, scene, K)
+    if sum(K)==0
+        e=0;
+        g = zeros(numel(Q),1);
+        return;
+    end
+    GT = zeros(size(Q));
+    e=0;
+    
+    
+    for i=1:numel(scene.agents)
+        q_i = Q(:, i); %3*nodes
+        dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
+        dt = dx(:,3)+1e-6;%add epsilon to make sure there is never a divide by 0
+        endtime = q_i(end);
+        segments = numel(q_i)/3-1;
+        kt = (endtime/segments)*ones(size(dx,1),1);%regular time intervals over the rod;
+        e = e + K*(sum(kt./dt));
+        dEdq_left = zeros(numel(q_i)/3, 3);
+        dEdq_right = zeros(numel(q_i)/3, 3);
+        dEdq_left(1:end-1,3) = kt./(dt.^2);
+        dEdq_right(2:end, 3) = -kt./(dt.^2);
+        
+        %e = e + K*0.5*(sum((dt - kt).^2));
+        %dEdq_left = zeros(numel(q_i)/3, 3);
+        %dEdq_right = zeros(numel(q_i)/3, 3);
+        %dEdq_left(1:end-1,3) = -(dt - kt);
+        %dEdq_right(2:end, 3) = (dt - kt);
+        
+        dEdq = dEdq_left + dEdq_right;
+        GT(:,i) = K*reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
+    end
+    g = reshape(GT, size(GT,1)*size(GT,2),1);
 end
 function [e, g] = preferred_time_energy(Q, scene, K)
     if sum(K)==0
