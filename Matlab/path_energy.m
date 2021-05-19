@@ -5,8 +5,8 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     Tols = q_i(end-num_agents+1:end);
     
     %Weights
-    K_agent = 0*scene.coeff_matrix(1,:)+1;
-    K_tol =   0*scene.coeff_matrix(2,:); %don't touch
+    K_agent = 1*scene.coeff_matrix(1,:)+1;
+    K_tol =   1*scene.coeff_matrix(2,:); %don't touch
     K_accel = 0*scene.coeff_matrix(3,:);
     K_map =   0*scene.coeff_matrix(4,:);
     K_ke =    1*scene.coeff_matrix(5,:);
@@ -151,8 +151,10 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             e = e + -K(i)*log((-tol + D)^2);
             if(ismember(j,scene.agents(i).friends))
                 e = e + -K(i)*log(-D + 2);
-                GB(:,i) = GB(:,i)+ K(i)*(-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-                GB(:,j) = GB(:,j)+ K(i)*(-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+%                 GB(:,i) = GB(:,i)+ K(i)*(-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+%                 GB(:,j) = GB(:,j)+ K(i)*(-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+                GB(:,i) = GB(:,i)+ K(i)*(1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+                GB(:,j) = GB(:,j)+ K(j)*(1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
             end
             
             GB(:,i) = GB(:,i)+ K(i)*(-2/((-tol + D).^2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);

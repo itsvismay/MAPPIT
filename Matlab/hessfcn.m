@@ -5,8 +5,8 @@ function [H] = hessfcn(q_i,lambda)
     Tols = q_i(end-num_agents+1:end);
     
     %Weights
-    K_agent = 0*scene.coeff_matrix(1,:);
-    K_tol =   0*scene.coeff_matrix(2,:); %don't touch
+    K_agent = 1*scene.coeff_matrix(1,:)+1;
+    K_tol =   1*scene.coeff_matrix(2,:);
     K_accel = 0*scene.coeff_matrix(3,:);
     K_map =   0*scene.coeff_matrix(4,:);
     K_ke =    1*scene.coeff_matrix(5,:);
@@ -15,11 +15,13 @@ function [H] = hessfcn(q_i,lambda)
     
     [e_ke, H_ke] = kinetic_energy_with_hessian(Q, scene, K_ke);
     [e_reg, H_reg] = regularizer_energy_with_hessian(Q, scene, K_reg);
+    [e_agent, HB_agent, hw_agent] = agent_agent_energy_with_hessian(Q, Tols, scene, K_agent);
     
     H = zeros(size(q_i,1),size(q_i,1));
     for ii=1:num_agents
-        H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1)) = H_ke(:,:,ii) + H_reg(:,:,ii);
-        %H_full(end-ii+1,end-ii+1) = 1; %assign the last block to identity
+        H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1)) = H_ke(:,:,ii) + H_reg(:,:,ii) + HB_agent(:,:,ii);
+        % tolerance_energy_with_hessian
+        H(end-ii+1,end-ii+1) = K_tol(end-ii+1) + hw_agent(end-ii+1, end-ii+1); 
     end
     
 end
@@ -95,3 +97,64 @@ function [e, HT] = regularizer_energy_with_hessian(Q, scene, K)
             
     end
 end
+
+function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K)
+    if sum(K)==0
+        e=0;
+        HB = zeros(size(Q,1), size(Q,1), size(Q,2));
+        hW = zeros(size(Q,2), size(Q,2));
+        return;
+    end
+   
+    HB = zeros(size(Q,1), size(Q,1), size(Q,2));
+    hW = zeros(size(Q,2), size(Q,2));
+    e=0;
+   
+    for i=1:numel(scene.agents)
+        A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
+        [A11, J1] = sample_points_for_rod(A1, scene.agents(i).e);
+        for j =i+1:numel(scene.agents)
+            if j==i
+                continue;
+            end
+            A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
+            [A22, J2] = sample_points_for_rod(A2, scene.agents(j).e);
+            dist_is_good = 0;
+            alpha_count = 10;
+            alpha_val = 10;
+            while dist_is_good==0
+                [~,G1] = soft_distance(alpha_val,A22, A11);
+                [D,G2] = soft_distance(alpha_val,A11, A22);
+                      
+                if(D>-1e-8)
+                    dist_is_good =1;
+                end
+                alpha_val = alpha_val+alpha_count;
+            end
+            JG1 = J1'*G1;
+            JG2 = J2'*G2;
+            
+            reshape_JG1 = reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+            reshape_JG2 = reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+            
+            tol = Tols(i) + Tols(j);
+            
+            e = e + -K(i)*log((-tol + D)^2);
+            if(ismember(j,scene.agents(i).friends))
+                e = e + -K(i)*log(-D + 2);
+                HB(:,:,i) = HB(:,:,i) + reshape_JG1' * (K(i)*(1/((-D + 2).^2))) * reshape_JG1;
+                HB(:,:,j) = HB(:,:,j) + reshape_JG2' * (K(j)*(1/((-D + 2).^2))) * reshape_JG2;
+            end
+            
+            HB(:,:,i) = HB(:,:,i)+ reshape_JG1' * (K(i)*(4/((-tol + D).^3))) * reshape_JG1;
+            HB(:,:,j) = HB(:,:,j)+ reshape_JG2' * (K(j)*(4/((-tol + D).^3))) * reshape_JG2;
+            
+            hW(i) = hW(i) + K(i)*(-1/((-tol+D).^2));
+            hW(j) = hW(j) + K(j)*(-1/((-tol+D).^2));
+            
+        end        
+    end
+end
+    
+    
+
