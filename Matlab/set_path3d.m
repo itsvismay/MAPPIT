@@ -18,7 +18,9 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
     % P1 are the indexes from djikstra's path
     % read out the vertex values into vv
     if(segments < length(P1))
-        sprintf("add more segments");
+        segments
+        length(P1)
+        "add more segments"
         return
     end
     

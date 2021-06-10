@@ -1,11 +1,12 @@
 function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
-    
+    global simple_sd;
     q = q_i(1:end-num_agents);
     Q = reshape(q, numel(q)/num_agents, num_agents); %3*nodes x agents
     Tols = q_i(end-num_agents+1:end);
+    g = zeros(size(q_i));
     
     %Weights
-    K_agent = 1*scene.coeff_matrix(1,:)+1;
+    K_agent = 1*scene.coeff_matrix(1,:);
     K_tol =   1*scene.coeff_matrix(2,:); %don't touch
     K_accel = 0*scene.coeff_matrix(3,:);
     K_map =   0*scene.coeff_matrix(4,:);
@@ -13,21 +14,29 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     K_pv =    0*scene.coeff_matrix(6,:);
     K_reg =   1;
     
+ 
     [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
     [e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
-    [e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
     [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
+    
+ 
+    [e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
     [e_ke, g_ke] = kinetic_energy(Q, scene, K_ke);
     [e_pv, g_pv] = preferred_time_energy(Q, scene, K_pv);
     [e_rg, g_rg] = regularizer_energy(Q, scene, K_reg);
     
-    f = e_agent + e_tol + e_map + e_ke + e_accel + e_pv + e_rg;
+    f = 0;
+    f = f + e_agent + e_tol + e_map;
     
-    g = g_full;
+    f = f + e_ke + e_accel + e_pv + e_rg;
+    
+    g = g + g_full;
     g(1:end-num_agents) = g(1:end-num_agents) + g_map + g_ke + g_accel + g_pv + g_rg;
     g(end-num_agents+1:end) = g(end-num_agents+1:end) + g_tol;
     
-    plottings(surf_anim, q, e, g_full(1:end-3));
+    g(1:end-num_agents) = g(1:end-num_agents) + g_ke + g_accel + g_pv + g_rg;
+    
+    plottings(surf_anim, q, e, g(1:end-3));
 end
 
 function [e, g] = regularizer_energy(Q, scene, K)
@@ -106,6 +115,7 @@ function [e, g] = preferred_time_energy(Q, scene, K)
     g = reshape(GT, size(GT,1)*size(GT,2),1);
 end
 function [e, g] = agent_agent_energy(Q, Tols, scene, K)
+    global simple_sd;
     num_agents = numel(scene.agents);
     if sum(K)==0
         e=0;
@@ -127,38 +137,46 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
             [A22, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             dist_is_good = 0;
-            alpha_count = 10;
-            alpha_val = 10;
+            if simple_sd
+                alpha_count = 10;
+                alpha_val = 10;
+            else
+                alpha_count = 1;
+                alpha_val = 1;
+            end
             while dist_is_good==0
-                [~,G1] = soft_distance(alpha_val,A22, A11);
-                [D,G2] = soft_distance(alpha_val,A11, A22);
-                
-%                 [B1,I1] = build_distance_bvh(A1,scene.agents(i).e);
-%                 [B2,I2] = build_distance_bvh(A2,scene.agents(j).e);
-%                 [~, G1] = smooth_min_distance(A2,scene.agents(j).e,B2,I2,alpha_val,A11,[],alpha_val);
-%                 [D, G2] = smooth_min_distance(A1,scene.agents(i).e,B1,I1,alpha_val,A22,[],alpha_val);
-                
+                if simple_sd
+                    [~,G1] = soft_distance(alpha_val,A22, A11);
+                    [D,G2] = soft_distance(alpha_val,A11, A22);
+                else
+                    [B1,I1] = build_distance_bvh(A11,[]);
+                    [B2,I2] = build_distance_bvh(A22,[]);
+                    [~, G1,~] = smooth_min_distance(A22,[],B2,I2,alpha_val,A11,[],alpha_val);
+                    [D, G2,~] = smooth_min_distance(A11,[],B1,I1,alpha_val,A22,[],alpha_val);
+                end
+
                 if(D>-1e-8)
                     dist_is_good =1;
                 end
                 alpha_val = alpha_val+alpha_count;
             end
-            JG1 = J1'*G1;
-            JG2 = J2'*G2;
+            JG1 = J1'*reshape(G1', size(G1,1)*size(G1,2), 1);
+            JG2 = J2'*reshape(G2', size(G2,1)*size(G2,2), 1);     
             
-            tol = Tols(i) + Tols(j);
+            tol = 0.75;%Tols(i) + Tols(j);
             
-            e = e + -K(i)*log((-tol + D)^2);
-            if(ismember(j,scene.agents(i).friends))
-                e = e + -K(i)*log(-D + 2);
-%                 GB(:,i) = GB(:,i)+ K(i)*(-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-%                 GB(:,j) = GB(:,j)+ K(i)*(-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
-                GB(:,i) = GB(:,i)+ K(i)*(1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-                GB(:,j) = GB(:,j)+ K(j)*(1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
-            end
+            e = e + -K(i)*log((-tol + D).^2);
             
-            GB(:,i) = GB(:,i)+ K(i)*(-2/((-tol + D).^2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-            GB(:,j) = GB(:,j)+ K(j)*(-2/((-tol + D).^2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+%             if(ismember(j,scene.agents(i).friends))
+%                 e = e + -K(i)*log(-D + 2);
+% %                 GB(:,i) = GB(:,i)+ K(i)*(-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+% %                 GB(:,j) = GB(:,j)+ K(i)*(-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+%                 GB(:,i) = GB(:,i)+ K(i)*(1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
+%                 GB(:,j) = GB(:,j)+ K(j)*(1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
+%             end
+            
+            GB(:,i) = GB(:,i)+ K(i)*(-2/((-tol + D)))*JG1;
+            GB(:,j) = GB(:,j)+ K(j)*(-2/((-tol + D)))*JG2;
             gW(i) = gW(i) + K(i)*(1/(-tol+D));
             gW(j) = gW(j) + K(j)*(1/(-tol+D));
             
