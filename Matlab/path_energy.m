@@ -140,9 +140,11 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             if simple_sd
                 alpha_count = 10;
                 alpha_val = 10;
+                beta_val = 0.0;
             else
-                alpha_count = 1;
-                alpha_val = 1;
+                alpha_count = 10;
+                alpha_val = 10;
+                beta_val = 0.0;
             end
             while dist_is_good==0
                 if simple_sd
@@ -151,15 +153,17 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
                 else
                     [B1,I1] = build_distance_bvh(A11,[]);
                     [B2,I2] = build_distance_bvh(A22,[]);
-                    [~, G1,~] = smooth_min_distance(A22,[],B2,I2,alpha_val,A11,[],alpha_val);
-                    [D, G2,~] = smooth_min_distance(A11,[],B1,I1,alpha_val,A22,[],alpha_val);
+                    [~, G1] = smooth_min_distance(A22,[],B2,I2,alpha_val,A11,[],alpha_val, beta_val);
+                    [D, G2] = smooth_min_distance(A11,[],B1,I1,alpha_val,A22,[],alpha_val, beta_val);
                 end
-
+                
                 if(D>-1e-8)
                     dist_is_good =1;
                 end
                 alpha_val = alpha_val+alpha_count;
             end
+            
+         
             JG1 = J1'*reshape(G1', size(G1,1)*size(G1,2), 1);
             JG2 = J2'*reshape(G2', size(G2,1)*size(G2,2), 1);     
             
@@ -177,8 +181,9 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             
             GB(:,i) = GB(:,i)+ K(i)*(-2/((-tol + D)))*JG1;
             GB(:,j) = GB(:,j)+ K(j)*(-2/((-tol + D)))*JG2;
-            gW(i) = gW(i) + K(i)*(1/(-tol+D));
-            gW(j) = gW(j) + K(j)*(1/(-tol+D));
+            
+            gW(i) = gW(i) + K(i)*(2/((-tol + D)));
+            gW(j) = gW(j) + K(j)*(2/((-tol + D)));
             
 %             B = B + 1/D;
 %             GB(:,i) = GB(:,i)+ (-1/(D^2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);

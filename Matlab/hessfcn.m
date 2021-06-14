@@ -128,13 +128,15 @@ function [e, HB, hW] = agent_agent_energy_with_hessian_abhisheks(Q, Tols, scene,
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
             [A22, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             dist_is_good = 0;
+            
             alpha_count = 10;
-            alpha_val = 1;
+            alpha_val = 10;
+            beta_val = 0.0;
             while dist_is_good==0     
                 [B1,I1] = build_distance_bvh(A11,[]);
                 [B2,I2] = build_distance_bvh(A22,[]);
-                [~, G1, H1] = smooth_min_distance(A22,[],B2,I2,alpha_val,A11,[],alpha_val);
-                [D, G2, H2] = smooth_min_distance(A11,[],B1,I1,alpha_val,A22,[],alpha_val);
+                [~, G1] = smooth_min_distance(A22,[],B2,I2,alpha_val,A11,[],alpha_val, beta_val);
+                [D, G2] = smooth_min_distance(A11,[],B1,I1,alpha_val,A22,[],alpha_val, beta_val);
                 
                 if(D>-1e-8)
                     dist_is_good =1;
@@ -142,26 +144,26 @@ function [e, HB, hW] = agent_agent_energy_with_hessian_abhisheks(Q, Tols, scene,
                 alpha_val = alpha_val+alpha_count;
             end
 
-            newH1 = reshape(H1', 3, size(H1,1)*3)';
-            newH2 = reshape(H2', 3, size(H2,1)*3)';
-            H1blocks = mat2cell(newH1, repmat(3, size(H1,1),1), [3]);
-            H2blocks = mat2cell(newH2, repmat(3, size(H2,1),1), [3]);
-            spH1 = sparse(blkdiag(H1blocks{:}));
-            spH2 = sparse(blkdiag(H2blocks{:}));
-            JH1J = J1'*spH1*J1;
-            JH2J = J2'*spH2*J2;
+%             newH1 = reshape(H1', 3, size(H1,1)*3)';
+%             newH2 = reshape(H2', 3, size(H2,1)*3)';
+%             H1blocks = mat2cell(newH1, repmat(3, size(H1,1),1), [3]);
+%             H2blocks = mat2cell(newH2, repmat(3, size(H2,1),1), [3]);
+%             spH1 = sparse(blkdiag(H1blocks{:}));
+%             spH2 = sparse(blkdiag(H2blocks{:}));
+%             JH1J = J1'*spH1*J1;
+%             JH2J = J2'*spH2*J2;
+            JG1 = J1'*reshape(G1', size(G1,1)*size(G1,2), 1);
+            JG2 = J2'*reshape(G2', size(G2,1)*size(G2,2), 1);
             
             tol = Tols(i) + Tols(j);
             
             e = e + -K(i)*log((-tol + D)^2);
-%             if(ismember(j,scene.agents(i).friends))
-%                 e = e + -K(i)*log(-D + 2);
-%                 HB(:,:,i) = HB(:,:,i) + (K(i)*(1/((-D + 2).^2))) * JH1J;
-%                 HB(:,:,j) = HB(:,:,j) + (K(j)*(1/((-D + 2).^2))) * JH2J;
-%             end
             
-            HB(:,:,i) = HB(:,:,i) + (K(i)*(2/((-tol + D).^2))) * JH1J;
-            HB(:,:,j) = HB(:,:,j) + (K(j)*(2/((-tol + D).^2))) * JH2J;
+            %HB(:,:,i) = HB(:,:,i) + (K(i)*(2/((-tol + D).^2))) * JH1J;
+            %HB(:,:,j) = HB(:,:,j) + (K(j)*(2/((-tol + D).^2))) * JH2J;
+            HB(:,:,i) = HB(:,:,i)+ JG1' * (K(i)*(2/((-tol + D).^2))) * JG1;
+            HB(:,:,j) = HB(:,:,j)+ JG2' * (K(j)*(2/((-tol + D).^2))) * JG2;
+            
             
             hW(i) = hW(i) + K(i)*(-1/((-tol+D).^2));
             hW(j) = hW(j) + K(j)*(-1/((-tol+D).^2));
@@ -220,8 +222,8 @@ function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K)
             HB(:,:,i) = HB(:,:,i)+ JG1' * (K(i)*(2/((-tol + D).^2))) * JG1;
             HB(:,:,j) = HB(:,:,j)+ JG2' * (K(j)*(2/((-tol + D).^2))) * JG2;
             
-            hW(i) = hW(i) + K(i)*(-1/((-tol+D).^2));
-            hW(j) = hW(j) + K(j)*(-1/((-tol+D).^2));
+            hW(i) = hW(i) + K(i)*(2/((-tol+D).^2));
+            hW(j) = hW(j) + K(j)*(2/((-tol+D).^2));
             
         end        
     end

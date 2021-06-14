@@ -1,12 +1,12 @@
 %read in from the scene file
 addpath("../external/smooth-distances/build/");
-fname = "../Scenes/output_results/scaling_tests/10_agents/";
+fname = "../Scenes/output_results/scaling_tests/1_agents/";
 %fname = "../Scenes/output_results/scaling_tests/test/";
 
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
 global scene num_agents simple_sd;
-simple_sd = 0;
+simple_sd = 1;
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
 scene.terrain.V = tV;
@@ -171,7 +171,8 @@ options = optimoptions('fmincon', ...
 options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = 1e3;
 q_i  = [reshape(v', numel(v),1); -1e-8*ones(numel(scene.agents),1)];
-
+qn = reshape(v', numel(v),1);
+%print_agents(fname+"initial.json", scene, qn);
 [q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
