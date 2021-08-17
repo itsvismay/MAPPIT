@@ -1,6 +1,14 @@
+% VV - vertices
+% EE - edges
+% newA - Adjacency Matrix used to compute current path
+% newA_visited - Adj Mat used to keep track of previously visited vertices
+% s, t - start and end
+% BV, Bind - Boundary verts and boundary indices into VV
 function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, Bind)
+    agent_radius = 1.5;
+    
     % set the edge weights
-    newA = set_edge_weights_directed(VV, newA, BV, newA_visited);
+    newA = set_edge_weights_directed(VV, newA, BV,Bind, newA_visited, agent_radius);
     
     % 3d dijkstra
     n = size(newA, 1);
@@ -40,9 +48,27 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
     end
 
     %unwind
+    hold on;
     while P(b)>0 && b ~= s
         Path = [b Path];
-        %% vertices based
+        
+        %% Cross out edges within agent_radius from Adj Mat
+        Idx_neighbors_in_radius = cell2mat(rangesearch(VV, VV(b,:), agent_radius));
+        %plot3(VV(Idx_neighbors_in_radius,1), VV(Idx_neighbors_in_radius,2), VV(Idx_neighbors_in_radius,3), 'ko')
+        Idx_neighbors_in_radius = Idx_neighbors_in_radius(2:end);%ignores node b
+        %for each nearby neighbor, wipe out edges
+        for idx_n = 1:length(Idx_neighbors_in_radius)
+            neighbor_idx = Idx_neighbors_in_radius(idx_n);
+            [xx,vv] = find(newA(:,neighbor_idx));
+            for num=1:length(xx)
+                newA_visited(xx(num),neighbor_idx) = 0;
+                newA_visited(neighbor_idx, xx(num)) = 0;
+            end
+        end
+        
+ 
+            
+        %% vertices based, cross out edges connected to vertices already visited from Adj mat
         [xx,vv] = find(newA(:,P(b)));
         for num=1:length(xx)
             newA_visited(xx(num),P(b)) = 0;
@@ -59,13 +85,46 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
     
 end
 
-function [E] = set_edge_weights_directed(Q, A, BV, A_visited)
+function [E] = set_edge_weights_directed(Q, A, BV, Bind, A_visited, ar)   
+    
+     %% Cross out edges within agent_radius from Boundary
+%     for i=1:length(Bind)
+%         b = Bind(i);
+%         Idx_neighbors_in_radius = cell2mat(rangesearch(Q, Q(b,:), ar));
+%         %plot3(VV(Idx_neighbors_in_radius,1), VV(Idx_neighbors_in_radius,2), VV(Idx_neighbors_in_radius,3), 'ko')
+%         Idx_neighbors_in_radius = Idx_neighbors_in_radius(2:end);%ignores node b
+%         %for each nearby neighbor, wipe out edges
+%         for idx_n = 1:length(Idx_neighbors_in_radius)
+%             neighbor_idx = Idx_neighbors_in_radius(idx_n);
+%             [xx,vv] = find(A(:,neighbor_idx));
+%             for num=1:length(xx)
+%                 A_visited(xx(num),neighbor_idx) = 0;
+%                 A_visited(neighbor_idx, xx(num)) = 0;
+%             end
+%         end
+%     end
+%     E = A_visited;
+    
     [ii,jj,ss] = find(A);
+    for k=1:length(ii)
+        ss(k) = 1;
+    end
+    
     for k=1:length(ii)
        %// A nonzero element of A: ss(k) = S(ii(k),jj(k))
        d = min_edge_to_boundary_dist(Q(ii(k),:), Q(jj(k),:), BV);
-       ss(k) = d;
+       
+       % if d < ar, then set weight to 0
+       if d<ar
+           ss(k) = 0; 
+       else
+           ss(k) = d-ar;
+       end
+       
+       
     end
+    
+    
     ii = [ii; size(A,1)];
     jj = [jj; size(A,2)];
     ss = [ss; 0];
@@ -73,6 +132,12 @@ function [E] = set_edge_weights_directed(Q, A, BV, A_visited)
     spA = sparse(ii,jj,ss);
     E = A_visited.*spA;
     
+end
+
+%Find edges in adjacency matrix A of mesh Q
+%near node n within radius r
+function [d] = find_edges_within_radius_of_node(n, Q, A, r)
+    Q_idx = rangesearch(Q, n, r); %indexes of Q 
 end
 
 function [d] = min_edge_to_boundary_dist(P1, P2, M)

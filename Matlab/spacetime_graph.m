@@ -1,4 +1,4 @@
-function [VV,EE, newA] = spacetime_graph(V,E,t)
+function [VV,EE, newA, BVind] = spacetime_graph(V,E,t, Bind)
   nt = size(t,1);
   nV = size(V,1);
   nE = size(E,1);
@@ -8,7 +8,8 @@ function [VV,EE, newA] = spacetime_graph(V,E,t)
   EE = [ EE_space; EE_time ];
 %   EE_cross = [ EE_space(1:nE*(nt-1),1) EE_space(nE+1:nE*nt,2) ];
 %   EE = [ EE_space; EE_time; EE_cross ];
-  
+
+  BVind = repmat(Bind, nt, 1) + kron(linspace(0,nt-1,nt)', nV*ones(size(Bind,1),1));
   
   VV = zeros(length(ver),3);
   VV(:,1) = ver(:,1);
