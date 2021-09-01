@@ -3,16 +3,20 @@ addpath("../external/smooth-distances/build/");
 addpath("../CrowdSolverCpp/matlab/");
 
 %Scaling Tests
+fname = "../Scenes/output_results/scaling_tests/2_agents/"; nLayer = 3; 
+    num_segments = 30; max_iters = 5; num_inside_iters = 30;
 %fname = "../Scenes/output_results/scaling_tests/10_agents/"; nLayer = 7; 
     %num_segments = 50; max_iters = 5; num_inside_iters = 30;
-fname = "../Scenes/output_results/scaling_tests/20_agents/"; nLayer = 8;
-    num_segments = 50; max_iters = 5; num_inside_iters = 30;
+%fname = "../Scenes/output_results/scaling_tests/20_agents/"; nLayer = 8;
+    %num_segments = 50; max_iters = 5; num_inside_iters = 30;
 %fname = "../Scenes/output_results/scaling_tests/30_agents/"; nLayer = 7;
     %num_segments = 50; max_iters = 5; num_inside_iters = 30;
 %fname = "../Scenes/output_results/scaling_tests/60_agents/"; nLayer = 7;
     %num_segments = 50; max_iters = 5; num_inside_iters = 30;
 %fname = "../Scenes/output_results/3x_3_agents/test/"; nLayer = 3; 
     %num_segments = 30; max_iters = 10; num_inside_iters = 50;
+%fname = "../Scenes/output_results/complex_maze/square_maze/one_agent/";nLayer = 5; 
+    %num_segments = 250; max_iters = 10; num_inside_iters = 20;
 %fname = "../Scenes/output_results/complex_maze/square_maze/three_agents/";nLayer = 5; 
     %num_segments = 250; max_iters = 10; num_inside_iters = 20;
 
@@ -199,7 +203,7 @@ options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = num_inside_iters;
 q_i  = [reshape(v', numel(v),1)];
 qn = reshape(v', numel(v),1);
-%print_agents(fname+"initial.json", scene, qn);
+print_agents(fname+"initial.json", scene, qn);
 for  iter=1:max_iters
     [q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
                             q_i, ...

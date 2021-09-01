@@ -4,6 +4,7 @@
 CMakeFiles/crowdsolver.dir/main.cpp.o: ../../external/json/single_include/nlohmann/json.hpp
 CMakeFiles/crowdsolver.dir/main.cpp.o: ../accel_energy.h
 CMakeFiles/crowdsolver.dir/main.cpp.o: ../accel_gradient.h
+CMakeFiles/crowdsolver.dir/main.cpp.o: ../accel_hessian.h
 CMakeFiles/crowdsolver.dir/main.cpp.o: ../kinetic_energy.h
 CMakeFiles/crowdsolver.dir/main.cpp.o: ../kinetic_gradient.h
 CMakeFiles/crowdsolver.dir/main.cpp.o: ../kinetic_hessian.h

@@ -5,6 +5,7 @@ CMakeFiles/crowdsolver.dir/main.cpp.o
  ../../external/json/single_include/nlohmann/json.hpp
  /Users/vismay/recode/crowds/CrowdSolverCpp/accel_energy.h
  /Users/vismay/recode/crowds/CrowdSolverCpp/accel_gradient.h
+ /Users/vismay/recode/crowds/CrowdSolverCpp/accel_hessian.h
  /Users/vismay/recode/crowds/CrowdSolverCpp/kinetic_energy.h
  /Users/vismay/recode/crowds/CrowdSolverCpp/kinetic_gradient.h
  /Users/vismay/recode/crowds/CrowdSolverCpp/kinetic_hessian.h

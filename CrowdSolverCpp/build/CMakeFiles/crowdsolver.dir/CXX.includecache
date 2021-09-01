@@ -368,6 +368,12 @@ Eigen/Dense
 Eigen/SparseCholesky
 -
 
+/Users/vismay/recode/crowds/CrowdSolverCpp/accel_hessian.h
+Eigen/Dense
+-
+Eigen/SparseCholesky
+-
+
 /Users/vismay/recode/crowds/CrowdSolverCpp/kinetic_energy.h
 Eigen/Dense
 -
@@ -413,6 +419,8 @@ accel_energy.h
 /Users/vismay/recode/crowds/CrowdSolverCpp/accel_energy.h
 accel_gradient.h
 /Users/vismay/recode/crowds/CrowdSolverCpp/accel_gradient.h
+accel_hessian.h
+/Users/vismay/recode/crowds/CrowdSolverCpp/accel_hessian.h
 
 /Users/vismay/recode/crowds/CrowdSolverCpp/tol_energy.h
 Eigen/Dense

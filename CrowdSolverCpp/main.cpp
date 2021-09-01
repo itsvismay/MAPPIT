@@ -11,6 +11,7 @@
 #include "tol_hessian.h"
 #include "accel_energy.h"
 #include "accel_gradient.h"
+#include "accel_hessian.h"
 
 using namespace Eigen;
 using namespace crowds;
@@ -32,7 +33,8 @@ std::vector<VectorXd> Qvec;
 
 
 json j_input;
-std::string fname = "../../Scenes/output_results/scaling_tests/1_agents/";
+//std::string fname = "../../Scenes/output_results/complex_maze/square_maze/one_agent/";
+std::string fname = "../../Scenes/output_results/scaling_tests/2_agents/";
 
 void add_agent_equality_contraints(std::vector<int>& to_fix, VectorXd& av, MatrixXd& Aeq, VectorXd& beq)
 {
@@ -60,21 +62,37 @@ void add_agent_equality_contraints(std::vector<int>& to_fix, VectorXd& av, Matri
 
 void readInit()
 {
+  std::cout<<"reading file"<<std::endl;
   std::ifstream input_file(fname + "initial.json");
   input_file >> j_input;
   std::cout<<j_input["agents"][0].size()<<std::endl;
-
+  std::cout<<"setting up agents"<<std::endl;
   //setup agent positions  
-  for(int i=0; i<j_input["agents"].size(); ++i)
+  for(int i=1; i<j_input["agents"].size(); ++i)
   {
-    VectorXd av = VectorXd::Zero(3*j_input["agents"][i]["v"].size());
+    VectorXd av = VectorXd::Zero(3*(j_input["agents"][i]["v"].size()));
     //std::cout<<"av size: "<<j_input["agents"]["v"]<<std::endl;
     for(int j=0; j<j_input["agents"][i]["v"].size(); j++)
     {
-      av.segment<3>(3*j) = Vector3d(j_input["agents"][i]["v"][j][0], 
+      av.segment<3>(3*(j)) = Vector3d(j_input["agents"][i]["v"][j][0], 
                                     j_input["agents"][i]["v"][j][1], 
                                     j_input["agents"][i]["v"][j][2]);
     }
+    // VectorXd av = VectorXd::Zero(3*4);
+    // av[0] = 0;
+    // av[1] = 0;
+    // av[2] = 0;
+    // av[3] = 0.5;
+    // av[4] = 0.3;
+    // av[5] = 0.5;
+    // av[6] = 1;
+    // av[7] = 1;
+    // av[8] = 1;
+    // av[9] = 1.2;
+    // av[10] = 1.7;
+    // av[11] = 1.1;
+
+
     Qvec.push_back(av);
 
     //constraints
@@ -161,24 +179,24 @@ void fd_check_gradient()
 {
   //x, UserTols, num_agents, scene, e, surf_anim
   int num_agents = Qvec.size();
+
   int num_points_per_agent = Qvec[0].size()/3;
   VectorXd UserTols = 0.75*VectorXd::Ones(num_agents);
 
-  double eps = 1e-5;
+  double eps = 1e-3;
   double e0 = accel_energy(q, num_agents, num_points_per_agent, K_acc);
-
+  std::cout<<"e0: "<<e0<<std::endl;
   VectorXd fdg = VectorXd::Zero(q.size());
   for(int i=0; i<fdg.size(); ++i)
   {
     VectorXd gl, gr;
-    q(i) += 0.5*eps;
+    q(i) += eps;
     double er = accel_energy(q, num_agents, num_points_per_agent, K_acc);
     q(i) -= eps;
 
-    double el = accel_energy(q, num_agents, num_points_per_agent, K_acc);
-    q(i) += 0.5*eps;
+   
 
-    double fd = (er - el)/eps;
+    double fd = (er - e0)/eps;
     fdg(i) = fd;
   }
 
@@ -186,7 +204,10 @@ void fd_check_gradient()
   accel_gradient(q, num_agents, num_points_per_agent, K_ke, g);
 
   std::cout<<g.transpose()<<std::endl;
+  std::cout<<"---------------------"<<std::endl;
   std::cout<<fdg.transpose()<<std::endl;
+  std::cout<<"#######################"<<std::endl;
+  std::cout<<g.transpose() - fdg.transpose()<<std::endl;
 }
 
 void fd_check_hessian()
@@ -196,19 +217,19 @@ void fd_check_hessian()
   int num_points_per_agent = Qvec[0].size()/3;
   VectorXd UserTols = 0.75*VectorXd::Ones(num_agents);
 
-  double eps = 1e-5;
+  double eps = 1e-4;
   VectorXd grad;
-  kinetic_gradient(q, num_agents, num_points_per_agent, K_ke, grad);
+  accel_gradient(q, num_agents, num_points_per_agent, K_ke, grad);
 
   MatrixXd fdH = MatrixXd::Zero(q.size(), q.size());
   for(int i=0; i<grad.size(); ++i)
   {
     VectorXd gl, gr;
     q(i) += 0.5*eps;
-    kinetic_gradient(q, num_agents, num_points_per_agent, K_ke, gr);
+    accel_gradient(q, num_agents, num_points_per_agent, K_ke, gr);
     q(i) -= eps;
 
-    kinetic_gradient(q, num_agents, num_points_per_agent, K_ke, gl);
+    accel_gradient(q, num_agents, num_points_per_agent, K_ke, gl);
     q(i) += 0.5*eps;
 
     VectorXd fd = (gr - gl)/eps;
@@ -216,7 +237,10 @@ void fd_check_hessian()
   }
 
   MatrixXd H;
-  kinetic_hessian(q, num_agents, num_points_per_agent, K_ke, H);
+  accel_hessian(q, num_agents, num_points_per_agent, K_ke, H);
+
+  std::cout<<"--------------"<<std::endl;
+  std::cout<<fdH<<std::endl;
 }
 
 void line_search()
@@ -382,6 +406,7 @@ int main(int argc, char *argv[])
 
   readInit();
   fd_check_gradient();
+  //fd_check_hessian();
   exit(0);
   solve();
   MatrixXd Q = Map<MatrixXd>(q.data(), 3, q.size()/3).transpose();
