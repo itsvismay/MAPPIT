@@ -78,7 +78,7 @@ void readInit()
     //                                 j_input["agents"][i]["v"][j][1], 
     //                                 j_input["agents"][i]["v"][j][2]);
     // }
-    VectorXd av = VectorXd::Zero(3*4);
+    VectorXd av = VectorXd::Zero(3*3);
     av[0] = 0;
     av[1] = 0;
     av[2] = 0;
@@ -88,9 +88,9 @@ void readInit()
     av[6] = 1;
     av[7] = 1;
     av[8] = 1;
-    av[9] = 1.2;
-    av[10] = 1.7;
-    av[11] = 1.1;
+    // av[9] = 1.2;
+    // av[10] = 1.7;
+    // av[11] = 1.1;
 
 
     // av[0] = 0.5;
@@ -419,8 +419,8 @@ int main(int argc, char *argv[])
 {
 
   readInit();
-  fd_check_gradient();
-  //fd_check_hessian();
+  // fd_check_gradient();
+  fd_check_hessian();
   exit(0);
   solve();
   MatrixXd Q = Map<MatrixXd>(q.data(), 3, q.size()/3).transpose();
