@@ -110,5 +110,8 @@ mex_kinetic_hessian.cpp;\
 mex_tol_energy.cpp;\
 mex_tol_gradient.cpp;\
 mex_tol_hessian.cpp;\
+mex_accel_energy.cpp;\
+mex_accel_gradient.cpp;\
+mex_accel_hessian.cpp;\
 "
   "${CORE_LIBS};igl::core;igl::matlab")

@@ -17,12 +17,19 @@ namespace crowds{
       MatrixXd Q_i = Map<MatrixXd>(q_i.data(), 3, q_i.size()/3).transpose();
       double e_i = 0;
       for(int j=1; j<Q_i.rows() -1; j++){
-        // //for each node thats not the first node (0) and last node
-        // Vector3d v1 = Q_i.row(j) - Q_i.row(j-1);
-        // Vector3d v2 = Q_i.row(j+1) - Q_i.row(j);
-        // Vector3d v1xv2 = v1.cross(v2);
-        // double v1dv2 = v1.dot(v2);
-        // double v1xv2norm = v1xv2.norm();
+        //for each node thats not the first node (0) and last node
+        Vector3d v1 = Q_i.row(j) - Q_i.row(j-1);
+        Vector3d v2 = Q_i.row(j+1) - Q_i.row(j);
+        Vector3d v1xv2 = v1.cross(v2);
+        double v1dv2 = v1.dot(v2);
+        double v1xv2norm = v1xv2.norm();
+      
+        // //--Dave's Energy---
+        double X = v1dv2;
+        double Y = v1xv2norm;
+        e_i += 0.5*K_acc*atan2(Y, X)*atan2(Y, X);
+
+        //---Etienne's Energy--
         // double eps = 1e-3;
         // if(v1xv2.norm()<=eps){
         //   v1xv2norm = eps;
@@ -32,11 +39,7 @@ namespace crowds{
         // double Y = v1xv2.dot(z);
         // double angle = 2.0*atan2(Y, X);
         // e_i += 0.5*K_acc*(angle - 0)*(angle - 0);
-
-        Vector3d v1 = Q_i.row(j-1) - Q_i.row(j);
-        Vector3d v2 = Q_i.row(j+1) - Q_i.row(j);
-        double angle = acos(v1.dot(v2)/(v1.norm()*v2.norm()));
-        e_i += 0.5*K_acc*(angle - PI)*(angle - PI);
+        
       }
       e += e_i;
     }

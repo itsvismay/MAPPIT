@@ -131,6 +131,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named mex_accel_hessian
+
+# Build rule for target.
+mex_accel_hessian: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mex_accel_hessian
+.PHONY : mex_accel_hessian
+
+# fast build rule for target.
+mex_accel_hessian/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_hessian.dir/build.make CMakeFiles/mex_accel_hessian.dir/build
+.PHONY : mex_accel_hessian/fast
+
+#=============================================================================
+# Target rules for targets named mex_accel_gradient
+
+# Build rule for target.
+mex_accel_gradient: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mex_accel_gradient
+.PHONY : mex_accel_gradient
+
+# fast build rule for target.
+mex_accel_gradient/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_gradient.dir/build.make CMakeFiles/mex_accel_gradient.dir/build
+.PHONY : mex_accel_gradient/fast
+
+#=============================================================================
 # Target rules for targets named mex_kinetic_energy
 
 # Build rule for target.
@@ -183,6 +209,19 @@ mex_tol_energy/fast:
 .PHONY : mex_tol_energy/fast
 
 #=============================================================================
+# Target rules for targets named mex_accel_energy
+
+# Build rule for target.
+mex_accel_energy: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 mex_accel_energy
+.PHONY : mex_accel_energy
+
+# fast build rule for target.
+mex_accel_energy/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_energy.dir/build.make CMakeFiles/mex_accel_energy.dir/build
+.PHONY : mex_accel_energy/fast
+
+#=============================================================================
 # Target rules for targets named mex_tol_gradient
 
 # Build rule for target.
@@ -207,6 +246,87 @@ mex_kinetic_hessian: cmake_check_build_system
 mex_kinetic_hessian/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_kinetic_hessian.dir/build.make CMakeFiles/mex_kinetic_hessian.dir/build
 .PHONY : mex_kinetic_hessian/fast
+
+mex_accel_energy.o: mex_accel_energy.cpp.o
+
+.PHONY : mex_accel_energy.o
+
+# target to build an object file
+mex_accel_energy.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_energy.dir/build.make CMakeFiles/mex_accel_energy.dir/mex_accel_energy.cpp.o
+.PHONY : mex_accel_energy.cpp.o
+
+mex_accel_energy.i: mex_accel_energy.cpp.i
+
+.PHONY : mex_accel_energy.i
+
+# target to preprocess a source file
+mex_accel_energy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_energy.dir/build.make CMakeFiles/mex_accel_energy.dir/mex_accel_energy.cpp.i
+.PHONY : mex_accel_energy.cpp.i
+
+mex_accel_energy.s: mex_accel_energy.cpp.s
+
+.PHONY : mex_accel_energy.s
+
+# target to generate assembly for a file
+mex_accel_energy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_energy.dir/build.make CMakeFiles/mex_accel_energy.dir/mex_accel_energy.cpp.s
+.PHONY : mex_accel_energy.cpp.s
+
+mex_accel_gradient.o: mex_accel_gradient.cpp.o
+
+.PHONY : mex_accel_gradient.o
+
+# target to build an object file
+mex_accel_gradient.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_gradient.dir/build.make CMakeFiles/mex_accel_gradient.dir/mex_accel_gradient.cpp.o
+.PHONY : mex_accel_gradient.cpp.o
+
+mex_accel_gradient.i: mex_accel_gradient.cpp.i
+
+.PHONY : mex_accel_gradient.i
+
+# target to preprocess a source file
+mex_accel_gradient.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_gradient.dir/build.make CMakeFiles/mex_accel_gradient.dir/mex_accel_gradient.cpp.i
+.PHONY : mex_accel_gradient.cpp.i
+
+mex_accel_gradient.s: mex_accel_gradient.cpp.s
+
+.PHONY : mex_accel_gradient.s
+
+# target to generate assembly for a file
+mex_accel_gradient.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_gradient.dir/build.make CMakeFiles/mex_accel_gradient.dir/mex_accel_gradient.cpp.s
+.PHONY : mex_accel_gradient.cpp.s
+
+mex_accel_hessian.o: mex_accel_hessian.cpp.o
+
+.PHONY : mex_accel_hessian.o
+
+# target to build an object file
+mex_accel_hessian.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_hessian.dir/build.make CMakeFiles/mex_accel_hessian.dir/mex_accel_hessian.cpp.o
+.PHONY : mex_accel_hessian.cpp.o
+
+mex_accel_hessian.i: mex_accel_hessian.cpp.i
+
+.PHONY : mex_accel_hessian.i
+
+# target to preprocess a source file
+mex_accel_hessian.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_hessian.dir/build.make CMakeFiles/mex_accel_hessian.dir/mex_accel_hessian.cpp.i
+.PHONY : mex_accel_hessian.cpp.i
+
+mex_accel_hessian.s: mex_accel_hessian.cpp.s
+
+.PHONY : mex_accel_hessian.s
+
+# target to generate assembly for a file
+mex_accel_hessian.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_hessian.dir/build.make CMakeFiles/mex_accel_hessian.dir/mex_accel_hessian.cpp.s
+.PHONY : mex_accel_hessian.cpp.s
 
 mex_kinetic_energy.o: mex_kinetic_energy.cpp.o
 
@@ -378,12 +498,24 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... mex_accel_energy"
+	@echo "... mex_accel_gradient"
+	@echo "... mex_accel_hessian"
 	@echo "... mex_kinetic_energy"
 	@echo "... mex_kinetic_gradient"
 	@echo "... mex_kinetic_hessian"
 	@echo "... mex_tol_energy"
 	@echo "... mex_tol_gradient"
 	@echo "... mex_tol_hessian"
+	@echo "... mex_accel_energy.o"
+	@echo "... mex_accel_energy.i"
+	@echo "... mex_accel_energy.s"
+	@echo "... mex_accel_gradient.o"
+	@echo "... mex_accel_gradient.i"
+	@echo "... mex_accel_gradient.s"
+	@echo "... mex_accel_hessian.o"
+	@echo "... mex_accel_hessian.i"
+	@echo "... mex_accel_hessian.s"
 	@echo "... mex_kinetic_energy.o"
 	@echo "... mex_kinetic_energy.i"
 	@echo "... mex_kinetic_energy.s"

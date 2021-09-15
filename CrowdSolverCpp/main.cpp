@@ -70,27 +70,38 @@ void readInit()
   //setup agent positions  
   for(int i=1; i<j_input["agents"].size(); ++i)
   {
-    VectorXd av = VectorXd::Zero(3*(j_input["agents"][i]["v"].size()));
-    //std::cout<<"av size: "<<j_input["agents"]["v"]<<std::endl;
-    for(int j=0; j<j_input["agents"][i]["v"].size(); j++)
-    {
-      av.segment<3>(3*(j)) = Vector3d(j_input["agents"][i]["v"][j][0], 
-                                    j_input["agents"][i]["v"][j][1], 
-                                    j_input["agents"][i]["v"][j][2]);
-    }
-    // VectorXd av = VectorXd::Zero(3*4);
-    // av[0] = 0;
-    // av[1] = 0;
-    // av[2] = 0;
-    // av[3] = 0.5;
-    // av[4] = 0.3;
-    // av[5] = 0.5;
-    // av[6] = 1;
-    // av[7] = 1;
-    // av[8] = 1;
-    // av[9] = 1.2;
-    // av[10] = 1.7;
-    // av[11] = 1.1;
+    // VectorXd av = VectorXd::Zero(3*(j_input["agents"][i]["v"].size()));
+    // //std::cout<<"av size: "<<j_input["agents"]["v"]<<std::endl;
+    // for(int j=0; j<j_input["agents"][i]["v"].size(); j++)
+    // {
+    //   av.segment<3>(3*(j)) = Vector3d(j_input["agents"][i]["v"][j][0], 
+    //                                 j_input["agents"][i]["v"][j][1], 
+    //                                 j_input["agents"][i]["v"][j][2]);
+    // }
+    VectorXd av = VectorXd::Zero(3*4);
+    av[0] = 0;
+    av[1] = 0;
+    av[2] = 0;
+    av[3] = 0.5;
+    av[4] = 0.3;
+    av[5] = 0.5;
+    av[6] = 1;
+    av[7] = 1;
+    av[8] = 1;
+    av[9] = 1.2;
+    av[10] = 1.7;
+    av[11] = 1.1;
+
+
+    // av[0] = 0.5;
+    // av[1] = 0.3;
+    // av[2] = 0.5;
+    // av[3] = 1;
+    // av[4] = 1;
+    // av[5] = 1;
+    // av[6] = 1.2;
+    // av[7] = 1.7;
+    // av[8] = 1.1;
 
 
     Qvec.push_back(av);
@@ -183,7 +194,7 @@ void fd_check_gradient()
   int num_points_per_agent = Qvec[0].size()/3;
   VectorXd UserTols = 0.75*VectorXd::Ones(num_agents);
 
-  double eps = 1e-3;
+  double eps = 1e-5;
   double e0 = accel_energy(q, num_agents, num_points_per_agent, K_acc);
   std::cout<<"e0: "<<e0<<std::endl;
   VectorXd fdg = VectorXd::Zero(q.size());
@@ -238,9 +249,12 @@ void fd_check_hessian()
 
   MatrixXd H;
   accel_hessian(q, num_agents, num_points_per_agent, K_ke, H);
-
+  std::cout<<"--------------"<<std::endl;
+  std::cout<<H<<std::endl;
   std::cout<<"--------------"<<std::endl;
   std::cout<<fdH<<std::endl;
+  std::cout<<"-#########--"<<std::endl;
+  std::cout<<fdH - H<<std::endl;
 }
 
 void line_search()

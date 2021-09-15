@@ -318,6 +318,15 @@ crowds_hessian_LIB_DEPENDS:STATIC=general;/Applications/MATLAB_R2019b.app/bin/ma
 //Dependencies for the target
 impaste_LIB_DEPENDS:STATIC=general;/Applications/MATLAB_R2019b.app/bin/maci64/libmex.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmx.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libeng.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmat.dylib;general;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Foundation.framework;general;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework;
 
+//Dependencies for the target
+mex_accel_energy_LIB_DEPENDS:STATIC=general;/Applications/MATLAB_R2019b.app/bin/maci64/libmex.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmx.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libeng.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmat.dylib;
+
+//Dependencies for the target
+mex_accel_gradient_LIB_DEPENDS:STATIC=general;/Applications/MATLAB_R2019b.app/bin/maci64/libmex.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmx.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libeng.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmat.dylib;
+
+//Dependencies for the target
+mex_accel_hessian_LIB_DEPENDS:STATIC=general;/Applications/MATLAB_R2019b.app/bin/maci64/libmex.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmx.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libeng.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmat.dylib;
+
 //Value Computed by CMake
 mex_crowds_BINARY_DIR:STATIC=/Users/vismay/recode/crowds/CrowdSolverCpp/matlab
 
