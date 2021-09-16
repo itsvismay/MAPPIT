@@ -2892,6 +2892,8 @@
 "radius":0.75,
 "mass":1,
 "friends":[],
+"mesh":"agent",
+"animation_cycles":[],
 "e":[[1,
 2],
 [2,
@@ -3347,9 +3349,7 @@
 4,
 3,
 2,
-1]},
-"mesh":"agent",
-"animation_cycles":[]},
+1]}},
 {"id":2,
 "xse":[[-44.999999727212447,
 5.5109105627562494E-15,
@@ -3457,6 +3457,8 @@
 "radius":0.75,
 "mass":1,
 "friends":[],
+"mesh":"agent",
+"animation_cycles":[],
 "e":[[1,
 2],
 [2,
@@ -3912,9 +3914,7 @@
 28,
 29,
 30,
-31]},
-"mesh":"agent",
-"animation_cycles":[]}],
+31]}}],
 "coeff_matrix":[[1,
 1],
 [100,

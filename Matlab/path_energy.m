@@ -20,13 +20,15 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
     
  
-    [e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
+    %[e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
     %[e_ke, g_ke] = kinetic_energy(Q, scene, K_ke);
     [e_pv, g_pv] = preferred_time_energy(Q, scene, K_pv);
     [e_rg, g_rg] = regularizer_energy(Q, scene, K_reg);
     
+    e_accel = mex_accel_energy(Q(:), num_agents, size(Q, 1)/3, K_accel);
     e_ke = mex_kinetic_energy(Q(:), num_agents, size(Q, 1)/3, K_ke);
     e_tol = 0;% mex_tol_energy(Tols, UserTols, K_tol); TODO
+    g_accel = mex_accel_gradient(Q(:), num_agents, size(Q,1)/3, K_accel);
     g_ke = mex_kinetic_gradient(Q(:), num_agents, size(Q,1)/3, K_ke);
     %g_tol = mex_tol_gradient(Tols, UserTols, K_tol);
     
