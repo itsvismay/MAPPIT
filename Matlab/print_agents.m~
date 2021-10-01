@@ -1,0 +1,19 @@
+function p = print_agents(fname, scene, q, runId)
+    %Function needs to print the:
+    % 1. Agents (without the environment, or BVH)
+    % 2. The figure (matlab figure of trajectory on map)
+    % 3. Timings
+    Q = reshape(q, numel(q)/numel(scene.agents), numel(scene.agents));
+    
+    ag
+    
+    for i=1:size(Q,2)
+        scene.agents(i).v = reshape(Q(:,i), 3, size(Q,1)/3)';
+    end
+    jsontext = jsonencode(scene);
+    jsontext = strrep(jsontext, ',', sprintf(',\n'));
+    jsontext = strrep(jsontext, '[{', sprintf('[\r{\r'));
+    jsontext = strrep(jsontext, '}]', sprintf('\r}\r]'));
+    fileID = fopen(fname, 'w');
+    fprintf(fileID, jsontext);
+end

@@ -14,7 +14,7 @@ namespace crowds{
 
       VectorXd q_i = q.segment(i*3*num_points_per_agent, 3*num_points_per_agent);
       MatrixXd Q_i = Map<MatrixXd>(q_i.data(), 3, q_i.size()/3).transpose();
-
+      
       VectorXd dx = Q_i.col(0).tail(num_points_per_agent -1) - Q_i.col(0).head(num_points_per_agent - 1) ;
       VectorXd dy = Q_i.col(1).tail(num_points_per_agent -1) - Q_i.col(1).head(num_points_per_agent - 1) ;
       VectorXd dt = Q_i.col(2).tail(num_points_per_agent -1) - Q_i.col(2).head(num_points_per_agent - 1) ;
@@ -23,7 +23,7 @@ namespace crowds{
       ArrayXd dx2dy2_dt = (dx.array()*dx.array() + dy.array()*dy.array())/dt.array();
 
       double e_i = 0.5*mass_i*dx2dy2_dt.matrix().sum();//e = 0.5*(dx^2 + dy^2)/dt
-      e += e_i;
+      e += K_Ke*e_i;
     }
     return e;
   }

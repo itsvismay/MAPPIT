@@ -38,5 +38,6 @@ namespace crowds{
       }
 
     }
+    g *= K_Ke;
   }
 }

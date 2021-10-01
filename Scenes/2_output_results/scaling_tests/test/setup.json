@@ -1,0 +1,65 @@
+{
+    "name": "scene_60",
+    "agents": {
+        "agent1": {
+            "id": 1,
+            "xse": [
+                [
+                    0,
+                    10,
+                    0.0
+                ],
+                [
+                    10,
+                    10,
+                    10
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 1,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        },
+        "agent2": {
+            "id": 2,
+            "xse": [
+                [
+                    0,
+                    0,
+                    0.0
+                ],
+                [
+                    10,
+                    0,
+                    10
+                ]
+            ],
+            "mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.75,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 1,
+                "K_tol": 100,
+                "K_accel": 0,
+                "K_map": 0,
+                "K_ke": 1,
+                "K_pv": 0
+            }
+        }
+    },
+    "obstacles": {},
+    "terrain": {
+        "mesh": "terrain.obj"
+    }
+}

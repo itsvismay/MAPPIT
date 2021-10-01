@@ -2,38 +2,30 @@
 #include <Eigen/SparseCholesky>
 
 using namespace Eigen;
+typedef Eigen::Triplet<double> T;
 
 namespace crowds{
-	void accel_hessian(VectorXd& q, int num_agents, int num_points_per_agent, double K_acc, MatrixXd& H)
+	void accel_hessian(VectorXd& q, int num_agents, int num_points_per_agent, double K_acc, SparseMatrix<double>& H)
 	{
+		std::vector<T> Htrips;
 		H.resize(q.size(), q.size());
 		H.setZero();
 
 		double e = 0.0;
-		for(int i=0; i<num_agents; i++)
-		{
+	    for(int i=0; i<num_agents; i++)
+	    {
 			double mass_i = 1.0;//hard coded for now
 
 			VectorXd q_i = q.segment(i*3*num_points_per_agent, 3*num_points_per_agent);
-			MatrixXd Q_i = Map<MatrixXd>(q_i.data(), 3, q_i.size()/3).transpose();
+      		MatrixXd Q_i = Map<MatrixXd>(q_i.data(), 3, q_i.size()/3).transpose();
 			Matrix<double, 9, 9> Hi;
 
-			for(int j=1; j<Q_i.rows() -1; j++){
-				//for each node thats not the first node (0) and last node
-				double q1 = Q_i.row(j-1)[0];
-				double q2 = Q_i.row(j-1)[1];
-				double q3 = Q_i.row(j-1)[2];
-				double q4 = Q_i.row(j)[0];
-				double q5 = Q_i.row(j)[1];
-				double q6 = Q_i.row(j)[2];
-				double q7 = Q_i.row(j+1)[0];
-				double q8 = Q_i.row(j+1)[1];
-				double q9 = Q_i.row(j+1)[2];
-				double K = K_acc;
-				//
+			for(int j=1; j<Q_i.rows() -1; j++)
+			{
 				Vector3d x1 = Q_i.row(j-1);
 				Vector3d v1 = Q_i.row(j) - Q_i.row(j-1);
 				Vector3d v2 = Q_i.row(j+1) - Q_i.row(j);
+				double K = 1;//v1.norm() + v2.norm();
 				Vector3d v1xv2 = (v1.cross(v2)).transpose();
 				double v1dv2 = v1.dot(v2);
 				double v1xv2norm = v1xv2.norm();
@@ -51,13 +43,18 @@ namespace crowds{
 		        v1dv2 = v1.dot(v2);
 		        v1xv2norm = v1xv2.norm();
 
-		        double X = v1dv2;
-		        double Y = v1xv2norm;
+		        
 
 		        double left = 0;
+		        if(v1xv2.norm()<=eps)
+		        {
+		          v1xv2norm = eps;
+		        }
+		        double X = v1dv2;
+		        double Y = v1xv2norm;
 		        double middle = 1.0/(1.0 + (Y/X)*(Y/X));
-		        if(v1xv2.norm()>eps)
-		          left = atan2(Y, X);
+		        left = atan2(Y, X);
+		        
 
 				//------------------Analytical gradient
 		        Matrix3d v2CrossMatrix;
@@ -102,32 +99,17 @@ namespace crowds{
 				{	
 					Vector3d hi = (v1dv2*v1xv2.transpose()*v2CrossMatrix - v2.transpose()*v1xv2norm*v1xv2norm);
 					double lo = v1dv2*v1dv2*v1xv2norm;
-					// std::cout<<"v2m"<<std::endl;
-					// std::cout<<v2CrossMatrix<<std::endl;
 					// //v2m*v1xv2'*v2 - v1dv2*v2m'*v2m
 					Matrix3d dhi_part1 = ((v2CrossMatrix*v1xv2)*v2.transpose() - v1dv2*v2CrossMatrix.transpose()*v2CrossMatrix);
 					Matrix3d dhi_part2 = (v2*2*v1xv2.transpose()*v2CrossMatrix);
 					Matrix3d dhi = dhi_part1 + dhi_part2;
 					Matrix3d lodhi = lo*dhi;
-					std::cout<<"hi"<<std::endl;
-					std::cout<<hi<<std::endl;
-					std::cout<<"lo"<<std::endl;
-					std::cout<<lo<<std::endl;
-					// std::cout<<"dhi part 1"<<std::endl;
-					// std::cout<<dhi_part1<<std::endl;
-					// std::cout<<"dhi part 2"<<std::endl;
-					// std::cout<<dhi_part2<<std::endl;
-					// std::cout<<"dhi"<<std::endl;
-					// std::cout<<dhi<<std::endl;
+		
+
 					Vector3d dlo_part1 = -(2*v1dv2*v1xv2norm*v2);
 					Vector3d dlo_part2 = -(v1dv2*v1dv2*(1.0/v1xv2norm) * (v1xv2.transpose()*v2CrossMatrix));
 					Vector3d dlo = dlo_part1 + dlo_part2;
-					// std::cout<<"dlo part 1"<<std::endl;
-					// std::cout<<dlo_part1.transpose()<<std::endl;
-					// std::cout<<"dlo part 2"<<std::endl;
-					// std::cout<<dlo_part2.transpose()<<std::endl;
-					// std::cout<<"dlo"<<std::endl;
-					// std::cout<<dlo.transpose()<<std::endl;
+
 					Matrix3d hidlo = hi*dlo.transpose();
 					double lolo = lo*lo;
 					dright1dx1 = (lodhi - hidlo)/lolo;
@@ -138,70 +120,51 @@ namespace crowds{
 				{	
 					Vector3d hi = (v1dv2*v1xv2.transpose()*v2CrossMatrix - v2.transpose()*v1xv2norm*v1xv2norm);
 					double lo = v1dv2*v1dv2*v1xv2norm;
-					std::cout<<"v1m"<<std::endl;
-					std::cout<<v1CrossMatrix<<std::endl;
-					std::cout<<"v2m"<<std::endl;
-					std::cout<<v2CrossMatrix<<std::endl;
 					Matrix3d dv2Cross_dv2;
 					{
 						Matrix3d dv2m_dv21;dv2m_dv21<< 0,  0, 0, 0,   0,  1, 0, -1,   0;
 						Matrix3d dv2m_dv22;dv2m_dv22<< 0,  0, -1, 0,   0,  0, 1, 0,   0;
 						Matrix3d dv2m_dv23;dv2m_dv23<< 0,  1, 0, -1,   0,  0, 0, 0,   0;
-						// dv2Cross_dv2.row(0) = dv2m_dv21.transpose()*v1xv2;
-						// dv2Cross_dv2.row(1) = dv2m_dv22.transpose()*v1xv2;
-						// dv2Cross_dv2.row(2) = dv2m_dv23.transpose()*v1xv2;
 						dv2Cross_dv2 = dv2m_dv21*v1xv2(0) + dv2m_dv22*v1xv2(1) + dv2m_dv23*v1xv2(2);
 					}
-					std::cout<<"v1dv2*dv2Cross_dv2"<<std::endl;
-					std::cout<<v1dv2*dv2Cross_dv2<<std::endl;
-					std::cout<<"next"<<std::endl;
-					std::cout<<(v2CrossMatrix.transpose()*v1xv2)*v1.transpose()<<std::endl;
-					std::cout<<"next"<<std::endl;
-					std::cout<<- v1dv2*v2CrossMatrix.transpose()*v1CrossMatrix.transpose()<<std::endl;
 			
 					// //(v2m'*v1xv2)*v1' - v1dv2*v2m'*v1m'
 					Matrix3d dhi_part1 = ((v2CrossMatrix.transpose()*v1xv2)*v1.transpose() - v1dv2*v2CrossMatrix.transpose()*v1CrossMatrix.transpose() + v1dv2*dv2Cross_dv2);
 					Matrix3d dhi_part2 = -(Matrix3d::Identity()*v1xv2norm*v1xv2norm + 2*v2*v1xv2.transpose()*v1CrossMatrix);
 					Matrix3d dhi = dhi_part1 + dhi_part2;
 					Matrix3d lodhi = lo*dhi;
-					std::cout<<"hi"<<std::endl;
-					std::cout<<hi<<std::endl;
-					std::cout<<"lo"<<std::endl;
-					std::cout<<lo<<std::endl;
-					std::cout<<"dhi part 1"<<std::endl;
-					std::cout<<dhi_part1<<std::endl;
-					std::cout<<"dhi part 2"<<std::endl;
-					std::cout<<dhi_part2<<std::endl;
-					std::cout<<"dhi"<<std::endl;
-					std::cout<<dhi<<std::endl;
 					Vector3d dlo_part1 = (2*v1dv2*v1xv2norm*v1);
 					Vector3d dlo_part2 = (v1dv2*v1dv2*(1.0/v1xv2norm) * (v1xv2.transpose()*v1CrossMatrix));
 					Vector3d dlo = dlo_part1 + dlo_part2;
-					std::cout<<"dlo part 1"<<std::endl;
-					std::cout<<dlo_part1.transpose()<<std::endl;
-					std::cout<<"dlo part 2"<<std::endl;
-					std::cout<<dlo_part2.transpose()<<std::endl;
-					std::cout<<"dlo"<<std::endl;
-					std::cout<<dlo.transpose()<<std::endl;
 					Matrix3d hidlo = hi*dlo.transpose();
 					double lolo = lo*lo;
 					dright1dx3 = (lodhi - hidlo)/lolo;
-					std::cout<<"lodhi"<<std::endl;
-					std::cout<<lodhi<<std::endl;
-					std::cout<<"hidlo"<<std::endl;
-					std::cout<<hidlo<<std::endl;
-					std::cout<<"lolo"<<std::endl;
-					std::cout<<lolo<<std::endl;
-				}
-
-
-
-				//dright2dv2
-				Matrix3d dright2dv2;
-				{	
 					
 				}
 
+
+
+				//dright2dx3
+				Matrix3d dright2dx3;
+				{	
+					Vector3d hi = (v1dv2*v1xv2.transpose()*v1CrossMatrix - v1.transpose()*v1xv2norm*v1xv2norm);
+					double lo = v1dv2*v1dv2*v1xv2norm;
+					
+					Matrix3d dhi_part1 = ((v1CrossMatrix.transpose()*v1xv2)*v1.transpose() - v1dv2*v1CrossMatrix.transpose()*v1CrossMatrix.transpose());
+					Matrix3d dhi_part2 = -(v1*2*v1xv2.transpose()*v1CrossMatrix);
+
+					Matrix3d dhi = dhi_part1 + dhi_part2;
+					Matrix3d lodhi = lo*dhi;
+			
+					Vector3d dlo_part1 = (2*v1dv2*v1xv2norm*v1);
+					Vector3d dlo_part2 = (v1dv2*v1dv2*(1.0/v1xv2norm) * (v1xv2.transpose()*v1CrossMatrix));
+					Vector3d dlo = dlo_part1 + dlo_part2;
+					
+					Matrix3d hidlo = hi*dlo.transpose();
+					double lolo = lo*lo;
+					dright2dx3 = (lodhi - hidlo)/lolo;
+					
+				}
 		        //--------------
 
 				
@@ -211,27 +174,7 @@ namespace crowds{
 			      	Matrix3d p2 = -left * dmiddx1 * right1.transpose(); //left*dmiddledv1*right
 					Matrix3d p3 = -left * middle * dright1dx1; //left*middle*drightdv1
 					H11 = p1 + p2 + p3;
-					
-					// std::cout<<"Left"<<std::endl;
-					// std::cout<<left<<std::endl;
-					// std::cout<<"Mid"<<std::endl;
-					// std::cout<<middle<<std::endl;
-					// std::cout<<"right1"<<std::endl;
-					// std::cout<<right1<<std::endl;
-					// std::cout<<"dleftdx1"<<std::endl;
-					// std::cout<<dleftdx1.transpose()<<std::endl;
-					// std::cout<<"dmiddx1"<<std::endl;
-					// std::cout<<dmiddx1.transpose()<<std::endl;
-					// std::cout<<"dright1dx1"<<std::endl;
-					// std::cout<<dright1dx1<<std::endl;
-					// std::cout<<"g1"<<std::endl;
-					// std::cout<<g1.transpose()<<std::endl;
-					// std::cout<<"##--P1"<<std::endl;
-					// std::cout<<p1<<std::endl;
-					// std::cout<<"##--P2"<<std::endl;
-					// std::cout<<p2<<std::endl;
-					// std::cout<<"##--P3"<<std::endl;
-					// std::cout<<p3<<std::endl;
+
 				}
 
 				Matrix3d H13;H13.setZero();// dGjp/dq(7:9)
@@ -240,6 +183,20 @@ namespace crowds{
 			      	Matrix3d p2 = -left * dmiddx3 * right1.transpose(); //left*dmiddledv2*right2
 					Matrix3d p3 = -left * middle * dright1dx3; //left*middle*drightdv2
 					H13 = p1.transpose() + p2.transpose() + p3;
+
+				}
+
+				Matrix3d H12;H12.setZero();// dGjp/dq(4:6)
+				{
+					H12 = -H11 - H13;
+				}
+				
+				Matrix3d H33;H33.setZero();// dGjp/dq(1:3)
+				{
+					Matrix3d p1 = middle * dleftdx3 * right2.transpose(); //dleftdx3*middle*right2
+			      	Matrix3d p2 = left * dmiddx3 * right2.transpose(); //left*dmiddledv2*right2
+					Matrix3d p3 = left * middle * dright2dx3; //left*middle*drightdv2
+					H33 = p1.transpose() + p2.transpose() + p3;
 
 					// std::cout<<"Left"<<std::endl;
 					// std::cout<<left<<std::endl;
@@ -252,7 +209,7 @@ namespace crowds{
 					// std::cout<<"dmiddx3"<<std::endl;
 					// std::cout<<dmiddx3.transpose()<<std::endl;
 					// std::cout<<"dright1dx3"<<std::endl;
-					// std::cout<<dright1dx3<<std::endl;
+					// std::cout<<dright2dx3<<std::endl;
 					// std::cout<<"g1"<<std::endl;
 					// std::cout<<g1.transpose()<<std::endl;
 					// std::cout<<"##--P1"<<std::endl;
@@ -263,26 +220,25 @@ namespace crowds{
 					// std::cout<<p3<<std::endl;
 				}
 
-				Matrix3d H12;H12.setZero();// dGjp/dq(4:6)
-				{
-					H12 = -H11 - H13;
-				}
-				
-				
 				Matrix3d H31;H31.setZero();// dGjp/dq(1:3)
 				H31 = H13.transpose();
-				
+
 				Matrix3d H32;H32.setZero();// dGjn/dq(1:3)
-				
-				Matrix3d H33;H33.setZero();// dGjp/dq(1:3)
+				{
+					H32 = -H31 - H33;
+				}
 				
 				Matrix3d H21;H21.setZero();// dGjp/dq(1:3)
 				H21 = H12.transpose();
 
-				Matrix3d H22;H22.setZero();// dGjp/dq(1:3)
 
 				Matrix3d H23;H23.setZero();// dGjp/dq(1:3)
 				H23 = H32.transpose();
+
+				Matrix3d H22;H22.setZero();// dGjp/dq(1:3)
+				{
+					H22 = -H21 - H23;
+				}
 
 				Hi<<H11,H12, H13, H21, H22, H23, H31, H32, H33;
 
@@ -332,15 +288,22 @@ namespace crowds{
 					i*3*num_points_per_agent + 3*j+0,
 					i*3*num_points_per_agent + 3*(j+1)+0;
 
+				Vector3i xyz = {1,1,0};
 				for(int ii=0; ii<3; ii++)
 				{
 					for(int jj=0; jj<3; jj++)
 					{
 						for(int kk=0; kk<3; kk++)
-						{
-							for(int ll=0; ll<3; ll++)
+						{	
+							if (xyz[kk]==1)
 							{
-								H(inds(ii)+kk, inds(jj)+ll) += Hi(3*ii+kk, 3*jj+ll);
+								for(int ll=0; ll<3; ll++)
+								{	
+									if (xyz[ll]==1)
+									{
+										Htrips.push_back(T(inds(ii)+kk, inds(jj)+ll, K*Hi(3*ii+kk, 3*jj+ll)));
+									}
+								}
 							}
 						}
 						
@@ -357,5 +320,7 @@ namespace crowds{
 			}
 		}
 
+		H.setFromTriplets(Htrips.begin(), Htrips.end());
+		H = K_acc*H;
 	}
 }

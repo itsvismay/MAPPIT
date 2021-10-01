@@ -11,7 +11,7 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
     % (note: the index of P1 corresponds to the one in 3d graph VV)
     I1(2) = I1(2) + (nLayer-1)*(nTotalVer/nLayer);
     
-    [D1, P1, AdjM, A_visited] = mydijk3d(VV, EE, AdjM, A_visited, I1(1), I1(2), BV, BVind);
+    [D1, P1, AdjM, A_visited] = mydijk3d(VV, EE, AdjM, A_visited, I1(1), I1(2), BV, BVind, agent.radius);
     
     % P1 are the indexes from djikstra's path
     % read out the vertex values into vv
@@ -28,6 +28,11 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
     vv(:,3) = vv(:,3);
     
     re = [(1:segments)' (2:(segments+1))'];
+    if(size(P1)==1)
+        sprintf("Error: Something bad happened. Djikstras wasn't unwound properly")
+        %if this happens:
+        % check agent start and end points. Make sure they're valid
+    end
     rv = interpolate_rod_segments(vv, segments);
     %re = [(1:size(vv,1)-1)' (2:size(vv,1))'];
     %rv = vv;

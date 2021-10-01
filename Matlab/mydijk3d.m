@@ -4,8 +4,8 @@
 % newA_visited - Adj Mat used to keep track of previously visited vertices
 % s, t - start and end
 % BV, Bind - Boundary verts and boundary indices into VV
-function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, Bind)
-    agent_radius = 1.5;
+function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, Bind, agentRadius)
+    agent_radius = 2*agentRadius;
     
     % set the edge weights
     newA = set_edge_weights_directed(VV, newA, BV,Bind, newA_visited, agent_radius);

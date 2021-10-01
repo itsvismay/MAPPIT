@@ -6,12 +6,12 @@ function [H] = hessfcn(q_i,lambda)
     
     %Weights
     K_agent = 1*scene.coeff_matrix(1,:);
-    K_tol =   0*scene.coeff_matrix(2,:);
-    K_accel = 0*scene.coeff_matrix(3,:);
-    K_map =   0*scene.coeff_matrix(4,:);
-    K_ke =    10*scene.coeff_matrix(5,:);
+    %K_tol =   0*scene.coeff_matrix(2,:);
+    K_accel = 1*scene.coeff_matrix(3,:);
+    K_map =   1*scene.coeff_matrix(4,:);
+    K_ke =    1*scene.coeff_matrix(5,:);
     K_pv =    0*scene.coeff_matrix(6,:);
-    K_reg =   1;
+    K_reg =   1*scene.coeff_matrix(7,:);
     
     if simple_sd
         [e_agent, HB_agent, hw_agent] = agent_agent_energy_with_hessian(Q, Tols, scene, K_agent);
@@ -19,22 +19,22 @@ function [H] = hessfcn(q_i,lambda)
         [e_agent, HB_agent, hw_agent] = agent_agent_energy_with_hessian_abhisheks(Q, Tols, scene, K_agent); 
     end
     
-    %[e_map, H_map] = map_energy_with_hessian(Q, Tols, scene, K_map);
+    [e_map, H_map] = map_energy_with_hessian(Q, Tols, scene, K_map);
     [e_reg, H_reg] = regularizer_energy_with_hessian(Q, scene, K_reg);
-    [e_ke1, H_ke1] = kinetic_energy_with_hessian(Q, scene, K_ke);
+
     [H_acc] = mex_accel_hessian(Q(:), num_agents, size(Q,1)/3, K_accel);
+    [H_ke] = mex_kinetic_hessian(Q(:), num_agents, size(Q, 1)/3, K_ke);
     
     H = sparse(size(q_i,1),size(q_i,1));
     for ii=1:num_agents
-        H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1)) = H_ke1(:,:,ii)...
-                                                                            + H_reg(:,:,ii)...
-                                                                            + mu_barrier*HB_agent{ii};
-                                                                            %+ mu_barrier*H_map{ii};
+        H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1)) = H_reg(:,:,ii)...
+                                                                            + mu_barrier*HB_agent{ii}...
+                                                                            + mu_barrier*H_map{ii};
 
         % tolerance_energy_with_hessian
        %H(end-ii+1,end-ii+1) = K_tol(end-ii+1) + hw_agent(end-ii+1, end-ii+1); 
     end
-   H = H + sparse(H_acc);
+   H = H + H_acc + H_ke;
    
 %     [H_ke] = mex_kinetic_hessian(Q(:), num_agents, size(Q, 1)/3, K_ke);
 %     unused = [0;0];
@@ -90,7 +90,6 @@ function [e, HT] = acceleration_energy_with_hessian(Q, scene, K)
     end
 end
 
-
 function [e, HT] = kinetic_energy_with_hessian(Q, scene, K)
     if sum(K)==0
         e=0;
@@ -144,7 +143,7 @@ function [e, HT] = regularizer_energy_with_hessian(Q, scene, K)
         endtime = q_i(end);
         segments = numel(q_i)/3-1;
         kt = (endtime/segments)*ones(size(dx,1),1);%regular time intervals over the rod;
-        e = e + K*(sum(kt./dt));
+        e = e + K(i)*(sum(kt./dt));
        
         d2Edq2 = zeros(numel(q_i),numel(q_i));
         
@@ -158,7 +157,7 @@ function [e, HT] = regularizer_energy_with_hessian(Q, scene, K)
             d2Edq2((kk-1)*3+6,(kk-1)*3+6) = d2Edq2((kk-1)*3+6,(kk-1)*3+6) + 2*kt(kk,1)./(dt(kk,1).^3);
         end
                
-        HT(:,:,i) = K*d2Edq2;
+        HT(:,:,i) = K(i)*d2Edq2;
             
     end
 end
@@ -232,7 +231,7 @@ end
 function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K)
     if sum(K)==0
         e=0;
-        HB = zeros(size(Q,1), size(Q,1), size(Q,2));
+        HB(1:size(Q,2)) = {sparse(size(Q,1), size(Q,1))};
         hW = zeros(size(Q,2), size(Q,2));
         return;
     end
@@ -265,7 +264,7 @@ function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K)
             JG1 = J1'*reshape(G1', size(G1,1)*size(G1,2), 1);
             JG2 = J2'*reshape(G2', size(G2,1)*size(G2,2), 1);  
             
-            tol = 0.75;%Tols(i) + Tols(j);
+            tol = scene.agents(i).radius;%Tols(i) + Tols(j);
             
             %Old Energy
             %e = e + -K(i)*log((-tol + D).^2);
@@ -294,7 +293,7 @@ end
 function [e, HB, hW] = map_energy_with_hessian(Q, Tols, scene, K)
     if sum(K)==0
         e=0;
-        HB = zeros(size(Q,1), size(Q,1), size(Q,2));
+        HB(1:size(Q,2)) = {sparse(size(Q,1), size(Q,1))};
         hW = zeros(size(Q,2), size(Q,2));
         return;
     end
@@ -325,7 +324,7 @@ function [e, HB, hW] = map_energy_with_hessian(Q, Tols, scene, K)
         end
 
         JG1 = J1'*reshape(GP', size(GP,1)*size(GP,2), 1);       
-        tol = 0.75;%Tols(i) + Tols(j);
+        tol = scene.agents(i).radius;%Tols(i) + Tols(j);
 
         e = e + -K(i)*log((-tol + D));
         Hi = (K(i)*(1/((-tol + D).^2))) * (JG1 * JG1');

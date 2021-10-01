@@ -15,35 +15,33 @@ namespace crowds{
 
       VectorXd q_i = q.segment(i*3*num_points_per_agent, 3*num_points_per_agent);
       MatrixXd Q_i = Map<MatrixXd>(q_i.data(), 3, q_i.size()/3).transpose();
+
       double e_i = 0;
+
       for(int j=1; j<Q_i.rows() -1; j++){
         //for each node thats not the first node (0) and last node
         Vector3d v1 = Q_i.row(j) - Q_i.row(j-1);
         Vector3d v2 = Q_i.row(j+1) - Q_i.row(j);
+        double K = v1.norm() + v2.norm();
         Vector3d v1xv2 = v1.cross(v2);
         double v1dv2 = v1.dot(v2);
         double v1xv2norm = v1xv2.norm();
       
-        // //--Dave's Energy---
+        // //----Dave's Energy-----
+        double eps = 1e-5;
+        if(v1dv2<=eps){
+          v1dv2 = eps;
+
+        }
         double X = v1dv2;
         double Y = v1xv2norm;
-        e_i += 0.5*K_acc*atan2(Y, X)*atan2(Y, X);
+        e_i += 0.5*K*atan2(Y, X)*atan2(Y, X);
 
-        //---Etienne's Energy--
-        // double eps = 1e-3;
-        // if(v1xv2.norm()<=eps){
-        //   v1xv2norm = eps;
-        // }
-        // Vector3d z = v1xv2/v1xv2norm;
-        // double X = v1.norm()*v2.norm() + v1dv2;
-        // double Y = v1xv2.dot(z);
-        // double angle = 2.0*atan2(Y, X);
-        // e_i += 0.5*K_acc*(angle - 0)*(angle - 0);
         
       }
       e += e_i;
     }
 
-    return e;
+    return K_acc*e;
   }
 }

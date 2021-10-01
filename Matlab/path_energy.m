@@ -7,12 +7,12 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     
     %Weights
     K_agent = 1*scene.coeff_matrix(1,:);
-    K_tol =   0*scene.coeff_matrix(2,:); %don't touch
+    %K_tol =   0*scene.coeff_matrix(2,:); %don't touch
     K_accel = 1*scene.coeff_matrix(3,:);
     K_map =   1*scene.coeff_matrix(4,:);
-    K_ke =    10*scene.coeff_matrix(5,:);
+    K_ke =    1*scene.coeff_matrix(5,:);
     K_pv =    0*scene.coeff_matrix(6,:);
-    K_reg =   1;
+    K_reg =   1*scene.coeff_matrix(7,:);
     
  
     [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
@@ -43,7 +43,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
     %g(end-num_agents+1:end) = g(end-num_agents+1:end) + g_tol; TODO
     %g(1:end-num_agents) = g(1:end-num_agents) + g_ke + g_accel + g_pv + g_rg;
     
-    plottings(surf_anim, q, e, g(1:end-3));
+    plottings(surf_anim, q, e, g_accel);
 end
 
 function [e, g] = regularizer_energy(Q, scene, K)
@@ -63,7 +63,7 @@ function [e, g] = regularizer_energy(Q, scene, K)
         endtime = q_i(end);
         segments = numel(q_i)/3-1;
         kt = (endtime/segments)*ones(size(dx,1),1);%regular time intervals over the rod;
-        e = e + K*(sum(kt./dt));
+        e = e + K(i)*(sum(kt./dt));
         dEdq_left = zeros(numel(q_i)/3, 3);
         dEdq_right = zeros(numel(q_i)/3, 3);
         dEdq_left(1:end-1,3) = kt./(dt.^2);
@@ -76,7 +76,7 @@ function [e, g] = regularizer_energy(Q, scene, K)
         %dEdq_right(2:end, 3) = (dt - kt);
         
         dEdq = dEdq_left + dEdq_right;
-        GT(:,i) = K*reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
+        GT(:,i) = K(i)*reshape(dEdq', size(dEdq,1)*size(dEdq,2), 1);
     end
     g = reshape(GT, size(GT,1)*size(GT,2),1);
 end
@@ -175,7 +175,7 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             JG1 = J1'*reshape(G1', size(G1,1)*size(G1,2), 1);
             JG2 = J2'*reshape(G2', size(G2,1)*size(G2,2), 1);     
             
-            tol = 0.75;%Tols(i) + Tols(j);
+            tol = scene.agents(i).radius;%Tols(i) + Tols(j);
             
             % Old energy
             %e = e + -K(i)*log((-tol + D).^2);
@@ -278,7 +278,7 @@ function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
         %make sure E, G, H are good
         % make sure softdistance alphas are in agreement
         
-        tol = 0.75;
+        tol = scene.agents(i).radius;
         JG1 = J1'*reshape(GP', size(GP,1)*size(GP,2), 1);
         
         
@@ -338,7 +338,7 @@ function [s] = plottings(surf_anim, q, e, g)
 %     Uquiver = GG(:,1);
 %     Vquiver = GG(:,2);
 %     Wquiver = GG(:,3);
-%     quiver3(Xquiver, Yquiver, Zquiver, Uquiver, Vquiver, Wquiver);
+%     quiver3(Xquiver, Yquiver, Zquiver, Uquiver, Vquiver, Wquiver, 5);
 %     drawnow;
 
     PV = reshape(q, 3, numel(q)/3)';

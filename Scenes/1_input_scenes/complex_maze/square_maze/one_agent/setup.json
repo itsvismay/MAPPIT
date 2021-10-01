@@ -1,0 +1,36 @@
+{
+	"name": "scene_1",
+	"agents": {
+		"agent1":{
+			"id": 1,
+			"xse": [[-23.4375, -4.6875, 0], 
+					[23.4375, -20.3125, 10]], 
+			"mesh": "agent_1.obj",
+			"animation_cycles": null,
+			"friends": [],
+            "radius": 0.5,
+            "mass": 1,
+            "energy_coefficients":{
+				"K_agent" : 0,
+				"K_tol" : 0,
+				"K_accel" : 1,
+				"K_map" : 1,
+				"K_ke" : 10,
+				"K_pv" : 0,
+				"K_rg" : 100
+			},
+			"energy_comments":
+			{
+				"K_agent": "don't need for 1 agent scene",
+				"K_tol": "depecreated",
+				"K_accel": "scene seems to work better without it",
+				"K_pv": ""
+			}
+		}
+	},
+	"obstacles": {},
+	"terrain": {
+		"mesh": "terrain.obj"
+	}
+
+}

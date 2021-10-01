@@ -25,7 +25,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
     int num_points_per_agent = mxGetScalar(prhs[2]);
     double K_ke = mxGetScalar(prhs[3]);
 
-    MatrixXd H_ke;
+    SparseMatrix<double> H_ke;
     
     crowds::kinetic_hessian(q, num_agents, num_points_per_agent, K_ke, H_ke);
 
