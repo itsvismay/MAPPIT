@@ -3,25 +3,87 @@
 	"agents": {
 		"agent1":{
 			"id": 1,
-			"xse": [[-2.5, -7.5, 0], 
-					[2.5, 6.25, 10]], 
-			"mesh": "agent_1.obj",
+			"xse": [[0, -1.53, 0], 
+					[1.53, 0, 5]], 
+			"mesh": "roomba",
 			"animation_cycles": null,
-			"radius": 1
+			"radius": 0.1,
+			"friends": [],
+			"mass": 1,
+			"energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 0,
+				"K_accel" : 1,
+				"K_map" : 1,
+				"K_ke" : 10,
+				"K_pv" : 0,
+				"K_rg" : 100
+			}
 		},
 		"agent2":{
 			"id": 2,
-			"xse": [[0, -5, 0],
-					[7.5, 6.25, 10]],
-			"mesh": "agent_2.obj",
+			"xse": [[1.53, 0, 0],
+					[0, 1.53, 5]],
+			"mesh": "roomba",
 			"animation_cycles": null,
-			"radius": 1
+			"radius": 0.1,
+			"friends": [],
+			"mass": 1,
+			"energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 0,
+				"K_accel" : 1,
+				"K_map" : 1,
+				"K_ke" : 10,
+				"K_pv" : 0,
+				"K_rg" : 100
+			}
+		},
+		"agent3":{
+			"id": 3,
+			"xse": [[-1.53, 0, 0],
+					[0, -1.53, 5]],
+			"mesh": "roomba",
+			"animation_cycles": null,
+			"radius": 0.1,
+			"friends": [],
+			"mass": 1,
+			"energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 0,
+				"K_accel" : 1,
+				"K_map" : 1,
+				"K_ke" : 10,
+				"K_pv" : 0,
+				"K_rg" : 100
+			}
+		},
+		"agent4":{
+			"id": 4,
+			"xse": [[0, 1.53,  0],
+					[-1.53, 0, 5]],
+			"mesh": "roomba",
+			"animation_cycles": null,
+			"radius": 0.1,
+			"friends": [],
+			"mass": 1,
+			"energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 0,
+				"K_accel" : 1,
+				"K_map" : 1,
+				"K_ke" : 10,
+				"K_pv" : 0,
+				"K_rg" : 100
+			}
 		}
 	},
 	"obstacles": {},
 	"terrain": {
 		"mesh": "maze.obj"
 	},
-	"tol":0
+	"smoothDistAlpha":100,
+	"useSpaceTimeGraphDiags": 1
+
 
 }

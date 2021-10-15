@@ -15,7 +15,7 @@ namespace crowds{
     return s;
   }
 
-  void accel_gradient(VectorXd& q, int num_agents, int num_points_per_agent, double K_acc, VectorXd& g)
+  void accel_gradient(VectorXd& q, int num_agents, int num_points_per_agent, VectorXd& K_acc, VectorXd& g)
   {
     g.resize(q.size());
     g.setZero();
@@ -38,7 +38,7 @@ namespace crowds{
       {
         Vector3d v1 = Q_i.row(j) - Q_i.row(j-1);
         Vector3d v2 = Q_i.row(j+1) - Q_i.row(j);
-        double K = 1;//v1.norm() + v2.norm();
+        double K = K_acc(i)*(v1.norm() + v2.norm());
         Vector3d v1xv2 = (v1.cross(v2)).transpose();
         double v1dv2 = v1.dot(v2);
         double v1xv2norm = v1xv2.norm();
@@ -116,44 +116,10 @@ namespace crowds{
         g(i*3*num_points_per_agent + 3*(j+1)+1) += Gjnext(1);
         // g(i*3*num_points_per_agent + 3*(j+1)+2) += Gjnext(2);
 
-        //-------Etienne's Energy-----------------------------------
-        // double eps = 1e-3;
-        // if(v1xv2.norm()<=eps){
-        //   v1xv2norm = eps;
-        // }
-        // Vector3d z = v1xv2/v1xv2norm;
-        // double X = v1.norm()*v2.norm() + v1dv2;
-        // double Y = v1xv2.dot(z);
-        // double angle = 2*atan2(Y, X);
-
-        // Vector3d Gjprev = -K_acc*(angle - 0) * (v1.cross(z)/v1.squaredNorm());
-        // Vector3d Gjnext = -K_acc*(angle - 0) * (v2.cross(z)/v2.squaredNorm());
-
-        // //Vector3d Gjprev = angle*(v1.cross(z)/v1.squaredNorm());
-        // //Vector3d Gjnext = angle*(v2.cross(z)/v2.squaredNorm());
-        // Vector3d Gj =  - Gjprev - Gjnext;
-
-        // g(i*3*num_points_per_agent + 3*(j-1)+0) += Gjprev(0);
-        // g(i*3*num_points_per_agent + 3*(j-1)+1) += Gjprev(1);
-        // g(i*3*num_points_per_agent + 3*(j-1)+2) += Gjprev(2);
-
-        // g(i*3*num_points_per_agent + 3*j+0)     += Gj(0);
-        // g(i*3*num_points_per_agent + 3*j+1)     += Gj(1);
-        // g(i*3*num_points_per_agent + 3*j+2)     += Gj(2);
-
-        // g(i*3*num_points_per_agent + 3*(j+1)+0) += Gjnext(0);
-        // g(i*3*num_points_per_agent + 3*(j+1)+1) += Gjnext(1);
-        // g(i*3*num_points_per_agent + 3*(j+1)+2) += Gjnext(2);
+        
       }
-      // g(i*3*num_points_per_agent + 3*0 +0) = 0;
-      // g(i*3*num_points_per_agent + 3*0 +1) = 0;
-      // g(i*3*num_points_per_agent + 3*0 +2) = 0;
-
-      // g(i*3*num_points_per_agent + 3*(j) +0) = 0;
-      // g(i*3*num_points_per_agent + 3*(j) +1) = 0;
-      // g(i*3*num_points_per_agent + 3*(j) +2) = 0;
+      
     }
 
-    g = K_acc*g;
   }
 }

@@ -20,7 +20,7 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
     if(segments < length(P1))
         segments
         length(P1)
-        "add more segments"
+        sprintf("Error: Set_path3d: add more segments");
         return
     end
     
@@ -29,6 +29,11 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
     
     re = [(1:segments)' (2:(segments+1))'];
     if(size(P1)==1)
+        PV = scene.agents(end).v;
+        PE = scene.agents(end).e;
+        rad = scene.agents(end).radius;
+        [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness', 2.0*rad, 'PolySize', 4);
+        tsurf(CF, CV, 'FaceColor', [0.19154,      0.78665,      0.56299]'); hold on;
         sprintf("Error: Something bad happened. Djikstras wasn't unwound properly")
         %if this happens:
         % check agent start and end points. Make sure they're valid

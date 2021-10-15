@@ -1,49 +1,67 @@
-function [f,g] = path_energy(q_i, UserTols, num_agents, scene, e, surf_anim)
-    global simple_sd mu_barrier;
+function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
+    global scene simple_sd mu_barrier;
+    egTic = tic;
+    
     q = q_i;%q_i(1:end-num_agents); %TODO
     Q = reshape(q, numel(q)/num_agents, num_agents); %3*nodes x agents
     Tols = [];%q_i(end-num_agents+1:end); %TODO
     g = zeros(size(q_i));
     
-    %Weights
+    %% Weights
     K_agent = 1*scene.coeff_matrix(1,:);
-    %K_tol =   0*scene.coeff_matrix(2,:); %don't touch
     K_accel = 1*scene.coeff_matrix(3,:);
     K_map =   1*scene.coeff_matrix(4,:);
     K_ke =    1*scene.coeff_matrix(5,:);
-    K_pv =    0*scene.coeff_matrix(6,:);
     K_reg =   1*scene.coeff_matrix(7,:);
+    A_mass = zeros(numel(scene.agents), 1)';
+    for i=1:numel(scene.agents)
+        A_mass(i) = scene.agents(i).mass;
+    end
     
- 
+    %% fxns
+    oneTic = tic;
     [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
-    %[e_tol, g_tol] = tolerance_energy(Tols, UserTols, K_tol);
+    scene.timings.iterations(end).egAgent = scene.timings.iterations(end).egAgent + toc(oneTic);
+    
+    oneTic = tic;
     [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
+    scene.timings.iterations(end).egMap = scene.timings.iterations(end).egMap + toc(oneTic);
     
- 
-    %[e_accel, g_accel] = acceleration_energy(Q, scene, K_accel);
-    %[e_ke, g_ke] = kinetic_energy(Q, scene, K_ke);
-    [e_pv, g_pv] = preferred_time_energy(Q, scene, K_pv);
-    [e_rg, g_rg] = regularizer_energy(Q, scene, K_reg);
+    oneTic = tic;
+    e_accel = mex_accel_energy(Q(:), K_accel', num_agents, size(Q, 1)/3);
+    scene.timings.iterations(end).eAcc = scene.timings.iterations(end).eAcc + toc(oneTic);
     
-    e_accel = mex_accel_energy(Q(:), num_agents, size(Q, 1)/3, K_accel);
-    e_ke = mex_kinetic_energy(Q(:), num_agents, size(Q, 1)/3, K_ke);
-    e_tol = 0;% mex_tol_energy(Tols, UserTols, K_tol); TODO
-    g_accel = mex_accel_gradient(Q(:), num_agents, size(Q,1)/3, K_accel);
-    g_ke = mex_kinetic_gradient(Q(:), num_agents, size(Q,1)/3, K_ke);
-    %g_tol = mex_tol_gradient(Tols, UserTols, K_tol);
+    oneTic = tic;
+    e_ke = mex_kinetic_energy(Q(:), K_ke', A_mass', num_agents, size(Q, 1)/3);
+    %[me_ke, me_grad] = kinetic_energy(Q, scene, K_ke);
+    scene.timings.iterations(end).eKE = scene.timings.iterations(end).eKE + toc(oneTic);
+    
+    oneTic = tic;
+    e_rg = mex_reg_energy(Q(:), K_reg', num_agents, size(Q, 1)/3);
+    scene.timings.iterations(end).eReg = scene.timings.iterations(end).eReg + toc(oneTic);
+    
+    oneTic = tic;
+    g_accel = mex_accel_gradient(Q(:),K_accel', num_agents, size(Q,1)/3);
+    scene.timings.iterations(end).gAcc = scene.timings.iterations(end).gAcc + toc(oneTic);
+    
+    oneTic = tic;
+    g_ke = mex_kinetic_gradient(Q(:), K_ke', A_mass', num_agents, size(Q,1)/3);
+    scene.timings.iterations(end).gKE = scene.timings.iterations(end).gKE + toc(oneTic);
+    
+    oneTic = tic;
+    g_rg = mex_reg_gradient(Q(:), K_reg', num_agents, size(Q,1)/3);
+    scene.timings.iterations(end).gReg = scene.timings.iterations(end).gReg + toc(oneTic);
     
     f = 0;
-    f = f + mu_barrier*e_agent + e_tol + mu_barrier*e_map;
+    f = f + mu_barrier*e_agent  + mu_barrier*e_map;
     
-    f = f + e_ke + e_accel + e_pv + e_rg;
+    f = f + e_ke + e_accel + e_rg;
     
     g = g + mu_barrier*g_full;
-    g = g + g_map + g_ke + g_accel + g_pv + g_rg + mu_barrier*g_map;
+    g = g + g_map + g_ke + g_accel + g_rg + mu_barrier*g_map;
+    scene.timings.iterations(end).egTotal = scene.timings.iterations(end).egTotal + toc(egTic);
     
-    %g(end-num_agents+1:end) = g(end-num_agents+1:end) + g_tol; TODO
-    %g(1:end-num_agents) = g(1:end-num_agents) + g_ke + g_accel + g_pv + g_rg;
-    
-    plottings(surf_anim, q, e, g_accel);
+    plottings(scene, q, [])
 end
 
 function [e, g] = regularizer_energy(Q, scene, K)
@@ -80,6 +98,7 @@ function [e, g] = regularizer_energy(Q, scene, K)
     end
     g = reshape(GT, size(GT,1)*size(GT,2),1);
 end
+
 function [e, g] = preferred_time_energy(Q, scene, K)
     if sum(K)==0
         e=0;
@@ -144,14 +163,15 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             end
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
             [A22, J2] = sample_points_for_rod(A2, scene.agents(j).e);
+            tol = scene.agents(i).radius+scene.agents(j).radius;%Tols(i) + Tols(j);
             dist_is_good = 0;
             if simple_sd
-                alpha_count = 10;
-                alpha_val = 10;
+                alpha_count = scene.smoothDistAlpha/10;
+                alpha_val = scene.smoothDistAlpha;
                 beta_val = 0.0;
             else
-                alpha_count = 1;
-                alpha_val = 1;
+                alpha_count = scene.smoothDistAlpha/10;
+                alpha_val = scene.smoothDistAlpha;
                 beta_val = 0.0;
             end
             while dist_is_good==0
@@ -165,8 +185,11 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
                     [D, G2] = smooth_min_distance(A11,[],B1,I1,alpha_val,A22,[],alpha_val, beta_val);
                 end
                 
-                if(D>-1e-8)
+                if(D>1e-8)
                     dist_is_good =1;
+                end
+                if(isinf(D))
+                    sprintf("Error: path_energy, agent energy, D is inf");
                 end
                 alpha_val = alpha_val+alpha_count;
             end
@@ -174,8 +197,6 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
          
             JG1 = J1'*reshape(G1', size(G1,1)*size(G1,2), 1);
             JG2 = J2'*reshape(G2', size(G2,1)*size(G2,2), 1);     
-            
-            tol = scene.agents(i).radius;%Tols(i) + Tols(j);
             
             % Old energy
             %e = e + -K(i)*log((-tol + D).^2);
@@ -205,46 +226,7 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
     g = reshape(GB, size(GB,1)*size(GB,2),1); %g(1:end-num_agents) = reshape(GB, size(GB,1)*size(GB,2),1); %TODO
     %g(end-num_agents+1:end) = gW; TODO
 end
-function [e, g] = tolerance_energy(Tols, UserTols, K)
-    e = 0.5*(K'.*(Tols - UserTols'))'*(Tols - UserTols');
-    g = K'.*(Tols - UserTols');
-end
-function [e, g] = acceleration_energy(Q, scene, K)
-    if sum(K)==0
-        e=0;
-        g = zeros(numel(Q),1);
-        return;
-    end
-    GK = zeros(size(Q));
-    e=0;
-    for i=1:numel(scene.agents)
-        q_i = Q(:, i); %3*nodes
-        dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
-        V1 = dx(1:end-1,:);
-        V2= dx(2:end,:);
-        V1xV2 = cross(V1, V2, 2);
-        V1dV2 = dot(V1, V2, 2);
-        V1xV2norm = sqrt(V1xV2(:,1).^2+V1xV2(:,2).^2+V1xV2(:,3).^2);
-        V1xV2norm(V1xV2norm < eps)= eps; %making sure norms are bigger than epsilon
-        Z = V1xV2 ./ V1xV2norm; 
-        V1norm = sqrt(sum(V1.^2,2));
-        V2norm = sqrt(sum(V2.^2,2));
-        Y = dot(V1xV2, Z, 2);
-        X = V1norm.*V2norm + V1dV2;
-        angle = 2*atan2(Y,X);
-        
-        %bending energy
-        e = e + 0.5*K(i)*sum((angle - 0).^2);
-
-        %vectorized gradient computation
-        %end points have zero gradient (no bending energy applied)
-        gr = [0 0 0; ...
-            K(i).*angle.*((cross(V2,Z)./(V2norm.*V2norm)) + (cross(V1,Z)./(V1norm.*V1norm))); ...
-            0 0 0]; 
-        GK(:,i) = reshape(gr', numel(gr),1);
-    end
-    g = reshape(GK, size(GK,1)*size(GK,2),1); 
-end        
+      
 function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
     if sum(K)==0
         e=0;
@@ -261,15 +243,20 @@ function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
         %[P, ~] = sample_points_for_rod(scene.terrain.V, scene.terrain.BF);
         P = scene.terrain.BV;
         
+        tol = scene.agents(i).radius;
         dist_is_good = 0;
-        alpha_count = 10;
-        alpha_val = 10;
-
+        alpha_count =  scene.smoothDistAlpha/10;
+        alpha_val = scene.smoothDistAlpha;
+        
         while dist_is_good==0
             [D,GP] = soft_distance(alpha_val,P, A11);
 
             if(D>-1e-8)
                 dist_is_good =1;
+            end
+            
+            if(isinf(D))
+                sprintf("Error: Path_energy, map energy, D is inf");
             end
             alpha_val = alpha_val+alpha_count;
         end
@@ -278,7 +265,7 @@ function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
         %make sure E, G, H are good
         % make sure softdistance alphas are in agreement
         
-        tol = scene.agents(i).radius;
+        
         JG1 = J1'*reshape(GP', size(GP,1)*size(GP,2), 1);
         
         
@@ -295,6 +282,7 @@ function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
     g = reshape(GB, size(GB,1)*size(GB,2),1);
     
 end
+
 function [e, g] = kinetic_energy(Q, scene, K)
     if sum(K)==0
         e=0;
@@ -329,25 +317,5 @@ function [e, g] = kinetic_energy(Q, scene, K)
     end
     g = reshape(GT, size(GT,1)*size(GT,2),1);
 end
-function [s] = plottings(surf_anim, q, e, g)
-%     QQ = reshape(q, 3, numel(q)/3)';
-%     GG = reshape(g, 3, (numel(g))/3)';
-%     Xquiver = QQ(:,1);
-%     Yquiver = QQ(:,2);
-%     Zquiver = QQ(:,3);
-%     Uquiver = GG(:,1);
-%     Vquiver = GG(:,2);
-%     Wquiver = GG(:,3);
-%     quiver3(Xquiver, Yquiver, Zquiver, Uquiver, Vquiver, Wquiver, 5);
-%     drawnow;
-
-    PV = reshape(q, 3, numel(q)/3)';
-    PE = e;
-%     plot3(PV(:,1), PV(:,2), PV(:,3), '-ok', 'LineWidth',5);
-    [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1.5, 'PolySize', 4);
-    surf_anim.Vertices = CV;
-    drawnow;
-end
-
 
 

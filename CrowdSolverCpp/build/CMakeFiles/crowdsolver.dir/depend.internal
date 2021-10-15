@@ -10,9 +10,9 @@ CMakeFiles/crowdsolver.dir/main.cpp.o
  /Users/vismay/recode/crowds/CrowdSolverCpp/kinetic_gradient.h
  /Users/vismay/recode/crowds/CrowdSolverCpp/kinetic_hessian.h
  /Users/vismay/recode/crowds/CrowdSolverCpp/main.cpp
- /Users/vismay/recode/crowds/CrowdSolverCpp/tol_energy.h
- /Users/vismay/recode/crowds/CrowdSolverCpp/tol_gradient.h
- /Users/vismay/recode/crowds/CrowdSolverCpp/tol_hessian.h
+ /Users/vismay/recode/crowds/CrowdSolverCpp/reg_energy.h
+ /Users/vismay/recode/crowds/CrowdSolverCpp/reg_gradient.h
+ /Users/vismay/recode/crowds/CrowdSolverCpp/reg_hessian.h
  /Users/vismay/recode/libigl/external/eigen/Eigen/Cholesky
  /Users/vismay/recode/libigl/external/eigen/Eigen/Core
  /Users/vismay/recode/libigl/external/eigen/Eigen/Dense

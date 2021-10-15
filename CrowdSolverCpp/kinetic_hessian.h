@@ -5,16 +5,16 @@ using namespace Eigen;
 typedef Eigen::Triplet<double> Trip;
 
 namespace crowds{
-	void kinetic_hessian(VectorXd& q, int num_agents, int num_points_per_agent, double K_Ke, SparseMatrix<double>& H)
+	void kinetic_hessian(VectorXd& q, int num_agents, int num_points_per_agent, VectorXd& K_Ke, VectorXd& mass, SparseMatrix<double>& H)
 	{
 	  std::vector<Trip> Htrips;
 	  H.resize(q.size(), q.size());
 	  H.setZero();
 
-	  double e = 0.0;
+	  double energy = 0.0;
 	  for(int i=0; i<num_agents; i++)
 	  {
-	    double mass_i = 1.0;//hard coded for now
+	    double mass_i = mass(i)*K_Ke(i);
 
 	    VectorXd q_i = q.segment(i*3*num_points_per_agent, 3*num_points_per_agent);
 	    
@@ -99,6 +99,5 @@ namespace crowds{
 	  }
 
 	  H.setFromTriplets(Htrips.begin(), Htrips.end());
-	  H = K_Ke*H;
 	}
 }

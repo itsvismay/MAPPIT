@@ -5,15 +5,15 @@ from mathutils import Matrix, Vector
 import sys
 import pathlib
 
-colors =[[0.19154,      0.78665,      0.56299],
-          [ 1.0147,      0.31997,      0.20648],
+colors = [[0.19154,      0.78665,      0.56299], 
+          [1.0,      0.31997,      0.20648],
           [0.24929,       0.4175,      0.87439],
           [0.18907,      0.61792,      0.73418],
           [0.19126,      0.50687,      0.84305],
           [0.20127,      0.55259,      0.78732],
           [0.35756,      0.34505,      0.83857],
-          [0.22557,      0.28247,       1.0331],
-          [0.13424,       1.0904,      0.31652],
+          [0.22557,      0.28247,       1.0],
+          [0.13424,       1.0,      0.31652],
           [0.66463,      0.19804,      0.67851],
           [0.19239,      0.44728,       0.9015],
           [0.95037,      0.20389,      0.38692],
@@ -21,7 +21,7 @@ colors =[[0.19154,      0.78665,      0.56299],
           [0.30151,      0.34759,      0.89208],
           [0.99527,      0.17835,      0.36756],
           [0.27262,      0.94403,      0.32453],
-          [0.18825,       0.3112,       1.0417],
+          [0.18825,       0.3112,       1.0],
           [0.75407,      0.21028,      0.57682],
           [0.95666,      0.21458,      0.36994],
           [0.70021,      0.64825,      0.19272],
@@ -30,7 +30,7 @@ colors =[[0.19154,      0.78665,      0.56299],
           [0.88803,      0.13745,       0.5157],
           [0.84613,      0.33478,      0.36026],
           [0.21983,      0.75253,      0.56881],
-          [  1.075,       0.2306,       0.2356],
+          [1.0,          0.2306,       0.2356],
           [0.80296,      0.20942,       0.5288],
           [0.58862,      0.75509,      0.19747],
           [0.35962,      0.32453,      0.85702],
@@ -39,15 +39,15 @@ colors =[[0.19154,      0.78665,      0.56299],
           [0.16349,      0.99597,      0.38172],
           [0.49841,      0.90317,       0.1396],
           [0.18493,      0.42813,      0.92811],
-          [ 1.0122,      0.33381,      0.19519],
-          [ 1.0059,      0.27752,      0.25775],
+          [1.0,          0.33381,      0.19519],
+          [1.0,          0.27752,      0.25775],
           [0.78035,      0.24489,      0.51593],
           [ 0.1856,      0.43055,      0.92503],
           [0.59614,      0.81037,      0.13467],
           [0.19053,      0.37403,      0.97662],
           [0.49686,      0.84013,      0.20419],
           [0.23716,      0.82479,      0.47923],
-          [0.25245,       1.0529,      0.23583],
+          [0.25245,       1.0,      0.23583],
           [0.81172,      0.57119,      0.15826],
           [0.27386,      0.43549,      0.83183],
           [0.56457,      0.20022,      0.77639],
@@ -57,7 +57,7 @@ colors =[[0.19154,      0.78665,      0.56299],
           [0.23694,      0.98922,      0.31501],
           [0.59195,      0.75386,      0.19537],
           [0.74114,      0.17774,       0.6223],
-          [0.16803,      0.18377,       1.1894],
+          [0.16803,      0.18377,       1.0],
           [0.27192,      0.93854,      0.33071],
           [0.91044,      0.46916,      0.16157],
           [0.23296,      0.96293,      0.34528],
@@ -69,7 +69,7 @@ colors =[[0.19154,      0.78665,      0.56299],
           [0.82396,      0.55465,      0.16257],
           [0.68395,      0.65521,      0.20202],
           [0.80606,      0.46624,      0.26888],
-          [ 1.0694,      0.23468,      0.23705],
+          [1.0,          0.23468,      0.23705],
           [0.94236,      0.24463,      0.35418],
           [ 0.6536,      0.20572,      0.68186],
           [0.22248,      0.74823,      0.57047],
@@ -87,15 +87,15 @@ colors =[[0.19154,      0.78665,      0.56299],
           [0.58041,      0.77744,      0.18332],
           [0.56521,      0.80512,      0.17084],
           [0.54313,      0.77533,      0.22271],
-          [0.19466,       1.1209,       0.2256],
+          [0.19466,       1.0,         0.2256],
           [0.22089,      0.50544,      0.81485],
           [0.83003,      0.48547,      0.22568],
           [0.51948,      0.84102,      0.18068],
           [0.73399,      0.60549,      0.20169],
-          [0.23874,       1.0746,      0.22787],
-          [0.16525,       1.1952,      0.18075],
+          [0.23874,       1.0,         0.22787],
+          [0.16525,       1.0,         0.18075],
           [ 0.1728,      0.58864,      0.77974],
-          [0.20619,        1.026,      0.30902],
+          [0.20619,        1.0,      0.30902],
           [0.19089,      0.96096,      0.38932],
           [0.89927,      0.22296,      0.41894],
           [0.84827,      0.53326,      0.15964],
@@ -104,10 +104,9 @@ colors =[[0.19154,      0.78665,      0.56299],
           [0.20283,      0.70141,      0.63694],
           [  0.901,      0.34352,      0.29666],
           [0.14355,      0.83488,      0.56275],
-          [0.19705,      0.19373,       1.1504]]
-
-def assign_mesh_color(agent_mesh, agent_json):
-    i = int(agent_json["id"])
+          [0.19705,      0.19373,       1.0]]
+def assign_mesh_color(agent_mesh, id):
+    i = id
     color = colors[i]
     mat = bpy.data.materials.new('agent_material'+str(i))
     agent_mesh.data.materials.append(mat)
@@ -156,7 +155,7 @@ def make_path_curve(name, coords_list):
     bpy.context.collection.objects.link(obj)
     return obj
 
-def make_rod_curve(name, coords_list, r):
+def make_rod_curve(name, coords_list, agent_radius, agent_id):
     # make a new curve
     crv = bpy.data.curves.new('crv', 'CURVE')
     crv.dimensions = '3D'
@@ -175,8 +174,14 @@ def make_rod_curve(name, coords_list, r):
     obj = bpy.data.objects.new(name, crv)
     bpy.context.collection.objects.link(obj)
 
+    #make sphere caps on the spline rod
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=agent_radius, 
+                  align='WORLD', location=(coords_list[-1][0], coords_list[-1][1], coords_list[-1][2]), scale=(1, 1, 1))
+    cap = bpy.context.selected_objects[0]
+    assign_mesh_color(cap, agent_id)
+
     #extrude to cylinder
-    bpy.ops.mesh.primitive_circle_add(radius=r, enter_editmode=False, align='WORLD', location=(0, 0, -20), scale=(1, 1, 1))
+    bpy.ops.mesh.primitive_circle_add(radius=agent_radius, enter_editmode=False, align='WORLD', location=(0, 0, -20), scale=(1, 1, 1))
     bpy.context.object.select_set(True)
     # bpy.context.object.hide_viewport = True
     bpy.context.object.name = "circle-"+name;
@@ -184,15 +189,16 @@ def make_rod_curve(name, coords_list, r):
     obj.data.bevel_mode = "OBJECT"
     obj.data.bevel_object = bpy.data.objects["circle-"+name]
     # obj.hide_viewport = True
+    assign_mesh_color(obj, agent_id)
     return obj
 
 
-def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder):
+def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, filename):
     render_rods = True
 
     bpy.ops.wm.open_mainfile(filepath=scene_folder + "../../base.blend")
 
-    f = open(scene_folder+"agents.json", "r")
+    f = open(scene_folder+filename+".json", "r")
     scene = json.loads(f.read())
     f1 = open(blend_material_folder + "agent_models/agent_list.json", "r")
     agent_obj_list = json.loads(f1.read())
@@ -216,8 +222,8 @@ def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder
         t = np.around(v[:,2], decimals=2)
 
         r = float(a["radius"])
-        rod = make_rod_curve("Rod-"+str(a["id"]), np.array([x, y, t], order='F').transpose(), r)
-        assign_mesh_color(rod, a)
+        rod = make_rod_curve("Rod-"+str(a["id"]), np.array([x, y, t], order='F').transpose(), r, int(a["id"]))
+        
 
     #load agents objects
     for a in scene["agents"]:
@@ -230,26 +236,15 @@ def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder
         r = float(a["radius"])
 
         meshFU=["-Y", "Z"]
-        bpy.ops.mesh.primitive_cube_add(size=r, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
-        # if a["animation_cycles"]:
-        #     print("use walk cycle")
-        #      # Manually do this after keyframing
-        #     # 1. Go into each walk cycle animation, disable the z-location 
-        #     # 2. Rotate the agents to face the correct direction
-        #     # 3. update walk cycle speed to match ground velocity
-        #     bpy.ops.import_scene.fbx( filepath = "/Users/vismay/Downloads/Walking.fbx")
-        #     obj_object = bpy.context.selected_objects[0]
-        # elif a["mesh"]:
-        # model = a["mesh"]
-        # #bpy.ops.import_scene.obj(filepath=blend_materials_folder+"agent_models/"+agent_obj_list[model]["file"])
-        # bpy.ops.import_scene.fbx( filepath = blend_material_folder+"agent_models/"+agent_obj_list[model]["file"])
-        # meshFU = agent_obj_list[model]["orientation_forward_up"]
-        # else:
-        #     print("use default unit cube")
+        if a["mesh"]:
+          model = a["mesh"]
+          bpy.ops.import_scene.obj(filepath=blend_material_folder+"agent_models/"+agent_obj_list[model]["file"])
+          meshFU = agent_obj_list[model]["orientation_forward_up"]
+        else:
+          bpy.ops.mesh.primitive_cube_add(size=r, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
 
         obj_object = bpy.context.selected_objects[0] ####<--Fix
-        for c in obj_object.children:
-          assign_mesh_color(c, a)
+        assign_mesh_color(obj_object, int(a["id"]))
         bpy.context.view_layer.objects.active = obj_object
         #origin_to_bottom(obj_object, meshFU, matrix=obj_object.matrix_world)
 
@@ -293,9 +288,9 @@ def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder
 
 
     if(render_rods):
-      bpy.ops.wm.save_mainfile(filepath=output_folder + "with_rods.blend")
+      bpy.ops.wm.save_mainfile(filepath=output_folder + filename + "_with_rods.blend")
     else:
-      bpy.ops.wm.save_mainfile(filepath=output_folder + "no_rods.blend")
+      bpy.ops.wm.save_mainfile(filepath=output_folder + filename + "_no_rods.blend")
 
 
 # #------------------------
@@ -305,12 +300,30 @@ def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder
 crowds_folder = "/Users/vismay/recode/crowds/"
 blend_material_folder = crowds_folder + "Scenes/3_blendered_results/blend_material/"
 
+# #3x3  agents
 #scene_folder = crowds_folder + "Scenes/2_output_results/3x_3_agents/test/run3/"
-scene_folder = crowds_folder + "Scenes/2_output_results/scaling_tests/20_agents/run5/"
-#scene_folder = crowds_folder + "Scenes/2_output_results/complex_maze/square_maze/one_agent/"
+
+# #Roomba Scenes
+# scene_folder = crowds_folder + "Scenes/2_output_results/roomba_maze/scene_2/run2/"
+# scene_folder = crowds_folder + "Scenes/2_output_results/roomba_maze/scene_3/run0/"
+
+# #Scaling Tests
+#scene_folder = crowds_folder + "Scenes/2_output_results/scaling_tests/10_agents/run11/"
+scene_folder = crowds_folder + "Scenes/2_output_results/scaling_tests/20_agents/run3/"
+
+# #Complex Maze
+#scene_folder = crowds_folder + "Scenes/2_output_results/complex_maze/square_maze/one_agent/run0/"
 #scene_folder = crowds_folder + "Scenes/2_output_results/complex_maze/square_maze/three_agents/"
 
-main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder)
+# #Three agent scenes
+# scene_folder = crowds_folder + "Scenes/2_output_results/three_agents/no_collisions/run3/"
+# scene_folder = crowds_folder + "Scenes/2_output_results/three_agents/symmetric_collisions/run1/"
+# scene_folder = crowds_folder + "Scenes/2_output_results/three_agents/size_asymmetric_collisions/run15/"
+# scene_folder = crowds_folder + "Scenes/2_output_results/three_agents/mass_asymmetric_collisions/run14/"
+scene_folder = crowds_folder + "Scenes/2_output_results/three_agents/size_mass_asymmetric_collisions/run5/"
+
+main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents")
+#main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "initial")
 
 exit()
 

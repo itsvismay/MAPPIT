@@ -107,9 +107,9 @@ compile_each("\
 mex_kinetic_energy.cpp;\
 mex_kinetic_gradient.cpp;\
 mex_kinetic_hessian.cpp;\
-mex_tol_energy.cpp;\
-mex_tol_gradient.cpp;\
-mex_tol_hessian.cpp;\
+mex_reg_energy.cpp;\
+mex_reg_gradient.cpp;\
+mex_reg_hessian.cpp;\
 mex_accel_energy.cpp;\
 mex_accel_gradient.cpp;\
 mex_accel_hessian.cpp;\

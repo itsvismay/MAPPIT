@@ -1,12 +1,27 @@
 {
 	"agent":{
-		"file": "agent.fbx",
-		"orientation_forward_up": ["Z", "Y"],
+		"file": "agent.obj",
+		"orientation_forward_up": ["-Z", "Y"],
 		"radius": 0.5
 	},
 	"elephant":{
-		"file": "agent.fbx",
+		"file": "elephant.obj",
+		"orientation_forward_up": ["-Z", "Y"],
+		"radius": 2
+	},
+	"deer":{
+		"file": "deer.obj",
 		"orientation_forward_up": ["Z", "Y"],
-		"radius": 3
+		"radius": 1.7
+	},
+	"snake":{
+		"file": "snake.obj",
+		"orientation_forward_up": ["-Z", "Y"],
+		"radius": 0.25
+	},
+	"roomba":{
+		"file": "roomba.obj",
+		"orientation_forward_up": ["Z", "Y"],
+		"radius": 0.125
 	}
 }

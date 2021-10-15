@@ -3,38 +3,38 @@
 	"agents": {
 		"agent1":{
 			"id": 1,
-			"xse": [[0, -8, 0], 
-					[0, 8, 10]], 
-			"mesh": "agent_1.obj",
+			"xse": [[0, -1.53, 0], 
+					[0, 1.53, 5]], 
+			"mesh": "roomba",
 			"animation_cycles": null,
-			"radius": 1,
+			"radius": 0.1,
 			"friends": [],
 			"mass": 1,
 			"energy_coefficients":{
 				"K_agent" : 1,
 				"K_tol" : 0,
 				"K_accel" : 0,
-				"K_map" : 0,
-				"K_ke" : 1,
+				"K_map" : 1,
+				"K_ke" : 100,
 				"K_pv" : 0,
 				"K_rg" : 1
 			}
 		},
 		"agent2":{
 			"id": 2,
-			"xse": [[8, 0, 0],
-					[-8, 0, 10]],
-			"mesh": "agent_2.obj",
+			"xse": [[1.53, 0, 0],
+					[-1.53, 0, 5]],
+			"mesh": "roomba",
 			"animation_cycles": null,
-			"radius": 1,
+			"radius": 0.1,
 			"friends": [],
 			"mass": 1,
 			"energy_coefficients":{
 				"K_agent" : 1,
 				"K_tol" : 0,
 				"K_accel" : 0,
-				"K_map" : 0,
-				"K_ke" : 1,
+				"K_map" : 1,
+				"K_ke" : 100,
 				"K_pv" : 0,
 				"K_rg" : 1
 			}
@@ -44,6 +44,8 @@
 	"terrain": {
 		"mesh": "maze.obj"
 	},
-	"tol":0
+	"smoothDistAlpha":100,
+	"useSpaceTimeGraphDiags": 1
+
 
 }

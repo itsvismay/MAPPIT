@@ -13,9 +13,9 @@
             "energy_coefficients":{
 				"K_agent" : 0,
 				"K_tol" : 0,
-				"K_accel" : 1,
+				"K_accel" : 0,
 				"K_map" : 1,
-				"K_ke" : 10,
+				"K_ke" : 1,
 				"K_pv" : 0,
 				"K_rg" : 100
 			},
@@ -31,6 +31,8 @@
 	"obstacles": {},
 	"terrain": {
 		"mesh": "terrain.obj"
-	}
+	},
+	"smoothDistAlpha":10,
+    "useSpaceTimeGraphDiags": 1
 
 }

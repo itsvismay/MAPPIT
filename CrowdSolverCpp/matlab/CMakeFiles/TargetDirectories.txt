@@ -1,11 +1,11 @@
 /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/rebuild_cache.dir
 /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_accel_hessian.dir
+/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_reg_hessian.dir
+/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_reg_gradient.dir
 /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_accel_gradient.dir
-/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_kinetic_energy.dir
-/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_tol_hessian.dir
+/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_reg_energy.dir
 /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/edit_cache.dir
 /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_kinetic_gradient.dir
-/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_tol_energy.dir
+/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_kinetic_energy.dir
 /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_accel_energy.dir
-/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_tol_gradient.dir
 /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles/mex_kinetic_hessian.dir

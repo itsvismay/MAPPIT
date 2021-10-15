@@ -18,16 +18,17 @@
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
     /* variable declarations here */
     
-    VectorXd q;
+    VectorXd q, K, mass;
 
     igl::matlab::parse_rhs_double(prhs+0, q);
-    int num_agents = mxGetScalar(prhs[1]);
-    int num_points_per_agent = mxGetScalar(prhs[2]);
-    double K_ke = mxGetScalar(prhs[3]);
+    igl::matlab::parse_rhs_double(prhs+1, K);
+    igl::matlab::parse_rhs_double(prhs+2, mass);
+    int num_agents = mxGetScalar(prhs[3]);
+    int num_points_per_agent = mxGetScalar(prhs[4]);
 
     SparseMatrix<double> H_ke;
     
-    crowds::kinetic_hessian(q, num_agents, num_points_per_agent, K_ke, H_ke);
+    crowds::kinetic_hessian(q, num_agents, num_points_per_agent, K, mass, H_ke);
 
     igl::matlab::prepare_lhs_double(H_ke, plhs+0);
 }

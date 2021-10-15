@@ -409,12 +409,12 @@ kinetic_gradient.h
 /Users/vismay/recode/crowds/CrowdSolverCpp/kinetic_gradient.h
 kinetic_hessian.h
 /Users/vismay/recode/crowds/CrowdSolverCpp/kinetic_hessian.h
-tol_energy.h
-/Users/vismay/recode/crowds/CrowdSolverCpp/tol_energy.h
-tol_gradient.h
-/Users/vismay/recode/crowds/CrowdSolverCpp/tol_gradient.h
-tol_hessian.h
-/Users/vismay/recode/crowds/CrowdSolverCpp/tol_hessian.h
+reg_energy.h
+/Users/vismay/recode/crowds/CrowdSolverCpp/reg_energy.h
+reg_gradient.h
+/Users/vismay/recode/crowds/CrowdSolverCpp/reg_gradient.h
+reg_hessian.h
+/Users/vismay/recode/crowds/CrowdSolverCpp/reg_hessian.h
 accel_energy.h
 /Users/vismay/recode/crowds/CrowdSolverCpp/accel_energy.h
 accel_gradient.h
@@ -422,15 +422,15 @@ accel_gradient.h
 accel_hessian.h
 /Users/vismay/recode/crowds/CrowdSolverCpp/accel_hessian.h
 
-/Users/vismay/recode/crowds/CrowdSolverCpp/tol_energy.h
+/Users/vismay/recode/crowds/CrowdSolverCpp/reg_energy.h
 Eigen/Dense
 -
 
-/Users/vismay/recode/crowds/CrowdSolverCpp/tol_gradient.h
+/Users/vismay/recode/crowds/CrowdSolverCpp/reg_gradient.h
 Eigen/Dense
 -
 
-/Users/vismay/recode/crowds/CrowdSolverCpp/tol_hessian.h
+/Users/vismay/recode/crowds/CrowdSolverCpp/reg_hessian.h
 Eigen/Dense
 -
 

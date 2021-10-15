@@ -9,9 +9,9 @@ CMakeFiles/crowdsolver.dir/main.cpp.o: ../kinetic_energy.h
 CMakeFiles/crowdsolver.dir/main.cpp.o: ../kinetic_gradient.h
 CMakeFiles/crowdsolver.dir/main.cpp.o: ../kinetic_hessian.h
 CMakeFiles/crowdsolver.dir/main.cpp.o: ../main.cpp
-CMakeFiles/crowdsolver.dir/main.cpp.o: ../tol_energy.h
-CMakeFiles/crowdsolver.dir/main.cpp.o: ../tol_gradient.h
-CMakeFiles/crowdsolver.dir/main.cpp.o: ../tol_hessian.h
+CMakeFiles/crowdsolver.dir/main.cpp.o: ../reg_energy.h
+CMakeFiles/crowdsolver.dir/main.cpp.o: ../reg_gradient.h
+CMakeFiles/crowdsolver.dir/main.cpp.o: ../reg_hessian.h
 CMakeFiles/crowdsolver.dir/main.cpp.o: /Users/vismay/recode/libigl/external/eigen/Eigen/Cholesky
 CMakeFiles/crowdsolver.dir/main.cpp.o: /Users/vismay/recode/libigl/external/eigen/Eigen/Core
 CMakeFiles/crowdsolver.dir/main.cpp.o: /Users/vismay/recode/libigl/external/eigen/Eigen/Dense

@@ -5,7 +5,7 @@ using namespace Eigen;
 typedef Eigen::Triplet<double> T;
 
 namespace crowds{
-	void accel_hessian(VectorXd& q, int num_agents, int num_points_per_agent, double K_acc, SparseMatrix<double>& H)
+	void accel_hessian(VectorXd& q, int num_agents, int num_points_per_agent, VectorXd& K_acc, SparseMatrix<double>& H)
 	{
 		std::vector<T> Htrips;
 		H.resize(q.size(), q.size());
@@ -14,8 +14,6 @@ namespace crowds{
 		double e = 0.0;
 	    for(int i=0; i<num_agents; i++)
 	    {
-			double mass_i = 1.0;//hard coded for now
-
 			VectorXd q_i = q.segment(i*3*num_points_per_agent, 3*num_points_per_agent);
       		MatrixXd Q_i = Map<MatrixXd>(q_i.data(), 3, q_i.size()/3).transpose();
 			Matrix<double, 9, 9> Hi;
@@ -25,7 +23,7 @@ namespace crowds{
 				Vector3d x1 = Q_i.row(j-1);
 				Vector3d v1 = Q_i.row(j) - Q_i.row(j-1);
 				Vector3d v2 = Q_i.row(j+1) - Q_i.row(j);
-				double K = 1;//v1.norm() + v2.norm();
+				double K = K_acc(i)*(v1.norm() + v2.norm());
 				Vector3d v1xv2 = (v1.cross(v2)).transpose();
 				double v1dv2 = v1.dot(v2);
 				double v1xv2norm = v1xv2.norm();
@@ -241,47 +239,6 @@ namespace crowds{
 				}
 
 				Hi<<H11,H12, H13, H21, H22, H23, H31, H32, H33;
-
-				// //---Etienne's Energy-------------------
-
-				// double eps = 1e-5;
-				//       if(v1xv2.norm()<=eps){
-				//         v1xv2norm = eps;
-				//       }
-				// Vector3d z = v1xv2/v1xv2norm;
-				// double X = v1.norm()*v2.norm() + v1dv2;
-				// double Y = v1xv2.dot(z);
-				// double angle = 2*atan2(Y, X);
-				// double K = K_acc;
-
-				// Vector3d Gjprev = -K * (angle) * (v1.cross(z)/v1.squaredNorm());
-				// Vector3d Gjnext = -K * (angle) * (v2.cross(z)/v2.squaredNorm());
-				// double z1 = z(0);
-				// double z2 = z(1);
-				// double z3 = z(2);
-
-				// Matrix3d H11;H11.setZero();// dGjp/dq(1:3)
-				
-				// Matrix3d H12;H12.setZero();// dGjp/dq(4:6)
-				
-				// Matrix3d H13;H13.setZero();// dGjp/dq(7:9)
-				
-				// Matrix3d H31;H31.setZero();// dGjp/dq(1:3)
-				// H31 = H13.transpose();
-				
-				// Matrix3d H32;H32.setZero();// dGjn/dq(1:3)
-				
-				// Matrix3d H33;H33.setZero();// dGjp/dq(1:3)
-				
-				// Matrix3d H21;H21.setZero();// dGjp/dq(1:3)
-				// H21 = H12.transpose();
-
-				// Matrix3d H22;H22.setZero();// dGjp/dq(1:3)
-				
-				// Matrix3d H23;H23.setZero();// dGjp/dq(1:3)
-				// H23 = H32.transpose();
-
-				// Hi<<H11,H12, H13, H21, H22, H23, H31, H32, H33;
 				
 				Vector3i inds;
 				inds<<i*3*num_points_per_agent + 3*(j-1)+0, 
@@ -321,6 +278,5 @@ namespace crowds{
 		}
 
 		H.setFromTriplets(Htrips.begin(), Htrips.end());
-		H = K_acc*H;
 	}
 }

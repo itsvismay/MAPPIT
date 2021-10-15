@@ -2,38 +2,53 @@
 addpath("../external/smooth-distances/build/");
 addpath("../CrowdSolverCpp/matlab/");
 
+global scene num_agents simple_sd mu_barrier space_time_diags surf_anim;
+
 mu_barrier= 1;
 smoothing_eps_coeff = 1e-2;
+space_time_diags = 0;
 
-%Scaling Tests
-%fname = "../Scenes/output_results/scaling_tests/2_agents/"; nLayer = 3; 
-    %num_segments = 20; max_iters = 5; num_inside_iters = 30;
-%fname = "../Scenes/output_results/scaling_tests/10_agents/"; nLayer = 7; 
-    %num_segments = 50; max_iters = 5; num_inside_iters = 30;
-%fname = "../Scenes/output_results/scaling_tests/20_agents/"; nLayer = 8;
-    %num_segments = 50; max_iters = 5; num_inside_iters = 30;
-%fname = "../Scenes/output_results/scaling_tests/30_agents/"; nLayer = 7;
+%% Scaling Tests
+%fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 4;
+    %num_segments = 50; max_iters = 4; num_inside_iters = 50;
+%fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 3;
+     %num_segments = 50; max_iters = 10; num_inside_iters = 40;
+%fname = "../Scenes/1_input_scenes/scaling_tests/10_agents/"; nLayer = 9;
+     %num_segments = 30; max_iters = 10; num_inside_iters = 40;
+fname = "../Scenes/1_input_scenes/scaling_tests/20_agents/"; nLayer = 9;
+     num_segments = 30; max_iters = 10; num_inside_iters = 30;
+%fname = "../Scenes/output_results/scaling_tests/30_agents/"; nLayer = 11;
     %num_segments = 50; max_iters = 5; num_inside_iters = 30;
 %fname = "../Scenes/output_results/scaling_tests/60_agents/"; nLayer = 7;
     %num_segments = 50; max_iters = 5; num_inside_iters = 30;
 %fname = "../Scenes/1_input_scenes/3x_3_agents/test/"; nLayer = 3; 
     %num_segments = 30; max_iters = 10; num_inside_iters = 50;
-fname = "../Scenes/1_input_scenes/3x_3_agents/test/"; nLayer = 3; 
-    num_segments = 30; max_iters = 10; num_inside_iters = 50;
-%fname = "../Scenes/output_results/complex_maze/square_maze/one_agent/";nLayer = 3; 
-    %num_segments = 250; max_iters = 10; num_inside_iters = 20;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+
+%% Roomba Maze
+% fname = "../Scenes/1_input_scenes/roomba_maze/scene_2/"; nLayer = 5; 
+%     num_segments = 35; max_iters = 10; num_inside_iters = 50; space_time_diags = 1;
+% fname = "../Scenes/1_input_scenes/roomba_maze/scene_3/"; nLayer = 5; 
+%     num_segments = 35; max_iters = 10; num_inside_iters = 50; space_time_diags = 1;
+%Cannot do the following. Its like folding a shipping box without overlaps. Impossible.
+% fname = "../Scenes/1_input_scenes/roomba_maze/scene_4/"; nLayer = 10; 
+%     num_segments = 40; max_iters = 6; num_inside_iters = 50; space_time_diags = 1;
+
+%% Complex Maze   
+%fname = "../Scenes/1_input_scenes/complex_maze/square_maze/one_agent/";nLayer = 3; 
+    %num_segments = 250; max_iters = 10; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 %fname = "../Scenes/output_results/complex_maze/square_maze/three_agents/";nLayer = 6; 
     %num_segments = 250; max_iters = 10; num_inside_iters = 20;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 %fname = "../Scenes/output_results/complex_maze/square_maze/five_agents/";nLayer = 10; 
     %num_segments = 280; max_iters = 10; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+ 
+%% Three
+%% Setup
     
 %looks at the output folder and gets the latest test run number
 runId = size(split(ls(strrep(fname,"1_input_scenes","2_output_results"))),1) -1;
 
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
-% setup_params.agents = rmfield(setup_params.agents, "agent3");
-global scene num_agents simple_sd mu_barrier;
 simple_sd = 1;
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
@@ -43,6 +58,7 @@ scene.terrain.BF = boundary_faces(tF);
 scene.terrain.BVind = unique(scene.terrain.BF);
 scene.terrain.BV = tV(scene.terrain.BVind,:);
 scene.agents = [];
+scene.smoothDistAlpha = setup_params.smoothDistAlpha;
 tV(scene.terrain.BVind,3) = 1;
 tsurf(tF, tV);hold on;
 
@@ -57,6 +73,7 @@ UserTols = [];
 coefficients_matrix = zeros(7, numel(fieldnames(setup_params.agents)));
 
 %% SETUP DIJIKSTRAS
+pre_tic = tic;
 AdjM = adjacency_matrix(scene.terrain.F);
 AdjM_visited = AdjM;
 nTotalVer = nLayer * length(scene.terrain.V(:,1));
@@ -193,21 +210,23 @@ scene.coeff_matrix = coefficients_matrix;
 %A = [A zeros(size(A,1),numel(scene.agents))];
 num_agents = numel(scene.agents);
 
+scene.timings.preprocess = toc(pre_tic);
+
 PV = v;
 PE = e;
 hold on;
-[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',1.5, 'PolySize', 4);
+[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',0.25, 'PolySize', 4);
 surf_anim = tsurf(CF, CV); 
 hold on;
 axis equal;
-axis tight manual 
-%imwrite(imind,cm,animation_file_name,'gif', 'Loopcount',inf);
+axis tight manual;
 drawnow;
 
 
 
 %minimize here
 options = optimoptions('fmincon', ...
+                        'OutputFcn', @stoppingCriteria,...
                         'SpecifyObjectiveGradient', true, ...
                         'Display', 'iter',...
                         'UseParallel', true,...
@@ -217,22 +236,42 @@ options.MaxFunctionEvaluations = 1e6;
 options.MaxIterations = num_inside_iters;
 q_i  = [reshape(v', numel(v),1)];
 qn = reshape(v', numel(v),1);
-print_agents(strrep(fname,"1_input_scenes","2_output_results") +"run"+runId+"/", "initial.json", scene, qn);
+scene.timings.iterations = [];
+plottings(scene, qn, []);
+print_agents(strrep(fname,"1_input_scenes","2_output_results") +"run"+runId+"/", "initial", qn);
 for  iter=1:max_iters
-    [q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents),scene, e, surf_anim),... 
+    iterTic = tic;
+    iterOutput = struct;
+    iterOutput.egAgent = 0;
+    iterOutput.egMap = 0;
+    iterOutput.eAcc = 0;
+    iterOutput.eKE = 0;
+    iterOutput.eReg = 0;
+    iterOutput.gAcc = 0;
+    iterOutput.gKE = 0;
+    iterOutput.gReg = 0;
+    iterOutput.egTotal = 0;
+    iterOutput.hAgent = 0;
+    iterOutput.hMap = 0;
+    iterOutput.hAcc = 0;
+    iterOutput.hKE = 0;
+    iterOutput.hReg = 0;
+    iterOutput.hTotal = 0;
+    iterOutput.output = struct;
+    iterOutput.totalTime =0;
+    scene.timings.iterations = [scene.timings.iterations iterOutput];
+    [q_i, fval, exitflag, output] = fmincon(@(x) path_energy(x,UserTols, numel(scene.agents), e, surf_anim),... 
                             q_i, ...
                             A,b,Aeq,beq,[],[], ...
                             [], options);
+    
     qn = q_i;
-
-    print_agents(strrep(fname,"1_input_scenes","2_output_results") +"run"+runId+"/", "agents.json", scene, qn) %TODO
-
-    Q = reshape(qn, numel(qn)/numel(scene.agents), numel(scene.agents));
-    scene.agents(i).v = reshape(Q(:,i), 3, size(Q,1)/3)';
-    PV = reshape(qn, 3, numel(qn)/3)';
-    [CV,CF,CJ,CI] = edge_cylinders(PV,e, 'Thickness', 1.5, 'PolySize', 4);
-    surf_anim.Vertices = CV;
-    drawnow;
+    output.message = strrep(output.message, newline, "");
+    scene.timings.iterations(end).output = output;
+    scene.timings.iterations(end).totalTime = toc(iterTic);
+    print_agents(strrep(fname,"1_input_scenes","2_output_results") +"run"+runId+"/", "agents", qn) %TODO
+    plottings(scene, qn, []);
+   
     mu_barrier = mu_barrier*0.5;
 end
 

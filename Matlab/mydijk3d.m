@@ -5,6 +5,7 @@
 % s, t - start and end
 % BV, Bind - Boundary verts and boundary indices into VV
 function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, Bind, agentRadius)
+    global space_time_diags
     agent_radius = 2*agentRadius;
     
     % set the edge weights
@@ -26,7 +27,7 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
         [neighbors,kA,Aj] = find(newA(:,u));
         for vi = neighbors'
             edge_weight = 1.0/newA(vi, u);%min_edge_to_boundary_dist(Q(u,:), Q(vi,:), BV);
-            
+            edge_weight = edge_weight + 100*norm(VV(vi,:) - VV(t,:));
             alt_dist = D(u) + edge_weight*norm(VV(u,:) - VV(vi,:));
             if alt_dist < D(vi)
                 D(vi) = alt_dist;

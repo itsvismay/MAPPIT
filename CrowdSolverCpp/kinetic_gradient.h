@@ -4,15 +4,15 @@
 using namespace Eigen;
 
 namespace crowds{
-  void kinetic_gradient(VectorXd& q, int num_agents, int num_points_per_agent, double K_Ke, VectorXd& g)
+  void kinetic_gradient(VectorXd& q, int num_agents, int num_points_per_agent, VectorXd& K_Ke, VectorXd& mass, VectorXd& g)
   {
     g.resize(q.size());
     g.setZero();
 
-    double e = 0.0;
+    double energy = 0.0;
     for(int i=0; i<num_agents; i++)
     {
-      double mass_i = 1.0;//hard coded for now
+      double mass_i = mass(i)*K_Ke(i);
 
       VectorXd q_i = q.segment(i*3*num_points_per_agent, 3*num_points_per_agent);
       
@@ -38,6 +38,5 @@ namespace crowds{
       }
 
     }
-    g *= K_Ke;
   }
 }

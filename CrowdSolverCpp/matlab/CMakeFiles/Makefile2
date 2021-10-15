@@ -74,13 +74,13 @@ CMAKE_BINARY_DIR = /Users/vismay/recode/crowds/CrowdSolverCpp/matlab
 
 # The main recursive "all" target.
 all: CMakeFiles/mex_accel_hessian.dir/all
+all: CMakeFiles/mex_reg_hessian.dir/all
+all: CMakeFiles/mex_reg_gradient.dir/all
 all: CMakeFiles/mex_accel_gradient.dir/all
-all: CMakeFiles/mex_kinetic_energy.dir/all
-all: CMakeFiles/mex_tol_hessian.dir/all
+all: CMakeFiles/mex_reg_energy.dir/all
 all: CMakeFiles/mex_kinetic_gradient.dir/all
-all: CMakeFiles/mex_tol_energy.dir/all
+all: CMakeFiles/mex_kinetic_energy.dir/all
 all: CMakeFiles/mex_accel_energy.dir/all
-all: CMakeFiles/mex_tol_gradient.dir/all
 all: CMakeFiles/mex_kinetic_hessian.dir/all
 
 .PHONY : all
@@ -92,13 +92,13 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/mex_accel_hessian.dir/clean
+clean: CMakeFiles/mex_reg_hessian.dir/clean
+clean: CMakeFiles/mex_reg_gradient.dir/clean
 clean: CMakeFiles/mex_accel_gradient.dir/clean
-clean: CMakeFiles/mex_kinetic_energy.dir/clean
-clean: CMakeFiles/mex_tol_hessian.dir/clean
+clean: CMakeFiles/mex_reg_energy.dir/clean
 clean: CMakeFiles/mex_kinetic_gradient.dir/clean
-clean: CMakeFiles/mex_tol_energy.dir/clean
+clean: CMakeFiles/mex_kinetic_energy.dir/clean
 clean: CMakeFiles/mex_accel_energy.dir/clean
-clean: CMakeFiles/mex_tol_gradient.dir/clean
 clean: CMakeFiles/mex_kinetic_hessian.dir/clean
 
 .PHONY : clean
@@ -131,6 +131,60 @@ CMakeFiles/mex_accel_hessian.dir/clean:
 .PHONY : CMakeFiles/mex_accel_hessian.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/mex_reg_hessian.dir
+
+# All Build rule for target.
+CMakeFiles/mex_reg_hessian.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_reg_hessian.dir/build.make CMakeFiles/mex_reg_hessian.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_reg_hessian.dir/build.make CMakeFiles/mex_reg_hessian.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles --progress-num=17,18 "Built target mex_reg_hessian"
+.PHONY : CMakeFiles/mex_reg_hessian.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/mex_reg_hessian.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/mex_reg_hessian.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 0
+.PHONY : CMakeFiles/mex_reg_hessian.dir/rule
+
+# Convenience name for target.
+mex_reg_hessian: CMakeFiles/mex_reg_hessian.dir/rule
+
+.PHONY : mex_reg_hessian
+
+# clean rule for target.
+CMakeFiles/mex_reg_hessian.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_reg_hessian.dir/build.make CMakeFiles/mex_reg_hessian.dir/clean
+.PHONY : CMakeFiles/mex_reg_hessian.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/mex_reg_gradient.dir
+
+# All Build rule for target.
+CMakeFiles/mex_reg_gradient.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_reg_gradient.dir/build.make CMakeFiles/mex_reg_gradient.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_reg_gradient.dir/build.make CMakeFiles/mex_reg_gradient.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles --progress-num=15,16 "Built target mex_reg_gradient"
+.PHONY : CMakeFiles/mex_reg_gradient.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/mex_reg_gradient.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/mex_reg_gradient.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 0
+.PHONY : CMakeFiles/mex_reg_gradient.dir/rule
+
+# Convenience name for target.
+mex_reg_gradient: CMakeFiles/mex_reg_gradient.dir/rule
+
+.PHONY : mex_reg_gradient
+
+# clean rule for target.
+CMakeFiles/mex_reg_gradient.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_reg_gradient.dir/build.make CMakeFiles/mex_reg_gradient.dir/clean
+.PHONY : CMakeFiles/mex_reg_gradient.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/mex_accel_gradient.dir
 
 # All Build rule for target.
@@ -158,58 +212,31 @@ CMakeFiles/mex_accel_gradient.dir/clean:
 .PHONY : CMakeFiles/mex_accel_gradient.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/mex_kinetic_energy.dir
+# Target rules for target CMakeFiles/mex_reg_energy.dir
 
 # All Build rule for target.
-CMakeFiles/mex_kinetic_energy.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_kinetic_energy.dir/build.make CMakeFiles/mex_kinetic_energy.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_kinetic_energy.dir/build.make CMakeFiles/mex_kinetic_energy.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles --progress-num=7,8 "Built target mex_kinetic_energy"
-.PHONY : CMakeFiles/mex_kinetic_energy.dir/all
+CMakeFiles/mex_reg_energy.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_reg_energy.dir/build.make CMakeFiles/mex_reg_energy.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_reg_energy.dir/build.make CMakeFiles/mex_reg_energy.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles --progress-num=13,14 "Built target mex_reg_energy"
+.PHONY : CMakeFiles/mex_reg_energy.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/mex_kinetic_energy.dir/rule: cmake_check_build_system
+CMakeFiles/mex_reg_energy.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/mex_kinetic_energy.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/mex_reg_energy.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 0
-.PHONY : CMakeFiles/mex_kinetic_energy.dir/rule
+.PHONY : CMakeFiles/mex_reg_energy.dir/rule
 
 # Convenience name for target.
-mex_kinetic_energy: CMakeFiles/mex_kinetic_energy.dir/rule
+mex_reg_energy: CMakeFiles/mex_reg_energy.dir/rule
 
-.PHONY : mex_kinetic_energy
-
-# clean rule for target.
-CMakeFiles/mex_kinetic_energy.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_kinetic_energy.dir/build.make CMakeFiles/mex_kinetic_energy.dir/clean
-.PHONY : CMakeFiles/mex_kinetic_energy.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/mex_tol_hessian.dir
-
-# All Build rule for target.
-CMakeFiles/mex_tol_hessian.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_tol_hessian.dir/build.make CMakeFiles/mex_tol_hessian.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_tol_hessian.dir/build.make CMakeFiles/mex_tol_hessian.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles --progress-num=17,18 "Built target mex_tol_hessian"
-.PHONY : CMakeFiles/mex_tol_hessian.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/mex_tol_hessian.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/mex_tol_hessian.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 0
-.PHONY : CMakeFiles/mex_tol_hessian.dir/rule
-
-# Convenience name for target.
-mex_tol_hessian: CMakeFiles/mex_tol_hessian.dir/rule
-
-.PHONY : mex_tol_hessian
+.PHONY : mex_reg_energy
 
 # clean rule for target.
-CMakeFiles/mex_tol_hessian.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_tol_hessian.dir/build.make CMakeFiles/mex_tol_hessian.dir/clean
-.PHONY : CMakeFiles/mex_tol_hessian.dir/clean
+CMakeFiles/mex_reg_energy.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_reg_energy.dir/build.make CMakeFiles/mex_reg_energy.dir/clean
+.PHONY : CMakeFiles/mex_reg_energy.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/mex_kinetic_gradient.dir
@@ -239,31 +266,31 @@ CMakeFiles/mex_kinetic_gradient.dir/clean:
 .PHONY : CMakeFiles/mex_kinetic_gradient.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/mex_tol_energy.dir
+# Target rules for target CMakeFiles/mex_kinetic_energy.dir
 
 # All Build rule for target.
-CMakeFiles/mex_tol_energy.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_tol_energy.dir/build.make CMakeFiles/mex_tol_energy.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_tol_energy.dir/build.make CMakeFiles/mex_tol_energy.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles --progress-num=13,14 "Built target mex_tol_energy"
-.PHONY : CMakeFiles/mex_tol_energy.dir/all
+CMakeFiles/mex_kinetic_energy.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_kinetic_energy.dir/build.make CMakeFiles/mex_kinetic_energy.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_kinetic_energy.dir/build.make CMakeFiles/mex_kinetic_energy.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles --progress-num=7,8 "Built target mex_kinetic_energy"
+.PHONY : CMakeFiles/mex_kinetic_energy.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/mex_tol_energy.dir/rule: cmake_check_build_system
+CMakeFiles/mex_kinetic_energy.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/mex_tol_energy.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/mex_kinetic_energy.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 0
-.PHONY : CMakeFiles/mex_tol_energy.dir/rule
+.PHONY : CMakeFiles/mex_kinetic_energy.dir/rule
 
 # Convenience name for target.
-mex_tol_energy: CMakeFiles/mex_tol_energy.dir/rule
+mex_kinetic_energy: CMakeFiles/mex_kinetic_energy.dir/rule
 
-.PHONY : mex_tol_energy
+.PHONY : mex_kinetic_energy
 
 # clean rule for target.
-CMakeFiles/mex_tol_energy.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_tol_energy.dir/build.make CMakeFiles/mex_tol_energy.dir/clean
-.PHONY : CMakeFiles/mex_tol_energy.dir/clean
+CMakeFiles/mex_kinetic_energy.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_kinetic_energy.dir/build.make CMakeFiles/mex_kinetic_energy.dir/clean
+.PHONY : CMakeFiles/mex_kinetic_energy.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/mex_accel_energy.dir
@@ -291,33 +318,6 @@ mex_accel_energy: CMakeFiles/mex_accel_energy.dir/rule
 CMakeFiles/mex_accel_energy.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_accel_energy.dir/build.make CMakeFiles/mex_accel_energy.dir/clean
 .PHONY : CMakeFiles/mex_accel_energy.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/mex_tol_gradient.dir
-
-# All Build rule for target.
-CMakeFiles/mex_tol_gradient.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_tol_gradient.dir/build.make CMakeFiles/mex_tol_gradient.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_tol_gradient.dir/build.make CMakeFiles/mex_tol_gradient.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles --progress-num=15,16 "Built target mex_tol_gradient"
-.PHONY : CMakeFiles/mex_tol_gradient.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/mex_tol_gradient.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/mex_tol_gradient.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/vismay/recode/crowds/CrowdSolverCpp/matlab/CMakeFiles 0
-.PHONY : CMakeFiles/mex_tol_gradient.dir/rule
-
-# Convenience name for target.
-mex_tol_gradient: CMakeFiles/mex_tol_gradient.dir/rule
-
-.PHONY : mex_tol_gradient
-
-# clean rule for target.
-CMakeFiles/mex_tol_gradient.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mex_tol_gradient.dir/build.make CMakeFiles/mex_tol_gradient.dir/clean
-.PHONY : CMakeFiles/mex_tol_gradient.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/mex_kinetic_hessian.dir

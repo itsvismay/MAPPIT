@@ -343,6 +343,15 @@ mex_kinetic_gradient_LIB_DEPENDS:STATIC=general;/Applications/MATLAB_R2019b.app/
 mex_kinetic_hessian_LIB_DEPENDS:STATIC=general;/Applications/MATLAB_R2019b.app/bin/maci64/libmex.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmx.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libeng.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmat.dylib;
 
 //Dependencies for the target
+mex_reg_energy_LIB_DEPENDS:STATIC=general;/Applications/MATLAB_R2019b.app/bin/maci64/libmex.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmx.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libeng.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmat.dylib;
+
+//Dependencies for the target
+mex_reg_gradient_LIB_DEPENDS:STATIC=general;/Applications/MATLAB_R2019b.app/bin/maci64/libmex.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmx.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libeng.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmat.dylib;
+
+//Dependencies for the target
+mex_reg_hessian_LIB_DEPENDS:STATIC=general;/Applications/MATLAB_R2019b.app/bin/maci64/libmex.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmx.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libeng.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmat.dylib;
+
+//Dependencies for the target
 mex_tol_energy_LIB_DEPENDS:STATIC=general;/Applications/MATLAB_R2019b.app/bin/maci64/libmex.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmx.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libeng.dylib;general;/Applications/MATLAB_R2019b.app/bin/maci64/libmat.dylib;
 
 //Dependencies for the target

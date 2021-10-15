@@ -1,6 +1,6 @@
 function v = interpolate_rod_segments(x, n_seg)
     if(n_seg < size(x,1) -1)
-        sprintf("must have more segments")
+        sprintf("Error: Interpolate_rod_segments: must have more segments")
     end
     n_seg = n_seg + 1;
     dx = x(2:end, :) - x(1:end-1,:);
