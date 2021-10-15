@@ -34,10 +34,10 @@ space_time_diags = 0;
 %     num_segments = 40; max_iters = 6; num_inside_iters = 50; space_time_diags = 1;
 
 %% Complex Maze   
-fname = "../Scenes/1_input_scenes/complex_maze/square_maze/one_agent/";nLayer = 4; 
-    num_segments = 220; max_iters = 10; num_inside_iters = 30; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-%fname = "../Scenes/output_results/complex_maze/square_maze/three_agents/";nLayer = 6; 
-    %num_segments = 250; max_iters = 10; num_inside_iters = 20;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/complex_maze/square_maze/one_agent/";nLayer = 3; 
+%     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+fname = "../Scenes/1_input_scenes/complex_maze/square_maze/three_agents/";nLayer = 3; 
+    num_segments = 200; max_iters = 5; num_inside_iters = 100;mu_barrier= 1; smoothing_eps_coeff = 1e-2;space_time_diags = 0;
 %fname = "../Scenes/output_results/complex_maze/square_maze/five_agents/";nLayer = 10; 
     %num_segments = 280; max_iters = 10; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
  

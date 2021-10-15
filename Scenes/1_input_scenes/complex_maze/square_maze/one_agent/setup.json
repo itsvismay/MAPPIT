@@ -4,11 +4,11 @@
 		"agent1":{
 			"id": 1,
 			"xse": [[-23.4375, -4.6875, 0], 
-					[23.4375, -20.3125, 10]], 
-			"mesh": "agent_1.obj",
+					[23.4375, -20.3125, 50]], 
+			"mesh": "agent",
 			"animation_cycles": null,
 			"friends": [],
-            "radius": 0.5,
+            "radius": 0.75,
             "mass": 1,
             "energy_coefficients":{
 				"K_agent" : 0,
@@ -33,6 +33,6 @@
 		"mesh": "terrain.obj"
 	},
 	"smoothDistAlpha":10,
-    "useSpaceTimeGraphDiags": 1
+    "useSpaceTimeGraphDiags": 0
 
 }

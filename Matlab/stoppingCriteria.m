@@ -8,8 +8,8 @@ optimValues.stepsize; %norm of step size
 % Check whether directional derivative norm is less than .01.
 % if it is that means the sum of the delta of agents trajectories is less
 % than 1e-2, which means basically converged
-% if optimValues.stepsize < 1e-4 && optimValues.iteration>0
-%     stop = true;
-% end
+if optimValues.stepsize < 1e-2 && optimValues.iteration>0
+    stop = true;
+end
 
 end 

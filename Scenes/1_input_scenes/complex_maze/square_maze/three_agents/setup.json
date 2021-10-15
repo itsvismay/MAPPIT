@@ -4,18 +4,18 @@
 		"agent1":{
 			"id": 1,
 			"xse": [[-23.4375, -4.6875, 0], 
-					[23.4375, -20.3125, 10]], 
+					[23.4375, -20.3125, 20]], 
 			"mesh": "agent",
 			"animation_cycles": null,
 			"friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients":{
 				"K_agent" : 1,
 				"K_tol" : 0,
 				"K_accel" : 1,
 				"K_map" : 1,
-				"K_ke" : 10,
+				"K_ke" : 1,
 				"K_pv" : 0,
 				"K_rg" : 100
 			}
@@ -23,18 +23,18 @@
 		"agent2":{
 			"id": 2,
 			"xse": [[23.4375, -20.3125, 0],
-					[-23.4375, -4.6875, 10]], 
+					[-23.4375, -4.6875, 20]], 
 			"mesh": "agent",
 			"animation_cycles": null,
 			"friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients":{
 				"K_agent" : 1,
 				"K_tol" : 0,
 				"K_accel" : 1,
 				"K_map" : 1,
-				"K_ke" : 10,
+				"K_ke" : 1,
 				"K_pv" : 0,
 				"K_rg" : 100
 			}
@@ -42,18 +42,18 @@
 		"agent3":{
 			"id": 3,
 			"xse": [[14, -23.437, 0],
-					[-23.437, 23.437, 10]], 
+					[-23.437, 23.437, 20]], 
 			"mesh": "agent",
 			"animation_cycles": null,
 			"friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients":{
 				"K_agent" : 1,
 				"K_tol" : 0,
 				"K_accel" : 1,
 				"K_map" : 1,
-				"K_ke" : 10,
+				"K_ke" : 1,
 				"K_pv" : 0,
 				"K_rg" : 100
 			}
@@ -62,6 +62,8 @@
 	"obstacles": {},
 	"terrain": {
 		"mesh": "terrain.obj"
-	}
+	},
+	"smoothDistAlpha":30,
+    "useSpaceTimeGraphDiags": 0
 
 }
