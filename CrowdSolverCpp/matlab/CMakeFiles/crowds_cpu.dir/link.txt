@@ -1,1 +1,0 @@
-/usr/bin/libtool -c -static -o libcrowds_cpu.a  CMakeFiles/crowds_cpu.dir/crowds_energy.cpp.o 
