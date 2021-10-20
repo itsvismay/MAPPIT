@@ -42,14 +42,14 @@ function [H] = hessfcn(q_i,lambda)
      
      
     oneHessTic = tic;
-    %[H_ke] = mex_kinetic_hessian(Q(:),K_ke', A_mass', num_agents, size(Q, 1)/3);
-    [e_ke1, H_ke1] = kinetic_energy_with_hessian(Q, scene, K_ke);
+    [H_ke] = mex_kinetic_hessian(Q(:),K_ke', A_mass', num_agents, size(Q, 1)/3);
+    %[e_ke1, H_ke1] = kinetic_energy_with_hessian(Q, scene, K_ke);
     scene.timings.iterations(end).hKE = scene.timings.iterations(end).hKE + toc(oneHessTic);
-    %H = H + H_ke;
-    for ii=1:num_agents
-        H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1)) = H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1))...
-                                                                            + H_ke1(:,:,ii);
-    end
+    H = H + H_ke;
+%     for ii=1:num_agents
+%         H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1)) = H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1))...
+%                                                                             + H_ke1(:,:,ii);
+%     end
     
     oneHessTic = tic;
     [H_reg] = mex_reg_hessian(Q(:),K_reg', num_agents, size(Q, 1)/3);

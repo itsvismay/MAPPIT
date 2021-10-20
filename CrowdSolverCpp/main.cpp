@@ -25,7 +25,7 @@ VectorXd UserTols;
 //Weights
 double K_agent = 1;
 double K_tol =   1; 
-double K_ke =    5;
+double K_ke =    1;
 double K_reg =   1;
 double K_acc =   1;
 std::vector<VectorXd> Qvec;
@@ -34,7 +34,7 @@ std::vector<VectorXd> Qvec;
 
 json j_input;
 //std::string fname = "../../Scenes/output_results/complex_maze/square_maze/one_agent/";
-std::string fname = "../../Scenes/2_output_results/scaling_tests/2_agents/run21/";
+std::string fname = "../../Scenes/2_output_results/scaling_tests/2_agents/run1/";
 
 void add_agent_equality_contraints(std::vector<int>& to_fix, VectorXd& av, MatrixXd& Aeq, VectorXd& beq)
 {
@@ -62,13 +62,16 @@ void add_agent_equality_contraints(std::vector<int>& to_fix, VectorXd& av, Matri
 
 void readInit()
 {
+  
+
+  //------------
+  //setup agent positions
   std::cout<<"reading file"<<std::endl;
   std::cout<<fname<<std::endl;
   std::ifstream input_file(fname + "initial.json");
   input_file >> j_input;
   std::cout<<j_input["agents"][0].size()<<std::endl;
   std::cout<<"setting up agents"<<std::endl;
-  //setup agent positions
   for(int i=0; i<j_input["agents"].size(); ++i)
   {
     VectorXd av = VectorXd::Zero(3*(j_input["agents"][i]["v"].size()));
@@ -94,6 +97,7 @@ void readInit()
     add_agent_equality_contraints(to_fix, av, Aeq, beq);
   }
 
+  //------------
   // for(int i=0; i<1; ++i)
   // {
   //   VectorXd av = VectorXd::Zero(3*3);
@@ -134,6 +138,7 @@ void readInit()
 
   //   add_agent_equality_contraints(to_fix, av, Aeq, beq);
   // }
+  //------------
 
   q.resize(Qvec.size()*Qvec[0].size());
   for(int i=0;i<Qvec.size(); i++){
@@ -169,12 +174,12 @@ void fd_check_accel_gradient()
   VectorXd g;
   accel_gradient(q, num_agents, num_points_per_agent, K, g);
 
-  std::cout<<g.segment<20>(0).transpose()<<std::endl;
+  std::cout<<g.transpose()<<std::endl;
   std::cout<<"---------------------"<<std::endl;
-  std::cout<<fdg.segment<20>(0).transpose()<<std::endl;
+  std::cout<<fdg.transpose()<<std::endl;
   std::cout<<"#######################"<<std::endl;
   VectorXd diff = g.transpose() - fdg.transpose();
-  std::cout<<diff.segment<20>(0).transpose()<<std::endl;
+  std::cout<<diff.transpose()<<std::endl;
 }
 
 void fd_check_reg_gradient()
@@ -201,12 +206,12 @@ void fd_check_reg_gradient()
   VectorXd g;
   reg_gradient(q, num_agents, num_points_per_agent, K, g);
 
-  std::cout<<g.segment<20>(0).transpose()<<std::endl;
+  std::cout<<g.transpose()<<std::endl;
   std::cout<<"---------------------"<<std::endl;
-  std::cout<<fdg.segment<20>(0).transpose()<<std::endl;
+  std::cout<<fdg.transpose()<<std::endl;
   std::cout<<"#######################"<<std::endl;
   VectorXd diff = g.transpose() - fdg.transpose();
-  std::cout<<diff.segment<20>(0).transpose()<<std::endl;
+  std::cout<<diff.transpose()<<std::endl;
 }
 
 void fd_check_kinetic_gradient()
@@ -234,12 +239,12 @@ void fd_check_kinetic_gradient()
   VectorXd g;
   kinetic_gradient(q, num_agents, num_points_per_agent, K, mass, g);
 
-  std::cout<<g.segment<20>(0).transpose()<<std::endl;
+  std::cout<<g.transpose()<<std::endl;
   std::cout<<"---------------------"<<std::endl;
-  std::cout<<fdg.segment<20>(0).transpose()<<std::endl;
+  std::cout<<fdg.transpose()<<std::endl;
   std::cout<<"#######################"<<std::endl;
   VectorXd diff = g.transpose() - fdg.transpose();
-  std::cout<<diff.segment<20>(0).transpose()<<std::endl;
+  std::cout<<diff.transpose()<<std::endl;
 }
 
 void fd_check_accel_hessian()
@@ -273,12 +278,12 @@ void fd_check_accel_hessian()
   accel_hessian(q, num_agents, num_points_per_agent, K, H);
   MatrixXd fullH = MatrixXd(H);
   std::cout<<"--------------"<<std::endl;
-  std::cout<<fullH.block<19,19>(0,0)<<std::endl;
+  std::cout<<fullH.block<10,10>(0,0)<<std::endl;
   std::cout<<"--------------"<<std::endl;
-  std::cout<<fdH.block<19,19>(0,0)<<std::endl;
+  std::cout<<fdH.block<10,10>(0,0)<<std::endl;
   std::cout<<"-#########--"<<std::endl;
   MatrixXd Diff = fdH - fullH;
-  std::cout<<Diff.block<19,19>(0,0)<<std::endl;
+  std::cout<<Diff.block<10,10>(0,0)<<std::endl;
 }
 
 void fd_check_reg_hessian()
@@ -312,12 +317,12 @@ void fd_check_reg_hessian()
   reg_hessian(q, num_agents, num_points_per_agent, K, H);
   MatrixXd fullH = MatrixXd(H);
   std::cout<<"--------------"<<std::endl;
-  std::cout<<fullH.block<19,19>(0,0)<<std::endl;
+  std::cout<<fullH.block<10,10>(0,0)<<std::endl;
   std::cout<<"--------------"<<std::endl;
-  std::cout<<fdH.block<19,19>(0,0)<<std::endl;
+  std::cout<<fdH.block<10,10>(0,0)<<std::endl;
   std::cout<<"-#########--"<<std::endl;
   MatrixXd Diff = fdH - fullH;
-  std::cout<<Diff.block<19,19>(0,0)<<std::endl;
+  std::cout<<Diff.block<10,10>(0,0)<<std::endl;
 }
 
 void fd_check_kinetic_hessian()
@@ -326,7 +331,7 @@ void fd_check_kinetic_hessian()
   int num_agents = Qvec.size();
   int num_points_per_agent = Qvec[0].size()/3;
   VectorXd K = K_ke*VectorXd::Ones(num_agents);
-  VectorXd mass = 10*VectorXd::Ones(num_agents);
+  VectorXd mass = 1*VectorXd::Ones(num_agents);
 
   double eps = 1e-4;
   VectorXd grad;
@@ -351,12 +356,12 @@ void fd_check_kinetic_hessian()
   kinetic_hessian(q, num_agents, num_points_per_agent, K, mass, H);
   MatrixXd fullH = MatrixXd(H);
   std::cout<<"--------------"<<std::endl;
-  std::cout<<fullH.block<19,19>(50,50)<<std::endl;
+  std::cout<<fullH.block<10,10>(0,0)<<std::endl;
   std::cout<<"--------------"<<std::endl;
-  std::cout<<fdH.block<19,19>(50,50)<<std::endl;
+  std::cout<<fdH.block<10,10>(0,0)<<std::endl;
   std::cout<<"-#########--"<<std::endl;
   MatrixXd Diff = fdH - fullH;
-  std::cout<<Diff.block<19,19>(50,50)<<std::endl;
+  std::cout<<Diff.block<10,10>(0,0)<<std::endl;
 }
 
 
@@ -364,12 +369,12 @@ int main(int argc, char *argv[])
 {
 
   readInit();
-  fd_check_accel_gradient();
-  fd_check_accel_hessian();
+  // fd_check_accel_gradient();
+  // fd_check_accel_hessian();
   //fd_check_reg_gradient();
   //fd_check_reg_hessian();
-  // fd_check_kinetic_gradient();
-  // fd_check_kinetic_hessian();
+  fd_check_kinetic_gradient();
+  fd_check_kinetic_hessian();
   exit(0);
 
   return 1;

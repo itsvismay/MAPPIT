@@ -2,5 +2,6 @@
 **/.DS_Store
 /Scenes/2_output_results
 /Scenes/3_blendered_results
+!/Scenes/3_blendered_results/main.py
 /CrowdSolverCpp/build
 /CrowdSolverCpp/matlab/build

@@ -9,8 +9,8 @@ smoothing_eps_coeff = 1e-2;
 space_time_diags = 0;
 
 %% Scaling Tests
-% fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 3;
-%     num_segments = 30; max_iters = 4; num_inside_iters = 50;
+fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 3;
+    num_segments = 30; max_iters = 4; num_inside_iters = 50;
 % fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
 %      num_segments = 30; max_iters = 10; num_inside_iters = 40;
 % fname = "../Scenes/1_input_scenes/scaling_tests/10_agents/"; nLayer = 9;
@@ -50,8 +50,8 @@ space_time_diags = 0;
 %     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/three_agents/size_asymmetric_collisions/";nLayer = 10; 
 %     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-fname = "../Scenes/1_input_scenes/three_agents/size_mass_asymmetric_collisions/";nLayer = 10; 
-    num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/three_agents/size_mass_asymmetric_collisions/";nLayer = 10; 
+%     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/three_agents/stinky_collisions/";nLayer = 5; 
 %     num_segments = 30; max_iters = 5; num_inside_iters = 50; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 

@@ -196,11 +196,11 @@ def make_rod_curve(name, coords_list, agent_radius, agent_id):
 def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, filename):
     render_rods = True
 
-    bpy.ops.wm.open_mainfile(filepath=scene_folder + "../../base.blend")
+    bpy.ops.wm.open_mainfile(filepath="Scenes/2_output_results/"+scene_folder + "../../base.blend")
 
-    f = open(scene_folder+filename+".json", "r")
+    f = open("Scenes/2_output_results/"+scene_folder+filename+".json", "r")
     scene = json.loads(f.read())
-    f1 = open(blend_material_folder + "agent_models/agent_list.json", "r")
+    f1 = open("Scenes/3_blendered_results/"+blend_material_folder + "agent_models/agent_list.json", "r")
     agent_obj_list = json.loads(f1.read())
 
     #load agents curves
@@ -238,7 +238,7 @@ def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder
         meshFU=["-Y", "Z"]
         if a["mesh"]:
           model = a["mesh"]
-          bpy.ops.import_scene.obj(filepath=blend_material_folder+"agent_models/"+agent_obj_list[model]["file"])
+          bpy.ops.import_scene.obj(filepath="Scenes/3_blendered_results/"+blend_material_folder+"agent_models/"+agent_obj_list[model]["file"])
           meshFU = agent_obj_list[model]["orientation_forward_up"]
         else:
           bpy.ops.mesh.primitive_cube_add(size=r, enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
@@ -283,7 +283,7 @@ def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder
        # Import FBX
     
  
-    output_folder = scene_folder.replace("2_output_results", "3_blendered_results")
+    output_folder = "Scenes/2_output_results/3_blendered_results/"+scene_folder
     pathlib.Path(output_folder).mkdir(parents=True, exist_ok=True)
 
 
@@ -298,29 +298,29 @@ def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder
 # bpy.ops.wm.read_factory_settings(use_empty=True)
 # #------------------------
 crowds_folder = "/Users/vismay/recode/crowds/"
-blend_material_folder = crowds_folder + "Scenes/3_blendered_results/blend_material/"
+blend_material_folder = crowds_folder + "blend_material/"
 
 # #3x3  agents
-#scene_folder = crowds_folder + "Scenes/2_output_results/3x_3_agents/test/run3/"
+#scene_folder = crowds_folder + "3x_3_agents/test/run3/"
 
 # #Roomba Scenes
-# scene_folder = crowds_folder + "Scenes/2_output_results/roomba_maze/scene_2/run2/"
-# scene_folder = crowds_folder + "Scenes/2_output_results/roomba_maze/scene_3/run0/"
+# scene_folder = crowds_folder + "roomba_maze/scene_2/run2/"
+# scene_folder = crowds_folder + "roomba_maze/scene_3/run0/"
 
 # #Scaling Tests
-#scene_folder = crowds_folder + "Scenes/2_output_results/scaling_tests/10_agents/run11/"
-scene_folder = crowds_folder + "Scenes/2_output_results/scaling_tests/20_agents/run3/"
+#scene_folder = crowds_folder + "scaling_tests/10_agents/run11/"
+scene_folder = crowds_folder + "scaling_tests/20_agents/run3/"
 
 # #Complex Maze
-#scene_folder = crowds_folder + "Scenes/2_output_results/complex_maze/square_maze/one_agent/run0/"
-#scene_folder = crowds_folder + "Scenes/2_output_results/complex_maze/square_maze/three_agents/"
+#scene_folder = crowds_folder + "complex_maze/square_maze/one_agent/run0/"
+#scene_folder = crowds_folder + "complex_maze/square_maze/three_agents/"
 
 # #Three agent scenes
-# scene_folder = crowds_folder + "Scenes/2_output_results/three_agents/no_collisions/run3/"
-# scene_folder = crowds_folder + "Scenes/2_output_results/three_agents/symmetric_collisions/run1/"
-# scene_folder = crowds_folder + "Scenes/2_output_results/three_agents/size_asymmetric_collisions/run15/"
-# scene_folder = crowds_folder + "Scenes/2_output_results/three_agents/mass_asymmetric_collisions/run14/"
-scene_folder = crowds_folder + "Scenes/2_output_results/three_agents/size_mass_asymmetric_collisions/run5/"
+# scene_folder = crowds_folder + "three_agents/no_collisions/run3/"
+# scene_folder = crowds_folder + "three_agents/symmetric_collisions/run1/"
+# scene_folder = crowds_folder + "three_agents/size_asymmetric_collisions/run15/"
+# scene_folder = crowds_folder + "three_agents/mass_asymmetric_collisions/run14/"
+scene_folder = crowds_folder + "three_agents/size_mass_asymmetric_collisions/run5/"
 
 main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents")
 #main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "initial")

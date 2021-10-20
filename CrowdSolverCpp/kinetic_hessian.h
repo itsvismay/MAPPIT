@@ -51,38 +51,38 @@ namespace crowds{
 
 	      //-----------------
 	      //ddE/dt1dx1, ddE/dx1dt1
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*e+0,     i*3*num_points_per_agent + 3*e+2,-mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)))); 
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*e+2,     i*3*num_points_per_agent + 3*e+0,-mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)))); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*e+0,     i*3*num_points_per_agent + 3*e+2,-mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)))); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*e+2,     i*3*num_points_per_agent + 3*e+0,-mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)))); 
 
 
 	      //ddE/dt1dx2, ddE/dx2dt1
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+0, i*3*num_points_per_agent + 3*(e+0)+2,	mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)) )     ); 
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+0)+2, i*3*num_points_per_agent + 3*(e+1)+0, mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)) ) ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+0, i*3*num_points_per_agent + 3*(e+0)+2,	mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)) )     ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+0)+2, i*3*num_points_per_agent + 3*(e+1)+0, mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)) ) ); 
 
 	      //ddE/dt2dx1, ddE/dx1dt2
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+0)+0, i*3*num_points_per_agent + 3*(e+1)+2, mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)) ) ); 
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+2, i*3*num_points_per_agent + 3*(e+0)+0, mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)) ) ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+0)+0, i*3*num_points_per_agent + 3*(e+1)+2, mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)) ) ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+2, i*3*num_points_per_agent + 3*(e+0)+0, mass_i*(x2 - x1)/((t2-t1)*(t2 - t1)) ) ); 
 
 	      //ddE/dt2dx2, ddE/dx2dt2
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+0, i*3*num_points_per_agent + 3*(e+1)+2, -mass_i*(x2 - x1)/((t2-t1)*(t2 - t1))) ); 
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+2, i*3*num_points_per_agent + 3*(e+1)+0, -mass_i*(x2 - x1)/((t2-t1)*(t2 - t1))) ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+0, i*3*num_points_per_agent + 3*(e+1)+2, -mass_i*(x2 - x1)/((t2-t1)*(t2 - t1))) ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+2, i*3*num_points_per_agent + 3*(e+1)+0, -mass_i*(x2 - x1)/((t2-t1)*(t2 - t1))) ); 
 
 	      //-----------------
 	      //ddE/dt1dy1, ddE/dy1dt1
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*e+1,     i*3*num_points_per_agent + 3*e+2, -mass_i*(y2 - y1)/((t2-t1)*(t2 - t1)))); 
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*e+2,     i*3*num_points_per_agent + 3*e+1, -mass_i*(y2 - y1)/((t2-t1)*(t2 - t1)))); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*e+1,     i*3*num_points_per_agent + 3*e+2, -mass_i*(y2 - y1)/((t2-t1)*(t2 - t1)))); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*e+2,     i*3*num_points_per_agent + 3*e+1, -mass_i*(y2 - y1)/((t2-t1)*(t2 - t1)))); 
 
 	      //ddE/dt1dy2, ddE/dy2dt1
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+1, i*3*num_points_per_agent + 3*(e+0)+2,mass_i*(y2 - y1)/((t2-t1)*(t2 - t1)) ) ); 
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+0)+2, i*3*num_points_per_agent + 3*(e+1)+1,mass_i*(y2 - y1)/((t2-t1)*(t2 - t1)) ) ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+1, i*3*num_points_per_agent + 3*(e+0)+2,mass_i*(y2 - y1)/((t2-t1)*(t2 - t1)) ) ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+0)+2, i*3*num_points_per_agent + 3*(e+1)+1,mass_i*(y2 - y1)/((t2-t1)*(t2 - t1)) ) ); 
 
 	      //ddE/dt2dy1, ddE/dy1dt2
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+0)+1, i*3*num_points_per_agent + 3*(e+1)+2, -mass_i*(y2 - y1)/((t2-t1)*(t2 - t1))) ); 
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+2, i*3*num_points_per_agent + 3*(e+0)+1, -mass_i*(y2 - y1)/((t2-t1)*(t2 - t1))) ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+0)+1, i*3*num_points_per_agent + 3*(e+1)+2, -mass_i*(y2 - y1)/((t2-t1)*(t2 - t1))) ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+2, i*3*num_points_per_agent + 3*(e+0)+1, -mass_i*(y2 - y1)/((t2-t1)*(t2 - t1))) ); 
 
 	      //ddE/dt2dy2, ddE/dy2dt2
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+1, i*3*num_points_per_agent + 3*(e+1)+2, mass_i*(y2 - y1)/((t2-t1)*(t2 - t1))) ); 
-	      Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+2, i*3*num_points_per_agent + 3*(e+1)+1, mass_i*(y2 - y1)/((t2-t1)*(t2 - t1))) ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+1, i*3*num_points_per_agent + 3*(e+1)+2, mass_i*(y2 - y1)/((t2-t1)*(t2 - t1))) ); 
+	      // Htrips.push_back(Trip(i*3*num_points_per_agent + 3*(e+1)+2, i*3*num_points_per_agent + 3*(e+1)+1, mass_i*(y2 - y1)/((t2-t1)*(t2 - t1))) ); 
 
 	      //-----------------
 	      //ddE/dt1dt1
