@@ -1,5 +1,7 @@
 /Scenes/Blends
+**/.DS_Store
 /Scenes/2_output_results
+!/Scenes/2_output_results/**/*.blend
 /Scenes/3_blendered_results
 /CrowdSolverCpp/build
-/CrowdSolverCpp/matlab/CMakeFiles
+/CrowdSolverCpp/matlab/build
