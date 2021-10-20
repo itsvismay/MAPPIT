@@ -25,7 +25,7 @@ VectorXd UserTols;
 //Weights
 double K_agent = 1;
 double K_tol =   1; 
-double K_ke =    1;
+double K_ke =    5;
 double K_reg =   1;
 double K_acc =   1;
 std::vector<VectorXd> Qvec;
@@ -34,7 +34,7 @@ std::vector<VectorXd> Qvec;
 
 json j_input;
 //std::string fname = "../../Scenes/output_results/complex_maze/square_maze/one_agent/";
-std::string fname = "../../Scenes/2_output_results/scaling_tests/2_agents/run12/";
+std::string fname = "../../Scenes/2_output_results/scaling_tests/2_agents/run21/";
 
 void add_agent_equality_contraints(std::vector<int>& to_fix, VectorXd& av, MatrixXd& Aeq, VectorXd& beq)
 {
@@ -63,6 +63,7 @@ void add_agent_equality_contraints(std::vector<int>& to_fix, VectorXd& av, Matri
 void readInit()
 {
   std::cout<<"reading file"<<std::endl;
+  std::cout<<fname<<std::endl;
   std::ifstream input_file(fname + "initial.json");
   input_file >> j_input;
   std::cout<<j_input["agents"][0].size()<<std::endl;
@@ -95,8 +96,6 @@ void readInit()
 
   // for(int i=0; i<1; ++i)
   // {
-
-
   //   VectorXd av = VectorXd::Zero(3*3);
   //   av[0] = 0;
   //   av[1] = 0;
@@ -146,56 +145,124 @@ void readInit()
   return;
 }
 
-void fd_check_gradient()
+void fd_check_accel_gradient()
 {
   //x, UserTols, num_agents, scene, e, surf_anim
   int num_agents = Qvec.size();
+  VectorXd K = K_acc*VectorXd::Ones(num_agents);
 
   int num_points_per_agent = Qvec[0].size()/3;
 
   double eps = 1e-5;
-  double e0 = reg_energy(q, num_agents, num_points_per_agent, K_acc);
+  double e0 = accel_energy(q, num_agents, num_points_per_agent, K);
   std::cout<<"e0: "<<e0<<std::endl;
   VectorXd fdg = VectorXd::Zero(q.size());
   for(int i=0; i<fdg.size(); ++i)
   {
     q(i) += eps;
-    double er = reg_energy(q, num_agents, num_points_per_agent, K_acc);
+    double er = accel_energy(q, num_agents, num_points_per_agent, K);
     q(i) -= eps;
     double fd = (er - e0)/eps;
     fdg(i) = fd;
   }
 
   VectorXd g;
-  reg_gradient(q, num_agents, num_points_per_agent, K_ke, g);
+  accel_gradient(q, num_agents, num_points_per_agent, K, g);
 
-  std::cout<<g.transpose()<<std::endl;
+  std::cout<<g.segment<20>(0).transpose()<<std::endl;
   std::cout<<"---------------------"<<std::endl;
-  std::cout<<fdg.transpose()<<std::endl;
+  std::cout<<fdg.segment<20>(0).transpose()<<std::endl;
   std::cout<<"#######################"<<std::endl;
-  std::cout<<g.transpose() - fdg.transpose()<<std::endl;
+  VectorXd diff = g.transpose() - fdg.transpose();
+  std::cout<<diff.segment<20>(0).transpose()<<std::endl;
 }
 
-void fd_check_hessian()
+void fd_check_reg_gradient()
+{
+  //x, UserTols, num_agents, scene, e, surf_anim
+  int num_agents = Qvec.size();
+  VectorXd K = K_reg*VectorXd::Ones(num_agents);
+
+  int num_points_per_agent = Qvec[0].size()/3;
+
+  double eps = 1e-5;
+  double e0 = reg_energy(q, num_agents, num_points_per_agent, K);
+  std::cout<<"e0: "<<e0<<std::endl;
+  VectorXd fdg = VectorXd::Zero(q.size());
+  for(int i=0; i<fdg.size(); ++i)
+  {
+    q(i) += eps;
+    double er = reg_energy(q, num_agents, num_points_per_agent, K);
+    q(i) -= eps;
+    double fd = (er - e0)/eps;
+    fdg(i) = fd;
+  }
+
+  VectorXd g;
+  reg_gradient(q, num_agents, num_points_per_agent, K, g);
+
+  std::cout<<g.segment<20>(0).transpose()<<std::endl;
+  std::cout<<"---------------------"<<std::endl;
+  std::cout<<fdg.segment<20>(0).transpose()<<std::endl;
+  std::cout<<"#######################"<<std::endl;
+  VectorXd diff = g.transpose() - fdg.transpose();
+  std::cout<<diff.segment<20>(0).transpose()<<std::endl;
+}
+
+void fd_check_kinetic_gradient()
+{
+  //x, UserTols, num_agents, scene, e, surf_anim
+  int num_agents = Qvec.size();
+  VectorXd K = K_ke*VectorXd::Ones(num_agents);
+  VectorXd mass = 10*VectorXd::Ones(num_agents);
+
+  int num_points_per_agent = Qvec[0].size()/3;
+
+  double eps = 1e-5;
+  double e0 = kinetic_energy(q, num_agents, num_points_per_agent, K, mass);
+  std::cout<<"e0: "<<e0<<std::endl;
+  VectorXd fdg = VectorXd::Zero(q.size());
+  for(int i=0; i<fdg.size(); ++i)
+  {
+    q(i) += eps;
+    double er = kinetic_energy(q, num_agents, num_points_per_agent, K, mass);
+    q(i) -= eps;
+    double fd = (er - e0)/eps;
+    fdg(i) = fd;
+  }
+
+  VectorXd g;
+  kinetic_gradient(q, num_agents, num_points_per_agent, K, mass, g);
+
+  std::cout<<g.segment<20>(0).transpose()<<std::endl;
+  std::cout<<"---------------------"<<std::endl;
+  std::cout<<fdg.segment<20>(0).transpose()<<std::endl;
+  std::cout<<"#######################"<<std::endl;
+  VectorXd diff = g.transpose() - fdg.transpose();
+  std::cout<<diff.segment<20>(0).transpose()<<std::endl;
+}
+
+void fd_check_accel_hessian()
 {
   //x, UserTols, num_agents, scene, e, surf_anim
   int num_agents = Qvec.size();
   int num_points_per_agent = Qvec[0].size()/3;
-  VectorXd UserTols = 0.75*VectorXd::Ones(num_agents);
+  //VectorXd UserTols = 0.75*VectorXd::Ones(num_agents);
+  VectorXd K = K_acc*VectorXd::Ones(num_agents);
 
   double eps = 1e-4;
   VectorXd grad;
-  reg_gradient(q, num_agents, num_points_per_agent, K_ke, grad);
+  accel_gradient(q, num_agents, num_points_per_agent, K, grad);
 
   MatrixXd fdH = MatrixXd::Zero(q.size(), q.size());
   for(int i=0; i<grad.size(); ++i)
   {
     VectorXd gl, gr;
     q(i) += 0.5*eps;
-    reg_gradient(q, num_agents, num_points_per_agent, K_ke, gr);
+    accel_gradient(q, num_agents, num_points_per_agent, K, gr);
     q(i) -= eps;
 
-    reg_gradient(q, num_agents, num_points_per_agent, K_ke, gl);
+    accel_gradient(q, num_agents, num_points_per_agent, K, gl);
     q(i) += 0.5*eps;
 
     VectorXd fd = (gr - gl)/eps;
@@ -203,15 +270,93 @@ void fd_check_hessian()
   }
 
   SparseMatrix<double> H;
-  reg_hessian(q, num_agents, num_points_per_agent, K_ke, H);
+  accel_hessian(q, num_agents, num_points_per_agent, K, H);
   MatrixXd fullH = MatrixXd(H);
   std::cout<<"--------------"<<std::endl;
-  std::cout<<fullH.block<9,9>(0,0)<<std::endl;
+  std::cout<<fullH.block<19,19>(0,0)<<std::endl;
   std::cout<<"--------------"<<std::endl;
-  std::cout<<fdH.block<9,9>(0,0)<<std::endl;
+  std::cout<<fdH.block<19,19>(0,0)<<std::endl;
   std::cout<<"-#########--"<<std::endl;
   MatrixXd Diff = fdH - fullH;
-  std::cout<<Diff.block<9,9>(0,0)<<std::endl;
+  std::cout<<Diff.block<19,19>(0,0)<<std::endl;
+}
+
+void fd_check_reg_hessian()
+{
+  //x, UserTols, num_agents, scene, e, surf_anim
+  int num_agents = Qvec.size();
+  int num_points_per_agent = Qvec[0].size()/3;
+  //VectorXd UserTols = 0.75*VectorXd::Ones(num_agents);
+  VectorXd K = K_reg*VectorXd::Ones(num_agents);
+
+  double eps = 1e-4;
+  VectorXd grad;
+  reg_gradient(q, num_agents, num_points_per_agent, K, grad);
+
+  MatrixXd fdH = MatrixXd::Zero(q.size(), q.size());
+  for(int i=0; i<grad.size(); ++i)
+  {
+    VectorXd gl, gr;
+    q(i) += 0.5*eps;
+    reg_gradient(q, num_agents, num_points_per_agent, K, gr);
+    q(i) -= eps;
+
+    reg_gradient(q, num_agents, num_points_per_agent, K, gl);
+    q(i) += 0.5*eps;
+
+    VectorXd fd = (gr - gl)/eps;
+    fdH.row(i) = fd;
+  }
+
+  SparseMatrix<double> H;
+  reg_hessian(q, num_agents, num_points_per_agent, K, H);
+  MatrixXd fullH = MatrixXd(H);
+  std::cout<<"--------------"<<std::endl;
+  std::cout<<fullH.block<19,19>(0,0)<<std::endl;
+  std::cout<<"--------------"<<std::endl;
+  std::cout<<fdH.block<19,19>(0,0)<<std::endl;
+  std::cout<<"-#########--"<<std::endl;
+  MatrixXd Diff = fdH - fullH;
+  std::cout<<Diff.block<19,19>(0,0)<<std::endl;
+}
+
+void fd_check_kinetic_hessian()
+{
+  //x, UserTols, num_agents, scene, e, surf_anim
+  int num_agents = Qvec.size();
+  int num_points_per_agent = Qvec[0].size()/3;
+  VectorXd K = K_ke*VectorXd::Ones(num_agents);
+  VectorXd mass = 10*VectorXd::Ones(num_agents);
+
+  double eps = 1e-4;
+  VectorXd grad;
+  kinetic_gradient(q, num_agents, num_points_per_agent, K, mass, grad);
+
+  MatrixXd fdH = MatrixXd::Zero(q.size(), q.size());
+  for(int i=0; i<grad.size(); ++i)
+  {
+    VectorXd gl, gr;
+    q(i) += 0.5*eps;
+    kinetic_gradient(q, num_agents, num_points_per_agent, K, mass, gr);
+    q(i) -= eps;
+
+    kinetic_gradient(q, num_agents, num_points_per_agent, K, mass, gl);
+    q(i) += 0.5*eps;
+
+    VectorXd fd = (gr - gl)/eps;
+    fdH.row(i) = fd;
+  }
+
+  SparseMatrix<double> H;
+  kinetic_hessian(q, num_agents, num_points_per_agent, K, mass, H);
+  MatrixXd fullH = MatrixXd(H);
+  std::cout<<"--------------"<<std::endl;
+  std::cout<<fullH.block<19,19>(50,50)<<std::endl;
+  std::cout<<"--------------"<<std::endl;
+  std::cout<<fdH.block<19,19>(50,50)<<std::endl;
+  std::cout<<"-#########--"<<std::endl;
+  MatrixXd Diff = fdH - fullH;
+  std::cout<<Diff.block<19,19>(50,50)<<std::endl;
 }
 
 
@@ -219,8 +364,12 @@ int main(int argc, char *argv[])
 {
 
   readInit();
-  //fd_check_gradient();
-  fd_check_hessian();
+  fd_check_accel_gradient();
+  fd_check_accel_hessian();
+  //fd_check_reg_gradient();
+  //fd_check_reg_hessian();
+  // fd_check_kinetic_gradient();
+  // fd_check_kinetic_hessian();
   exit(0);
 
   return 1;

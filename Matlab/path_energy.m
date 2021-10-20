@@ -33,11 +33,12 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
     
     oneTic = tic;
     e_ke = mex_kinetic_energy(Q(:), K_ke', A_mass', num_agents, size(Q, 1)/3);
-    %[me_ke, me_grad] = kinetic_energy(Q, scene, K_ke);
+    %[e_ke, g_ke] = kinetic_energy(Q, scene, K_ke);
     scene.timings.iterations(end).eKE = scene.timings.iterations(end).eKE + toc(oneTic);
     
     oneTic = tic;
     e_rg = mex_reg_energy(Q(:), K_reg', num_agents, size(Q, 1)/3);
+    %[e_rg, g_rg] = regularizer_energy(Q, scene, K_reg);
     scene.timings.iterations(end).eReg = scene.timings.iterations(end).eReg + toc(oneTic);
     
     oneTic = tic;

@@ -20,7 +20,7 @@ namespace crowds{
         //for each node thats not the first node (0) and last node
         Vector3d v1 = Q_i.row(j) - Q_i.row(j-1);
         Vector3d v2 = Q_i.row(j+1) - Q_i.row(j);
-        double K = v1.norm() + v2.norm();
+        double K = K_acc(i)*(v1.norm() + v2.norm());
         Vector3d v1xv2 = v1.cross(v2);
         double v1dv2 = v1.dot(v2);
         double v1xv2norm = v1xv2.norm();
@@ -37,7 +37,7 @@ namespace crowds{
 
         
       }
-      e += K_acc(i)*e_i;
+      e += e_i;
     }
 
     return e;

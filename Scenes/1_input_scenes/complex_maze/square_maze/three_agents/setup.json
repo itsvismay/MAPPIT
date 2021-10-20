@@ -13,7 +13,7 @@
             "energy_coefficients":{
 				"K_agent" : 1,
 				"K_tol" : 0,
-				"K_accel" : 1,
+				"K_accel" : 0,
 				"K_map" : 1,
 				"K_ke" : 1,
 				"K_pv" : 0,
@@ -32,7 +32,7 @@
             "energy_coefficients":{
 				"K_agent" : 1,
 				"K_tol" : 0,
-				"K_accel" : 1,
+				"K_accel" : 0,
 				"K_map" : 1,
 				"K_ke" : 1,
 				"K_pv" : 0,
@@ -51,7 +51,7 @@
             "energy_coefficients":{
 				"K_agent" : 1,
 				"K_tol" : 0,
-				"K_accel" : 1,
+				"K_accel" : 0,
 				"K_map" : 1,
 				"K_ke" : 1,
 				"K_pv" : 0,

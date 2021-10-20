@@ -9,12 +9,12 @@ smoothing_eps_coeff = 1e-2;
 space_time_diags = 0;
 
 %% Scaling Tests
-%fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 9;
-    %num_segments = 50; max_iters = 4; num_inside_iters = 50;
+% fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 3;
+%     num_segments = 30; max_iters = 4; num_inside_iters = 50;
 % fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
 %      num_segments = 30; max_iters = 10; num_inside_iters = 40;
-%fname = "../Scenes/1_input_scenes/scaling_tests/10_agents/"; nLayer = 9;
-     %num_segments = 30; max_iters = 10; num_inside_iters = 40;
+% fname = "../Scenes/1_input_scenes/scaling_tests/10_agents/"; nLayer = 9;
+%      num_segments = 30; max_iters = 10; num_inside_iters = 40;
 %fname = "../Scenes/1_input_scenes/scaling_tests/20_agents/"; nLayer = 9;
      %num_segments = 30; max_iters = 10; num_inside_iters = 30;
 %fname = "../Scenes/output_results/scaling_tests/30_agents/"; nLayer = 11;
@@ -27,7 +27,7 @@ space_time_diags = 0;
 %% Roomba Maze
 % fname = "../Scenes/1_input_scenes/roomba_maze/scene_2/"; nLayer = 5; 
 %     num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 1;
-%fname = "../Scenes/1_input_scenes/roomba_maze/scene_3/"; nLayer = 5; 
+% fname = "../Scenes/1_input_scenes/roomba_maze/scene_3/"; nLayer = 5; 
 %    num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 1;
 %Cannot do the following. Its like folding a shipping box without overlaps. Impossible.
 % fname = "../Scenes/1_input_scenes/roomba_maze/scene_4/"; nLayer = 10; 
@@ -36,8 +36,8 @@ space_time_diags = 0;
 %% Complex Maze   
 % fname = "../Scenes/1_input_scenes/complex_maze/square_maze/one_agent/";nLayer = 3; 
 %     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-fname = "../Scenes/1_input_scenes/complex_maze/square_maze/three_agents/";nLayer = 3; 
-    num_segments = 200; max_iters = 5; num_inside_iters = 100;mu_barrier= 1; smoothing_eps_coeff = 1e-2;space_time_diags = 0;
+% fname = "../Scenes/1_input_scenes/complex_maze/square_maze/three_agents/";nLayer = 3; 
+%     num_segments = 200;max_iters = 5;num_inside_iters = 10;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
 %fname = "../Scenes/output_results/complex_maze/square_maze/five_agents/";nLayer = 10; 
     %num_segments = 280; max_iters = 10; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
  
@@ -50,8 +50,8 @@ fname = "../Scenes/1_input_scenes/complex_maze/square_maze/three_agents/";nLayer
 %     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/three_agents/size_asymmetric_collisions/";nLayer = 10; 
 %     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-% fname = "../Scenes/1_input_scenes/three_agents/size_mass_asymmetric_collisions/";nLayer = 10; 
-%     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+fname = "../Scenes/1_input_scenes/three_agents/size_mass_asymmetric_collisions/";nLayer = 10; 
+    num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/three_agents/stinky_collisions/";nLayer = 5; 
 %     num_segments = 30; max_iters = 5; num_inside_iters = 50; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 

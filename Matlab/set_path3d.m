@@ -25,7 +25,6 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
     end
     
     vv = VV(P1,:);
-    vv(:,3) = vv(:,3);
     
     re = [(1:segments)' (2:(segments+1))'];
     if(size(P1)==1)

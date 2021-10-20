@@ -6,7 +6,6 @@
 if(LIBIGL_FOUND)
     return()
 endif()
-
 find_path(LIBIGL_INCLUDE_DIR igl/readOBJ.h
     HINTS
         ${LIBIGL_DIR}
@@ -18,6 +17,7 @@ find_path(LIBIGL_INCLUDE_DIR igl/readOBJ.h
         ${CMAKE_SOURCE_DIR}/libigl
         ${CMAKE_SOURCE_DIR}/../libigl
         ${CMAKE_SOURCE_DIR}/../../libigl
+        ${CMAKE_SOURCE_DIR}/../external/libigl
         /usr
         /usr/local
         /usr/local/igl/libigl

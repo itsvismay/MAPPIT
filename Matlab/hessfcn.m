@@ -16,6 +16,8 @@ function [H] = hessfcn(q_i,lambda)
         A_mass(i) = scene.agents(i).mass;
     end
     
+    H = sparse(size(q_i,1),size(q_i,1));
+
     oneHessTic = tic;
     if simple_sd
         [e_agent, HB_agent, hw_agent] = agent_agent_energy_with_hessian(Q, Tols, scene, K_agent);
@@ -28,28 +30,107 @@ function [H] = hessfcn(q_i,lambda)
     [e_map, H_map] = map_energy_with_hessian(Q, Tols, scene, K_map);
     scene.timings.iterations(end).hMap = scene.timings.iterations(end).hMap + toc(oneHessTic);
     
+    for ii=1:num_agents
+        H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1)) = mu_barrier*HB_agent{ii}...
+                                                                        + mu_barrier*H_map{ii};
+    end
+    
     oneHessTic = tic;
     [H_acc] = mex_accel_hessian(Q(:),K_accel', num_agents, size(Q,1)/3);
     scene.timings.iterations(end).hAcc = scene.timings.iterations(end).hAcc + toc(oneHessTic);
- 
+    H = H + H_acc;
+     
+     
     oneHessTic = tic;
-    [H_ke] = mex_kinetic_hessian(Q(:),K_ke', A_mass', num_agents, size(Q, 1)/3);
+    %[H_ke] = mex_kinetic_hessian(Q(:),K_ke', A_mass', num_agents, size(Q, 1)/3);
+    [e_ke1, H_ke1] = kinetic_energy_with_hessian(Q, scene, K_ke);
     scene.timings.iterations(end).hKE = scene.timings.iterations(end).hKE + toc(oneHessTic);
-
+    %H = H + H_ke;
+    for ii=1:num_agents
+        H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1)) = H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1))...
+                                                                            + H_ke1(:,:,ii);
+    end
+    
     oneHessTic = tic;
     [H_reg] = mex_reg_hessian(Q(:),K_reg', num_agents, size(Q, 1)/3);
+    %[e_reg1, H_reg1] = regularizer_energy_with_hessian(Q, scene, K_reg);
     scene.timings.iterations(end).hReg = scene.timings.iterations(end).hReg + toc(oneHessTic);
- 
-    H = sparse(size(q_i,1),size(q_i,1));
-    for ii=1:num_agents
-        H(1+(ii-1)*size(Q,1):ii*size(Q,1),1+(ii-1)*size(Q,1):ii*size(Q,1)) = mu_barrier*HB_agent{ii}...
-                                                                            + mu_barrier*H_map{ii};
-    end
-    H = H + H_acc + H_ke+ H_reg;
-    
+    H = H + H_reg;
+
     scene.timings.iterations(end).hTotal = scene.timings.iterations(end).hTotal + toc(hessTic);
 end
 
+function [e, HT] = kinetic_energy_with_hessian(Q, scene, K)
+    if sum(K)==0
+        e=0;
+        HT = zeros(size(Q,1), size(Q,1), size(Q,2));
+        return;
+    end
+    HT = zeros(size(Q,1), size(Q,1), size(Q,2));
+    e=0;
+    for i=1:numel(scene.agents)
+
+        q_i = Q(:, i); %3*nodes
+        m = scene.agents(i).mass;
+        dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
+        d2Edq2 = zeros(numel(q_i),numel(q_i));
+        e = e + K*sum(0.5*m*sum(dx(:, 1:2).*dx(:,1:2),2)./dx(:,3)); %kinetic energy
+        for kk=1:numel(q_i)/3-1
+            d2Edq2((kk-1)*3+1,(kk-1)*3+1) = d2Edq2((kk-1)*3+1,(kk-1)*3+1) + m./dx(kk,3);
+            d2Edq2((kk-1)*3+2,(kk-1)*3+2) = d2Edq2((kk-1)*3+2,(kk-1)*3+2) + m./dx(kk,3);
+            d2Edq2((kk-1)*3+3,(kk-1)*3+3) = d2Edq2((kk-1)*3+3,(kk-1)*3+3) + m*(dx(kk,1).*dx(kk,1) + dx(kk,2).*dx(kk,2))./(dx(kk,3).*dx(kk,3).*dx(kk,3));
+
+            d2Edq2((kk-1)*3+1,(kk-1)*3+4) = d2Edq2((kk-1)*3+1,(kk-1)*3+4) - m./dx(kk,3);
+            d2Edq2((kk-1)*3+2,(kk-1)*3+5) = d2Edq2((kk-1)*3+2,(kk-1)*3+5) - m./dx(kk,3);
+            d2Edq2((kk-1)*3+3,(kk-1)*3+6) = d2Edq2((kk-1)*3+3,(kk-1)*3+6) - m*(dx(kk,1).*dx(kk,1) + dx(kk,2).*dx(kk,2))./(dx(kk,3).*dx(kk,3).*dx(kk,3));
+
+            d2Edq2((kk-1)*3+4,(kk-1)*3+1) = d2Edq2((kk-1)*3+4,(kk-1)*3+1) - m./dx(kk,3);
+            d2Edq2((kk-1)*3+5,(kk-1)*3+2) = d2Edq2((kk-1)*3+5,(kk-1)*3+2) - m./dx(kk,3);
+            d2Edq2((kk-1)*3+6,(kk-1)*3+3) = d2Edq2((kk-1)*3+6,(kk-1)*3+3) - m*(dx(kk,1).*dx(kk,1) + dx(kk,2).*dx(kk,2))./(dx(kk,3).*dx(kk,3).*dx(kk,3));
+
+            d2Edq2((kk-1)*3+4,(kk-1)*3+4) = d2Edq2((kk-1)*3+4,(kk-1)*3+4) + m./dx(kk,3);
+            d2Edq2((kk-1)*3+5,(kk-1)*3+5) = d2Edq2((kk-1)*3+5,(kk-1)*3+5) + m./dx(kk,3);
+            d2Edq2((kk-1)*3+6,(kk-1)*3+6) = d2Edq2((kk-1)*3+6,(kk-1)*3+6) + m*(dx(kk,1).*dx(kk,1) + dx(kk,2).*dx(kk,2))./(dx(kk,3).*dx(kk,3).*dx(kk,3));
+        end
+               
+        HT(:,:,i) = K(i)*d2Edq2;
+            
+    end
+end
+
+function [e, HT] = regularizer_energy_with_hessian(Q, scene, K)
+    if sum(K)==0
+        e=0;
+        HT = zeros(size(Q,1), size(Q,1), size(Q,2));
+        return;
+    end
+    HT = zeros(size(Q,1), size(Q,1), size(Q,2));
+    e=0;
+    for i=1:numel(scene.agents)
+        q_i = Q(:, i); %3*nodes
+        dx = reshape(q_i(4:end) - q_i(1:end -3), 3, numel(q_i)/3-1)';
+        dt = dx(:,3)+1e-6;%add epsilon to make sure there is never a divide by 0
+        endtime = q_i(end);
+        segments = numel(q_i)/3-1;
+        kt = (endtime/segments)*ones(size(dx,1),1);%regular time intervals over the rod;
+        e = e + K(i)*(sum(kt./dt));
+       
+        d2Edq2 = zeros(numel(q_i),numel(q_i));
+        
+        for kk=1:numel(q_i)/3-1
+            d2Edq2((kk-1)*3+3,(kk-1)*3+3) = d2Edq2((kk-1)*3+3,(kk-1)*3+3) + 2*kt(kk,1)./(dt(kk,1).^3);
+
+            d2Edq2((kk-1)*3+3,(kk-1)*3+6) = d2Edq2((kk-1)*3+3,(kk-1)*3+6) - 2*kt(kk,1)./(dt(kk,1).^3);
+
+            d2Edq2((kk-1)*3+6,(kk-1)*3+3) = d2Edq2((kk-1)*3+6,(kk-1)*3+3) - 2*kt(kk,1)./(dt(kk,1).^3);
+
+            d2Edq2((kk-1)*3+6,(kk-1)*3+6) = d2Edq2((kk-1)*3+6,(kk-1)*3+6) + 2*kt(kk,1)./(dt(kk,1).^3);
+        end
+               
+        HT(:,:,i) = K(i)*d2Edq2;
+            
+    end
+end
 
 function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K)
     if sum(K)==0
