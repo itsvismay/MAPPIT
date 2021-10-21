@@ -3,26 +3,50 @@
 	"agents": {
 		"agent1":{
 			"id": 1,
-			"xse": [[-1.02776, -5.5347, 0], 
-					[0.97224, -2.30613,10]], 
-			"mesh": "agent_1.obj",
-			"animation_cycles": null,
-			"radius": 0.5,
-			"desc": "watercooler"
+			"xse": [[0,5 , 0], 
+					[0,-5, 20]], 
+			"mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.35,
+            "mass": 10,
+            "preferred_end_time": 10,
+            "energy_coefficients": {
+                "K_agent": 1,
+                "K_tol": 0,
+                "K_accel": 0,
+                "K_map": 1,
+                "K_ke": 1,
+                "K_pv": 1000,
+                "K_rg": 10
+            }
 		},
 		"agent2":{
 			"id": 2,
-			"xse": [[-1.02776,5.5347 , 0], 
-					[-1.02776,-5.5347, 10]], 
-			"mesh": "agent_1.obj",
-			"animation_cycles": null,
-			"radius": 0.5
+			"xse": [[0,-5, 0], 
+					[0,5,20]], 
+			"mesh": "agent",
+            "animation_cycles": null,
+            "friends": [],
+            "radius": 0.35,
+            "mass": 1,
+            "energy_coefficients": {
+                "K_agent": 1,
+                "K_tol": 0,
+                "K_accel": 0,
+                "K_map": 1,
+                "K_ke": 1,
+                "K_pv": 0,
+                "K_rg": 10
+            }
 		}
 	},
 	"obstacles": {},
 	"terrain": {
 		"mesh": "maze.obj"
 	},
-	"tol":0
+	"tol":0,
+    "smoothDistAlpha":100,
+    "useSpaceTimeGraphDiags": 0
 
 }

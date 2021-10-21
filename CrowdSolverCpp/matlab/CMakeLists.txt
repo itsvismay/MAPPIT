@@ -113,5 +113,7 @@ mex_reg_hessian.cpp;\
 mex_accel_energy.cpp;\
 mex_accel_gradient.cpp;\
 mex_accel_hessian.cpp;\
+mex_pv_energy.cpp;\
+mex_pv_gradient.cpp;\
 "
   "${CORE_LIBS};igl::core;igl::matlab")

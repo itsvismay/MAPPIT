@@ -9,8 +9,8 @@ smoothing_eps_coeff = 1e-2;
 space_time_diags = 0;
 
 %% Scaling Tests
-fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 3;
-    num_segments = 30; max_iters = 4; num_inside_iters = 50;
+% fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 3;
+%     num_segments = 30; max_iters = 4; num_inside_iters = 50;
 % fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
 %      num_segments = 30; max_iters = 10; num_inside_iters = 40;
 % fname = "../Scenes/1_input_scenes/scaling_tests/10_agents/"; nLayer = 9;
@@ -54,6 +54,11 @@ fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 3;
 %     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/three_agents/stinky_collisions/";nLayer = 5; 
 %     num_segments = 30; max_iters = 5; num_inside_iters = 50; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+
+%% Tunnel Maze
+fname = "../Scenes/1_input_scenes/tunnel_maze/scene_1/";nLayer = 8; 
+    num_segments = 50;max_iters = 1;num_inside_iters = 150;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
+
 
 %% Setup
     
@@ -138,6 +143,10 @@ for i = 1:numel(a)
     agent.v = 0;
     agent.radius = getfield(setup_params.agents, a{i}).radius;
     agent.mass = getfield(setup_params.agents, a{i}).mass;
+    agent.preferred_end_time = agent.xse(end, end);
+    if (isfield(getfield(setup_params.agents, a{i}), "preferred_end_time"))
+        agent.preferred_end_time = getfield(setup_params.agents, a{i}).preferred_end_time;
+    end
     agent.friends = getfield(setup_params.agents, a{i}).friends;
     agent.mesh = getfield(setup_params.agents, a{i}).mesh;
     agent.animation_cycles = getfield(setup_params.agents, a{i}).animation_cycles;
@@ -260,15 +269,18 @@ for  iter=1:max_iters
     iterOutput.eAcc = 0;
     iterOutput.eKE = 0;
     iterOutput.eReg = 0;
+    iterOutput.ePv = 0;
     iterOutput.gAcc = 0;
     iterOutput.gKE = 0;
     iterOutput.gReg = 0;
+    iterOutput.gPv = 0;
     iterOutput.egTotal = 0;
     iterOutput.hAgent = 0;
     iterOutput.hMap = 0;
     iterOutput.hAcc = 0;
     iterOutput.hKE = 0;
     iterOutput.hReg = 0;
+    iterOutput.hPv = 0;
     iterOutput.hTotal = 0;
     iterOutput.output = struct;
     iterOutput.totalTime =0;

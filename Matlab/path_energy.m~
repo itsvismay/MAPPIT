@@ -18,7 +18,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
     for i=1:numel(scene.agents)
         A_mass(i) = scene.agents(i).mass;
     end
-    pv = scene.agents(i).preferred_end_time;
+    pv = scene.agents(i).
     
     %% fxns
     oneTic = tic;
@@ -30,7 +30,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
     scene.timings.iterations(end).egMap = scene.timings.iterations(end).egMap + toc(oneTic);
     
     oneTic = tic;
-    e_pv = mex_pv_energy(Q(:), K_pv', pv, num_agents, size(Q, 1)/3);
+    e_pv = mex_pv_energy(Q(:), K_pv', 40, num_agents, size(Q, 1)/3);
     scene.timings.iterations(end).ePv = scene.timings.iterations(end).ePv + toc(oneTic);
     
     oneTic = tic;
@@ -48,7 +48,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
     scene.timings.iterations(end).eReg = scene.timings.iterations(end).eReg + toc(oneTic);
     
     oneTic = tic;
-    g_pv = mex_pv_gradient(Q(:),K_pv', pv, num_agents, size(Q,1)/3);
+    g_pv = mex_pv_gradient(Q(:),K_pv', 40, num_agents, size(Q,1)/3);
     scene.timings.iterations(end).ePv = scene.timings.iterations(end).ePv + toc(oneTic);
     
     oneTic = tic;

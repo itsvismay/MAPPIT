@@ -12,6 +12,8 @@
 #include "accel_energy.h"
 #include "accel_gradient.h"
 #include "accel_hessian.h"
+#include "pv_energy.h"
+#include "pv_gradient.h"
 
 using namespace Eigen;
 using namespace crowds;
@@ -28,6 +30,7 @@ double K_tol =   1;
 double K_ke =    1;
 double K_reg =   1;
 double K_acc =   1;
+double K_pv =   1;
 std::vector<VectorXd> Qvec;
 
 
@@ -148,6 +151,39 @@ void readInit()
   std::cout<<"NUM Points Per: "<<Qvec[0].size()<<std::endl;
   std::cout<<"NUM DOFS: "<<q.size()<<std::endl;
   return;
+}
+
+void fd_check_pv_gradient()
+{
+  //x, UserTols, num_agents, scene, e, surf_anim
+  int num_agents = Qvec.size();
+  VectorXd K = K_pv*VectorXd::Ones(num_agents);
+  double pv = 10;
+
+  int num_points_per_agent = Qvec[0].size()/3;
+
+  double eps = 1e-5;
+  double e0 = pv_energy(q, num_agents, num_points_per_agent, K, pv);
+  std::cout<<"e0: "<<e0<<std::endl;
+  VectorXd fdg = VectorXd::Zero(q.size());
+  for(int i=0; i<fdg.size(); ++i)
+  {
+    q(i) += eps;
+    double er = pv_energy(q, num_agents, num_points_per_agent, K, pv);
+    q(i) -= eps;
+    double fd = (er - e0)/eps;
+    fdg(i) = fd;
+  }
+
+  VectorXd g;
+  pv_gradient(q, num_agents, num_points_per_agent, K, pv, g);
+
+  std::cout<<g.transpose()<<std::endl;
+  std::cout<<"---------------------"<<std::endl;
+  std::cout<<fdg.transpose()<<std::endl;
+  std::cout<<"#######################"<<std::endl;
+  VectorXd diff = g.transpose() - fdg.transpose();
+  std::cout<<diff.transpose()<<std::endl;
 }
 
 void fd_check_accel_gradient()
@@ -371,10 +407,15 @@ int main(int argc, char *argv[])
   readInit();
   // fd_check_accel_gradient();
   // fd_check_accel_hessian();
+
   //fd_check_reg_gradient();
   //fd_check_reg_hessian();
-  fd_check_kinetic_gradient();
-  fd_check_kinetic_hessian();
+
+  // fd_check_kinetic_gradient();
+  // fd_check_kinetic_hessian();
+
+  fd_check_pv_gradient();
+  //fd_check_pv_hessian();
   exit(0);
 
   return 1;
