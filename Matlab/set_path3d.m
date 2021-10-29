@@ -20,7 +20,7 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
     if(segments < length(P1))
         segments
         length(P1)
-        sprintf("Error: Set_path3d: add more segments");
+        sprintf("Error: Set_path3d: add more segments")
         return
     end
     

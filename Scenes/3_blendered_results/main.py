@@ -196,7 +196,6 @@ def make_rod_curve(name, coords_list, agent_radius, agent_id):
 def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, filename):
     render_rods = True
 
-    print(crowds_folder+"Scenes/1_input_scenes/"+scene_folder+"../base.blend")
     bpy.ops.wm.open_mainfile(filepath=crowds_folder+"Scenes/1_input_scenes/"+scene_folder.split("/")[0]+"/base.blend")
 
     f = open(crowds_folder+"Scenes/2_output_results/"+scene_folder+filename+".json", "r")
@@ -324,7 +323,13 @@ blend_material_folder = "blend_material/"
 #scene_folder = "three_agents/size_mass_asymmetric_collisions/run5/"
 
 # #Tunnel Maze
-scene_folder = "tunnel_maze/scene_1/run39/"
+#scene_folder = "tunnel_maze/scene_1/run39/"
+
+# #Comparisons
+# scene_folder = "Comparisons/2_agents/implicit_crowds/2_agents_output/output_2_agents_offset/"
+# scene_folder = "Comparisons/2_agents/implicit_crowds/2_agents_output/output_2_agents_sym/"
+scene_folder = "Comparisons/3_agents/implicit_crowds/3_agents_output/output_3_agents_sym/"
+#scene_folder = "Comparisons/3_agents/implicit_crowds/3_agents_output/output_3_agents_offset/"
 
 main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents")
 #main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "initial")

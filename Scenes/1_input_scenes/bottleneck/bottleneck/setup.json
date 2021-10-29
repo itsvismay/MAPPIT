@@ -1,0 +1,112 @@
+{
+	"name": "bottleneck",
+	"agents": {
+		"agent1":{
+			"id": 1,
+			"xse": [[0, -32.5, 0], 
+					[0, 32.5, 20]], 
+			"mesh": "elephant",
+			"animation_cycles": null,
+			"friends": [],
+            "radius": 1,
+            "mass": 1,
+            "preferred_end_time": 10,
+            "energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 0,
+				"K_accel" : 0,
+				"K_map" : 1,
+				"K_ke" : 10,
+				"K_pv" : 10,
+				"K_rg" : 10
+			}
+		},
+		"agent2":{
+			"id": 2,
+			"xse": [[6.25, -32.5, 0], 
+					[6.25, 32.5, 20]], 
+			"mesh": "elephant",
+			"animation_cycles": null,
+			"friends": [],
+            "radius": 1,
+            "mass": 1,
+            "preferred_end_time": 10,
+            "energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 0,
+				"K_accel" : 0,
+				"K_map" : 1,
+				"K_ke" : 10,
+				"K_pv" : 10,
+				"K_rg" : 10
+			}
+		},
+		"agent3":{
+			"id": 3,
+			"xse": [[12.5, -32.5, 0], 
+					[12.5, 32.5, 20]], 
+			"mesh": "elephant",
+			"animation_cycles": null,
+			"friends": [],
+            "radius": 1,
+            "mass": 1,
+            "preferred_end_time": 10,
+            "energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 0,
+				"K_accel" : 0,
+				"K_map" : 1,
+				"K_ke" : 10,
+				"K_pv" : 10,
+				"K_rg" : 10
+			}
+		},
+		"agent4":{
+			"id": 4,
+			"xse": [[-6.25, -32.5, 0], 
+					[-6.25, 32.5, 20]], 
+			"mesh": "elephant",
+			"animation_cycles": null,
+			"friends": [],
+            "radius": 1,
+            "mass": 1,
+            "preferred_end_time": 10,
+            "energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 0,
+				"K_accel" : 0,
+				"K_map" : 1,
+				"K_ke" : 10,
+				"K_pv" : 10,
+				"K_rg" : 10
+			}
+		},
+		"agent5":{
+			"id": 5,
+			"xse": [[-12.5, -32.5, 0], 
+					[-12.5, 32.5, 20]], 
+			"mesh": "elephant",
+			"animation_cycles": null,
+			"friends": [],
+            "radius": 1,
+            "mass": 1,
+            "preferred_end_time": 10,
+            "energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 0,
+				"K_accel" : 0,
+				"K_map" : 1,
+				"K_ke" : 10,
+				"K_pv" : 10,
+				"K_rg" : 10
+			}
+		}
+	},
+	"obstacles": {},
+	"terrain": {
+		"mesh": "terrain.obj"
+	},
+    "smoothDistAlpha":50,
+    "useSpaceTimeGraphDiags": 0
+
+}

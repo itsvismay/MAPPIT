@@ -5,7 +5,7 @@ using namespace Eigen;
 
 namespace crowds{
   
-  void pv_gradient(VectorXd& q, int num_agents, int num_points_per_agent, VectorXd& K_pv, double pv, VectorXd& g)
+  void pv_gradient(VectorXd& q, int num_agents, int num_points_per_agent, VectorXd& K_pv, VectorXd& pv, VectorXd& g)
   {
   	g.resize(q.size());
     g.setZero();
@@ -16,7 +16,7 @@ namespace crowds{
 		VectorXd q_i = q.segment(i*3*num_points_per_agent, 3*num_points_per_agent);
 
 		int t_end = q_i.size()-1;
-		g(i*3*num_points_per_agent + t_end) = K_pv(i)*(q_i(t_end) - pv);
+		g(i*3*num_points_per_agent + t_end) = K_pv(i)*(q_i(t_end) - pv(i));
 
 		// //For each rod segment, do this:
 		// for(int e =0; e<num_points_per_agent - 1; e++)

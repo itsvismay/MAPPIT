@@ -5,7 +5,7 @@ using namespace Eigen;
 
 namespace crowds{
   
-  double pv_energy(VectorXd& q, int num_agents, int num_points_per_agent, VectorXd& K_pv, double pv)
+  double pv_energy(VectorXd& q, int num_agents, int num_points_per_agent, VectorXd& K_pv, VectorXd& pv)
   {
 	double energy = 0.0;
 	for(int i=0; i<num_agents; i++)
@@ -16,7 +16,7 @@ namespace crowds{
 		// option 1:
 		// in this version, pv is the desired end time
 		// just get end times to match
-		double energy_i = K_pv(i)*0.5*(q_i(q_i.size()-1) - pv)*(q_i(q_i.size()-1) - pv);
+		double energy_i = K_pv(i)*0.5*(q_i(q_i.size()-1) - pv(i))*(q_i(q_i.size()-1) - pv(i));
 
 		// option 2, 
 		// matching the slope of each rod segment

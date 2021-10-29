@@ -7,20 +7,23 @@ function [H] = hessfcn(q_i,lambda)
     
     %Weights
     K_agent = 1*scene.coeff_matrix(1,:);
+    K_tol =   1*scene.coeff_matrix(2,:);
     K_accel = 1*scene.coeff_matrix(3,:);
     K_map =   1*scene.coeff_matrix(4,:);
     K_ke =    1*scene.coeff_matrix(5,:);
     K_reg =   1*scene.coeff_matrix(7,:);
     A_mass = zeros(numel(scene.agents), 1)';
+    A_pv = zeros(numel(scene.agents), 1)';
     for i=1:numel(scene.agents)
         A_mass(i) = scene.agents(i).mass;
+        A_pv(i) = scene.agents(i).preferred_end_time;
     end
     
     H = sparse(size(q_i,1),size(q_i,1));
 
     oneHessTic = tic;
     if simple_sd
-        [e_agent, HB_agent, hw_agent] = agent_agent_energy_with_hessian(Q, Tols, scene, K_agent);
+        [e_agent, HB_agent, hw_agent] = agent_agent_energy_with_hessian(Q, Tols, scene, K_agent, K_tol);
     else
         [e_agent, HB_agent, hw_agent] = agent_agent_energy_with_hessian_abhisheks(Q, Tols, scene, K_agent); 
     end
@@ -132,7 +135,7 @@ function [e, HT] = regularizer_energy_with_hessian(Q, scene, K)
     end
 end
 
-function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K)
+function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K, Ktol)
     if sum(K)==0
         e=0;
         HB(1:size(Q,2)) = {sparse(size(Q,1), size(Q,1))};
@@ -185,7 +188,16 @@ function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K)
             Hi = (K(i)*(1/((-tol + D).^2))) * (JG1 * JG1');
             Hj = (K(j)*(1/((-tol + D).^2))) * (JG2 * JG2');
             
-            
+            if(ismember(j,scene.agents(i).friends))
+                %friendship_radius = 3*max(scene.agents(i).radius, scene.agents(j).radius);
+                e = e + Ktol(i)*K(i)*(D - tol)^2;
+                %GB(:,i) = GB(:,i)+ 2*K(i)*(D-tol)*JG1;
+                %GB(:,j) = GB(:,j)+ 2*K(j)*(D-tol)*JG2;
+                Hi = Hi + 2*Ktol(i) * K(i) * (JG1 * JG1');
+                Hj = Hj + 2*Ktol(i) * K(j) * (JG2 * JG2');
+                %Hi = Hi + (K(i)*(1/((-D + friendship_radius).^2))) * (JG1 * JG1');
+                %Hj = Hj + (K(j)*(1/((-D + friendship_radius).^2))) * (JG2 * JG2');
+            end
             
             [spHi, spHj] = sparsify_dense_hessian(A1, A2, Hi, Hj, 0.2);
             

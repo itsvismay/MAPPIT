@@ -1,0 +1,4613 @@
+{
+	"name": "antelopes",
+	"agents": {
+		"agent1": {
+			"id": 1,
+			"xse": [
+				[0,
+					187.837524,
+					0
+				],
+				[0, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent2": {
+			"id": 2,
+			"xse": [
+				[50,
+					187.837524,
+					0
+				],
+				[50, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent3": {
+			"id": 3,
+			"xse": [
+				[-50,
+					187.837524,
+					0
+				],
+				[-50, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent4": {
+			"id": 4,
+			"xse": [
+				[75,
+					187.837524,
+					0
+				],
+				[75, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent5": {
+			"id": 5,
+			"xse": [
+				[-25,
+					187.837524,
+					0
+				],
+				[-25, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent6": {
+			"id": 6,
+			"xse": [
+				[25,
+					187.837524,
+					0
+				],
+				[25, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent7": {
+			"id": 7,
+			"xse": [
+				[-75,
+					187.837524,
+					0
+				],
+				[-75, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent8": {
+			"id": 8,
+			"xse": [
+				[87.5,
+					187.837524,
+					0
+				],
+				[87.5, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent9": {
+			"id": 9,
+			"xse": [
+				[-12.5,
+					187.837524,
+					0
+				],
+				[-12.5, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent10": {
+			"id": 10,
+			"xse": [
+				[37.5,
+					187.837524,
+					0
+				],
+				[37.5, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent11": {
+			"id": 11,
+			"xse": [
+				[-62.5,
+					187.837524,
+					0
+				],
+				[-62.5, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent12": {
+			"id": 12,
+			"xse": [
+				[62.5,
+					187.837524,
+					0
+				],
+				[62.5, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent13": {
+			"id": 13,
+			"xse": [
+				[-37.5,
+					187.837524,
+					0
+				],
+				[-37.5, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent14": {
+			"id": 14,
+			"xse": [
+				[12.5,
+					187.837524,
+					0
+				],
+				[12.5, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent15": {
+			"id": 15,
+			"xse": [
+				[-87.5,
+					187.837524,
+					0
+				],
+				[-87.5, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent16": {
+			"id": 16,
+			"xse": [
+				[-6.25,
+					187.837524,
+					0
+				],
+				[-6.25, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent17": {
+			"id": 17,
+			"xse": [
+				[43.75,
+					187.837524,
+					0
+				],
+				[43.75, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent18": {
+			"id": 18,
+			"xse": [
+				[-56.25,
+					187.837524,
+					0
+				],
+				[-56.25, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent19": {
+			"id": 19,
+			"xse": [
+				[68.75,
+					187.837524,
+					0
+				],
+				[68.75, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent20": {
+			"id": 20,
+			"xse": [
+				[-31.25,
+					187.837524,
+					0
+				],
+				[-31.25, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent21": {
+			"id": 21,
+			"xse": [
+				[18.75,
+					187.837524,
+					0
+				],
+				[18.75, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent22": {
+			"id": 22,
+			"xse": [
+				[-81.25,
+					187.837524,
+					0
+				],
+				[-81.25, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent23": {
+			"id": 23,
+			"xse": [
+				[81.25,
+					187.837524,
+					0
+				],
+				[81.25, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent24": {
+			"id": 24,
+			"xse": [
+				[-18.75,
+					187.837524,
+					0
+				],
+				[-18.75, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent25": {
+			"id": 25,
+			"xse": [
+				[31.25,
+					187.837524,
+					0
+				],
+				[31.25, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent26": {
+			"id": 26,
+			"xse": [
+				[-68.75,
+					187.837524,
+					0
+				],
+				[-68.75, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent27": {
+			"id": 27,
+			"xse": [
+				[56.25,
+					187.837524,
+					0
+				],
+				[56.25, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent28": {
+			"id": 28,
+			"xse": [
+				[-43.75,
+					187.837524,
+					0
+				],
+				[-43.75, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent29": {
+			"id": 29,
+			"xse": [
+				[6.25,
+					187.837524,
+					0
+				],
+				[6.25, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent30": {
+			"id": 30,
+			"xse": [
+				[0,
+					175.337524,
+					0
+				],
+				[0, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent31": {
+			"id": 31,
+			"xse": [
+				[50,
+					175.337524,
+					0
+				],
+				[50, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent32": {
+			"id": 32,
+			"xse": [
+				[-50,
+					175.337524,
+					0
+				],
+				[-50, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent33": {
+			"id": 33,
+			"xse": [
+				[-25,
+					175.337524,
+					0
+				],
+				[-25, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent34": {
+			"id": 34,
+			"xse": [
+				[-75,
+					175.337524,
+					0
+				],
+				[-75, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent35": {
+			"id": 35,
+			"xse": [
+				[75,
+					175.337524,
+					0
+				],
+				[75, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent36": {
+			"id": 36,
+			"xse": [
+				[25,
+					175.337524,
+					0
+				],
+				[25, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent37": {
+			"id": 37,
+			"xse": [
+				[37.5,
+					175.337524,
+					0
+				],
+				[37.5, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent38": {
+			"id": 38,
+			"xse": [
+				[12.5,
+					175.337524,
+					0
+				],
+				[12.5, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent39": {
+			"id": 39,
+			"xse": [
+				[87.5,
+					175.337524,
+					0
+				],
+				[87.5, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent40": {
+			"id": 40,
+			"xse": [
+				[62.5,
+					175.337524,
+					0
+				],
+				[62.5, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent41": {
+			"id": 41,
+			"xse": [
+				[-62.5,
+					175.337524,
+					0
+				],
+				[-62.5, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent42": {
+			"id": 42,
+			"xse": [
+				[-87.5,
+					175.337524,
+					0
+				],
+				[-87.5, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent43": {
+			"id": 43,
+			"xse": [
+				[-12.5,
+					175.337524,
+					0
+				],
+				[-12.5, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent44": {
+			"id": 44,
+			"xse": [
+				[-37.5,
+					175.337524,
+					0
+				],
+				[-37.5, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent45": {
+			"id": 45,
+			"xse": [
+				[-31.25,
+					175.337524,
+					0
+				],
+				[-31.25, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent46": {
+			"id": 46,
+			"xse": [
+				[-43.75,
+					175.337524,
+					0
+				],
+				[-43.75, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent47": {
+			"id": 47,
+			"xse": [
+				[-6.25,
+					175.337524,
+					0
+				],
+				[-6.25, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent48": {
+			"id": 48,
+			"xse": [
+				[-18.75,
+					175.337524,
+					0
+				],
+				[-18.75, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent49": {
+			"id": 49,
+			"xse": [
+				[-81.25,
+					175.337524,
+					0
+				],
+				[-81.25, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent50": {
+			"id": 50,
+			"xse": [
+				[-56.25,
+					175.337524,
+					0
+				],
+				[-56.25, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent51": {
+			"id": 51,
+			"xse": [
+				[-68.75,
+					175.337524,
+					0
+				],
+				[-68.75, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent52": {
+			"id": 52,
+			"xse": [
+				[68.75,
+					175.337524,
+					0
+				],
+				[68.75, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent53": {
+			"id": 53,
+			"xse": [
+				[56.25,
+					175.337524,
+					0
+				],
+				[56.25, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent54": {
+			"id": 54,
+			"xse": [
+				[81.25,
+					175.337524,
+					0
+				],
+				[81.25, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent55": {
+			"id": 55,
+			"xse": [
+				[18.75,
+					175.337524,
+					0
+				],
+				[18.75, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent56": {
+			"id": 56,
+			"xse": [
+				[6.25,
+					175.337524,
+					0
+				],
+				[6.25, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent57": {
+			"id": 57,
+			"xse": [
+				[43.75,
+					175.337524,
+					0
+				],
+				[43.75, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent58": {
+			"id": 58,
+			"xse": [
+				[31.25,
+					175.337524,
+					0
+				],
+				[31.25, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent59": {
+			"id": 59,
+			"xse": [
+				[-3.125,
+					187.837524,
+					0
+				],
+				[-3.125, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent60": {
+			"id": 60,
+			"xse": [
+				[46.875,
+					187.837524,
+					0
+				],
+				[46.875, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent61": {
+			"id": 61,
+			"xse": [
+				[-53.125,
+					187.837524,
+					0
+				],
+				[-53.125, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent62": {
+			"id": 62,
+			"xse": [
+				[71.875,
+					187.837524,
+					0
+				],
+				[71.875, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent63": {
+			"id": 63,
+			"xse": [
+				[-28.125,
+					187.837524,
+					0
+				],
+				[-28.125, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent64": {
+			"id": 64,
+			"xse": [
+				[21.875,
+					187.837524,
+					0
+				],
+				[21.875, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent65": {
+			"id": 65,
+			"xse": [
+				[-78.125,
+					187.837524,
+					0
+				],
+				[-78.125, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent66": {
+			"id": 66,
+			"xse": [
+				[84.375,
+					187.837524,
+					0
+				],
+				[84.375, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent67": {
+			"id": 67,
+			"xse": [
+				[-15.625,
+					187.837524,
+					0
+				],
+				[-15.625, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent68": {
+			"id": 68,
+			"xse": [
+				[34.375,
+					187.837524,
+					0
+				],
+				[34.375, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent69": {
+			"id": 69,
+			"xse": [
+				[-65.625,
+					187.837524,
+					0
+				],
+				[-65.625, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent70": {
+			"id": 70,
+			"xse": [
+				[59.375,
+					187.837524,
+					0
+				],
+				[59.375, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent71": {
+			"id": 71,
+			"xse": [
+				[-40.625,
+					187.837524,
+					0
+				],
+				[-40.625, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent72": {
+			"id": 72,
+			"xse": [
+				[9.375,
+					187.837524,
+					0
+				],
+				[9.375, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent73": {
+			"id": 73,
+			"xse": [
+				[-90.625,
+					187.837524,
+					0
+				],
+				[-90.625, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent74": {
+			"id": 74,
+			"xse": [
+				[90.625,
+					187.837524,
+					0
+				],
+				[90.625, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent75": {
+			"id": 75,
+			"xse": [
+				[-9.375,
+					187.837524,
+					0
+				],
+				[-9.375, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent76": {
+			"id": 76,
+			"xse": [
+				[40.625,
+					187.837524,
+					0
+				],
+				[40.625, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent77": {
+			"id": 77,
+			"xse": [
+				[-59.375,
+					187.837524,
+					0
+				],
+				[-59.375, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent78": {
+			"id": 78,
+			"xse": [
+				[65.625,
+					187.837524,
+					0
+				],
+				[65.625, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent79": {
+			"id": 79,
+			"xse": [
+				[-34.375,
+					187.837524,
+					0
+				],
+				[-34.375, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent80": {
+			"id": 80,
+			"xse": [
+				[15.625,
+					187.837524,
+					0
+				],
+				[15.625, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent81": {
+			"id": 81,
+			"xse": [
+				[-84.375,
+					187.837524,
+					0
+				],
+				[-84.375, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent82": {
+			"id": 82,
+			"xse": [
+				[78.125,
+					187.837524,
+					0
+				],
+				[78.125, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent83": {
+			"id": 83,
+			"xse": [
+				[-21.875,
+					187.837524,
+					0
+				],
+				[-21.875, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent84": {
+			"id": 84,
+			"xse": [
+				[28.125,
+					187.837524,
+					0
+				],
+				[28.125, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent85": {
+			"id": 85,
+			"xse": [
+				[-71.875,
+					187.837524,
+					0
+				],
+				[-71.875, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent86": {
+			"id": 86,
+			"xse": [
+				[53.125,
+					187.837524,
+					0
+				],
+				[53.125, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent87": {
+			"id": 87,
+			"xse": [
+				[-46.875,
+					187.837524,
+					0
+				],
+				[-46.875, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent88": {
+			"id": 88,
+			"xse": [
+				[3.125,
+					187.837524,
+					0
+				],
+				[3.125, -174.940323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent89": {
+			"id": 89,
+			"xse": [
+				[0,
+					181.587524,
+					0
+				],
+				[0, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent90": {
+			"id": 90,
+			"xse": [
+				[50,
+					181.587524,
+					0
+				],
+				[50, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent91": {
+			"id": 91,
+			"xse": [
+				[-50,
+					181.587524,
+					0
+				],
+				[-50, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent92": {
+			"id": 92,
+			"xse": [
+				[-25,
+					181.587524,
+					0
+				],
+				[-25, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent93": {
+			"id": 93,
+			"xse": [
+				[-75,
+					181.587524,
+					0
+				],
+				[-75, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent94": {
+			"id": 94,
+			"xse": [
+				[75,
+					181.587524,
+					0
+				],
+				[75, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent95": {
+			"id": 95,
+			"xse": [
+				[25,
+					181.587524,
+					0
+				],
+				[25, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent96": {
+			"id": 96,
+			"xse": [
+				[37.5,
+					181.587524,
+					0
+				],
+				[37.5, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent97": {
+			"id": 97,
+			"xse": [
+				[12.5,
+					181.587524,
+					0
+				],
+				[12.5, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent98": {
+			"id": 98,
+			"xse": [
+				[87.5,
+					181.587524,
+					0
+				],
+				[87.5, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent99": {
+			"id": 99,
+			"xse": [
+				[62.5,
+					181.587524,
+					0
+				],
+				[62.5, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent100": {
+			"id": 100,
+			"xse": [
+				[-62.5,
+					181.587524,
+					0
+				],
+				[-62.5, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent101": {
+			"id": 101,
+			"xse": [
+				[-87.5,
+					181.587524,
+					0
+				],
+				[-87.5, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent102": {
+			"id": 102,
+			"xse": [
+				[-12.5,
+					181.587524,
+					0
+				],
+				[-12.5, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent103": {
+			"id": 103,
+			"xse": [
+				[-37.5,
+					181.587524,
+					0
+				],
+				[-37.5, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent104": {
+			"id": 104,
+			"xse": [
+				[-31.25,
+					181.587524,
+					0
+				],
+				[-31.25, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent105": {
+			"id": 105,
+			"xse": [
+				[-34.375,
+					175.337524,
+					0
+				],
+				[-34.375, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent106": {
+			"id": 106,
+			"xse": [
+				[-28.125,
+					175.337524,
+					0
+				],
+				[-28.125, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent107": {
+			"id": 107,
+			"xse": [
+				[-43.75,
+					181.587524,
+					0
+				],
+				[-43.75, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent108": {
+			"id": 108,
+			"xse": [
+				[-46.875,
+					175.337524,
+					0
+				],
+				[-46.875, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent109": {
+			"id": 109,
+			"xse": [
+				[-40.625,
+					175.337524,
+					0
+				],
+				[-40.625, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent110": {
+			"id": 110,
+			"xse": [
+				[-6.25,
+					181.587524,
+					0
+				],
+				[-6.25, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent111": {
+			"id": 111,
+			"xse": [
+				[-9.375,
+					175.337524,
+					0
+				],
+				[-9.375, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent112": {
+			"id": 112,
+			"xse": [
+				[-3.125,
+					175.337524,
+					0
+				],
+				[-3.125, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent113": {
+			"id": 113,
+			"xse": [
+				[-18.75,
+					181.587524,
+					0
+				],
+				[-18.75, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent114": {
+			"id": 114,
+			"xse": [
+				[-21.875,
+					175.337524,
+					0
+				],
+				[-21.875, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent115": {
+			"id": 115,
+			"xse": [
+				[-15.625,
+					175.337524,
+					0
+				],
+				[-15.625, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent116": {
+			"id": 116,
+			"xse": [
+				[-81.25,
+					181.587524,
+					0
+				],
+				[-81.25, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent117": {
+			"id": 117,
+			"xse": [
+				[-84.375,
+					175.337524,
+					0
+				],
+				[-84.375, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent118": {
+			"id": 118,
+			"xse": [
+				[-78.125,
+					175.337524,
+					0
+				],
+				[-78.125, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent119": {
+			"id": 119,
+			"xse": [
+				[-90.625,
+					175.337524,
+					0
+				],
+				[-90.625, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent120": {
+			"id": 120,
+			"xse": [
+				[-56.25,
+					181.587524,
+					0
+				],
+				[-56.25, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent121": {
+			"id": 121,
+			"xse": [
+				[-59.375,
+					175.337524,
+					0
+				],
+				[-59.375, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent122": {
+			"id": 122,
+			"xse": [
+				[-53.125,
+					175.337524,
+					0
+				],
+				[-53.125, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent123": {
+			"id": 123,
+			"xse": [
+				[-68.75,
+					181.587524,
+					0
+				],
+				[-68.75, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent124": {
+			"id": 124,
+			"xse": [
+				[-71.875,
+					175.337524,
+					0
+				],
+				[-71.875, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent125": {
+			"id": 125,
+			"xse": [
+				[-65.625,
+					175.337524,
+					0
+				],
+				[-65.625, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent126": {
+			"id": 126,
+			"xse": [
+				[68.75,
+					181.587524,
+					0
+				],
+				[68.75, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent127": {
+			"id": 127,
+			"xse": [
+				[65.625,
+					175.337524,
+					0
+				],
+				[65.625, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent128": {
+			"id": 128,
+			"xse": [
+				[71.875,
+					175.337524,
+					0
+				],
+				[71.875, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent129": {
+			"id": 129,
+			"xse": [
+				[56.25,
+					181.587524,
+					0
+				],
+				[56.25, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent130": {
+			"id": 130,
+			"xse": [
+				[53.125,
+					175.337524,
+					0
+				],
+				[53.125, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent131": {
+			"id": 131,
+			"xse": [
+				[59.375,
+					175.337524,
+					0
+				],
+				[59.375, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent132": {
+			"id": 132,
+			"xse": [
+				[90.625,
+					175.337524,
+					0
+				],
+				[90.625, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent133": {
+			"id": 133,
+			"xse": [
+				[81.25,
+					181.587524,
+					0
+				],
+				[81.25, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent134": {
+			"id": 134,
+			"xse": [
+				[78.125,
+					175.337524,
+					0
+				],
+				[78.125, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent135": {
+			"id": 135,
+			"xse": [
+				[84.375,
+					175.337524,
+					0
+				],
+				[84.375, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent136": {
+			"id": 136,
+			"xse": [
+				[18.75,
+					181.587524,
+					0
+				],
+				[18.75, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent137": {
+			"id": 137,
+			"xse": [
+				[15.625,
+					175.337524,
+					0
+				],
+				[15.625, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent138": {
+			"id": 138,
+			"xse": [
+				[21.875,
+					175.337524,
+					0
+				],
+				[21.875, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent139": {
+			"id": 139,
+			"xse": [
+				[6.25,
+					181.587524,
+					0
+				],
+				[6.25, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent140": {
+			"id": 140,
+			"xse": [
+				[3.125,
+					175.337524,
+					0
+				],
+				[3.125, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent141": {
+			"id": 141,
+			"xse": [
+				[9.375,
+					175.337524,
+					0
+				],
+				[9.375, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent142": {
+			"id": 142,
+			"xse": [
+				[43.75,
+					181.587524,
+					0
+				],
+				[43.75, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent143": {
+			"id": 143,
+			"xse": [
+				[40.625,
+					175.337524,
+					0
+				],
+				[40.625, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent144": {
+			"id": 144,
+			"xse": [
+				[46.875,
+					175.337524,
+					0
+				],
+				[46.875, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent145": {
+			"id": 145,
+			"xse": [
+				[31.25,
+					181.587524,
+					0
+				],
+				[31.25, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent146": {
+			"id": 146,
+			"xse": [
+				[28.125,
+					175.337524,
+					0
+				],
+				[28.125, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent147": {
+			"id": 147,
+			"xse": [
+				[34.375,
+					175.337524,
+					0
+				],
+				[34.375, -187.440323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent148": {
+			"id": 148,
+			"xse": [
+				[34.375,
+					181.587524,
+					0
+				],
+				[34.375, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent149": {
+			"id": 149,
+			"xse": [
+				[28.125,
+					181.587524,
+					0
+				],
+				[28.125, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent150": {
+			"id": 150,
+			"xse": [
+				[46.875,
+					181.587524,
+					0
+				],
+				[46.875, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent151": {
+			"id": 151,
+			"xse": [
+				[40.625,
+					181.587524,
+					0
+				],
+				[40.625, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent152": {
+			"id": 152,
+			"xse": [
+				[9.375,
+					181.587524,
+					0
+				],
+				[9.375, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent153": {
+			"id": 153,
+			"xse": [
+				[3.125,
+					181.587524,
+					0
+				],
+				[3.125, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent154": {
+			"id": 154,
+			"xse": [
+				[21.875,
+					181.587524,
+					0
+				],
+				[21.875, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent155": {
+			"id": 155,
+			"xse": [
+				[15.625,
+					181.587524,
+					0
+				],
+				[15.625, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent156": {
+			"id": 156,
+			"xse": [
+				[84.375,
+					181.587524,
+					0
+				],
+				[84.375, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent157": {
+			"id": 157,
+			"xse": [
+				[78.125,
+					181.587524,
+					0
+				],
+				[78.125, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent158": {
+			"id": 158,
+			"xse": [
+				[90.625,
+					181.587524,
+					0
+				],
+				[90.625, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent159": {
+			"id": 159,
+			"xse": [
+				[59.375,
+					181.587524,
+					0
+				],
+				[59.375, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent160": {
+			"id": 160,
+			"xse": [
+				[53.125,
+					181.587524,
+					0
+				],
+				[53.125, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent161": {
+			"id": 161,
+			"xse": [
+				[71.875,
+					181.587524,
+					0
+				],
+				[71.875, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent162": {
+			"id": 162,
+			"xse": [
+				[65.625,
+					181.587524,
+					0
+				],
+				[65.625, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent163": {
+			"id": 163,
+			"xse": [
+				[-65.625,
+					181.587524,
+					0
+				],
+				[-65.625, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent164": {
+			"id": 164,
+			"xse": [
+				[-71.875,
+					181.587524,
+					0
+				],
+				[-71.875, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent165": {
+			"id": 165,
+			"xse": [
+				[-53.125,
+					181.587524,
+					0
+				],
+				[-53.125, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent166": {
+			"id": 166,
+			"xse": [
+				[-59.375,
+					181.587524,
+					0
+				],
+				[-59.375, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent167": {
+			"id": 167,
+			"xse": [
+				[-90.625,
+					181.587524,
+					0
+				],
+				[-90.625, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent168": {
+			"id": 168,
+			"xse": [
+				[-78.125,
+					181.587524,
+					0
+				],
+				[-78.125, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent169": {
+			"id": 169,
+			"xse": [
+				[-84.375,
+					181.587524,
+					0
+				],
+				[-84.375, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent170": {
+			"id": 170,
+			"xse": [
+				[-15.625,
+					181.587524,
+					0
+				],
+				[-15.625, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent171": {
+			"id": 171,
+			"xse": [
+				[-21.875,
+					181.587524,
+					0
+				],
+				[-21.875, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent172": {
+			"id": 172,
+			"xse": [
+				[-3.125,
+					181.587524,
+					0
+				],
+				[-3.125, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent173": {
+			"id": 173,
+			"xse": [
+				[-9.375,
+					181.587524,
+					0
+				],
+				[-9.375, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent174": {
+			"id": 174,
+			"xse": [
+				[-40.625,
+					181.587524,
+					0
+				],
+				[-40.625, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent175": {
+			"id": 175,
+			"xse": [
+				[-46.875,
+					181.587524,
+					0
+				],
+				[-46.875, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent176": {
+			"id": 176,
+			"xse": [
+				[-28.125,
+					181.587524,
+					0
+				],
+				[-28.125, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		},
+		"agent177": {
+			"id": 177,
+			"xse": [
+				[-34.375,
+					181.587524,
+					0
+				],
+				[-34.375, -181.190323,
+					100
+				]
+			],
+			"mesh": "deer",
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 10
+			}
+		}
+	},
+	"terrain": {
+		"mesh": "terrain.obj"
+	},
+	"obstacles": {},
+	"smoothDistAlpha": 30,
+	"useSpaceTimeGraphDiags": 0
+}

@@ -9,20 +9,23 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
     
     %% Weights and parameters
     K_agent = 1*scene.coeff_matrix(1,:);
+    K_tol =   1*scene.coeff_matrix(2,:);
     K_accel = 1*scene.coeff_matrix(3,:);
     K_map =   1*scene.coeff_matrix(4,:);
     K_ke =    1*scene.coeff_matrix(5,:);
     K_pv =    1*scene.coeff_matrix(6,:);
     K_reg =   1*scene.coeff_matrix(7,:);
     A_mass = zeros(numel(scene.agents), 1)';
+    A_pv = zeros(numel(scene.agents), 1)';
     for i=1:numel(scene.agents)
         A_mass(i) = scene.agents(i).mass;
+        A_pv(i) = scene.agents(i).preferred_end_time;
     end
-    pv = scene.agents(i).preferred_end_time;
+    
     
     %% fxns
     oneTic = tic;
-    [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent);
+    [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent, K_tol);
     scene.timings.iterations(end).egAgent = scene.timings.iterations(end).egAgent + toc(oneTic);
     
     oneTic = tic;
@@ -30,7 +33,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
     scene.timings.iterations(end).egMap = scene.timings.iterations(end).egMap + toc(oneTic);
     
     oneTic = tic;
-    e_pv = mex_pv_energy(Q(:), K_pv', pv, num_agents, size(Q, 1)/3);
+    e_pv = mex_pv_energy(Q(:), K_pv', A_pv, num_agents, size(Q, 1)/3);
     scene.timings.iterations(end).ePv = scene.timings.iterations(end).ePv + toc(oneTic);
     
     oneTic = tic;
@@ -48,7 +51,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
     scene.timings.iterations(end).eReg = scene.timings.iterations(end).eReg + toc(oneTic);
     
     oneTic = tic;
-    g_pv = mex_pv_gradient(Q(:),K_pv', pv, num_agents, size(Q,1)/3);
+    g_pv = mex_pv_gradient(Q(:),K_pv', A_pv, num_agents, size(Q,1)/3);
     scene.timings.iterations(end).ePv = scene.timings.iterations(end).ePv + toc(oneTic);
     
     oneTic = tic;
@@ -152,7 +155,7 @@ function [e, g] = preferred_time_energy(Q, scene, K)
     g = reshape(GT, size(GT,1)*size(GT,2),1);
 end
 
-function [e, g] = agent_agent_energy(Q, Tols, scene, K)
+function [e, g] = agent_agent_energy(Q, Tols, scene, K, Ktol)
     global simple_sd;
     num_agents = numel(scene.agents);
     if sum(K)==0
@@ -215,23 +218,18 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K)
             %GB(:,j) = GB(:,j)+ K(j)*(-2/((-tol + D)))*JG2;
             
             %New energy
-             e = e + -K(i)*log((-tol + D));
-             GB(:,i) = GB(:,i)+ -(K(i)*JG1)/(-tol + D);
-             GB(:,j) = GB(:,j)+ -(K(j)*JG2)/(-tol + D);
+     
+            e = e + -K(i)*log((-tol + D));
+            GB(:,i) = GB(:,i)+ -(K(i)*JG1)/(-tol + D);
+            GB(:,j) = GB(:,j)+ -(K(j)*JG2)/(-tol + D);
             
-%             if(ismember(j,scene.agents(i).friends))
-%                 e = e + -K(i)*log(-D + 2);
-% %                 GB(:,i) = GB(:,i)+ K(i)*(-1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-% %                 GB(:,j) = GB(:,j)+ K(i)*(-1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
-%                 GB(:,i) = GB(:,i)+ K(i)*(1/(-D + 2))*reshape(JG1', size(JG1,1)*size(JG1,2), 1);
-%                 GB(:,j) = GB(:,j)+ K(j)*(1/(-D + 2))*reshape(JG2', size(JG2,1)*size(JG2,2), 1);
-%             end
-            
-            
-            
-%             gW(i) = gW(i) + K(i)*(2/((-tol + D))); TODO
-%             gW(j) = gW(j) + K(j)*(2/((-tol + D)));
-            
+            if(ismember(j,scene.agents(i).friends))
+                %friendship_radius = 4*max(scene.agents(i).radius, scene.agents(j).radius);
+                e = e + Ktol(i)*K(i)*(D - tol)^2;
+                GB(:,i) = GB(:,i)+ 2*Ktol(i)*K(i)*(D-tol)*JG1;% -(K(i)*JG1)/(-D + friendship_radius);
+                GB(:,j) = GB(:,j)+ 2*Ktol(i)*K(j)*(D-tol)*JG2;%-(K(j)*JG2)/(-D + friendship_radius);
+            end
+                   
         end        
     end
     g = reshape(GB, size(GB,1)*size(GB,2),1); %g(1:end-num_agents) = reshape(GB, size(GB,1)*size(GB,2),1); %TODO

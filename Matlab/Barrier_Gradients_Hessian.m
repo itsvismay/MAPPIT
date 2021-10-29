@@ -54,12 +54,24 @@ space_time_diags = 0;
 %     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/three_agents/stinky_collisions/";nLayer = 5; 
 %     num_segments = 30; max_iters = 5; num_inside_iters = 50; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/three_agents/friends_asymmetric_grouping/";nLayer = 5; 
+%     num_segments = 30; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
 %% Tunnel Maze
-fname = "../Scenes/1_input_scenes/tunnel_maze/scene_1/";nLayer = 8; 
-    num_segments = 50;max_iters = 1;num_inside_iters = 150;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
+% fname = "../Scenes/1_input_scenes/tunnel_maze/scene_1/";nLayer = 8; 
+%     num_segments = 50;max_iters = 1;num_inside_iters = 150;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
 
+%% Pond Scene
 
+%% Bottleneck
+% fname = "../Scenes/1_input_scenes/bottleneck/bottleneck/";nLayer = 10; 
+%     num_segments = 50; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+
+%% Antelopes
+fname = "../Scenes/1_input_scenes/antelopes/200/"; nLayer = 10;
+    num_segments = 100; max_iters = 5; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+
+    
 %% Setup
     
 %looks at the output folder and gets the latest test run number

@@ -18,11 +18,12 @@
 void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
     /* variable declarations here */
     
-    VectorXd q, K, mass;
+    VectorXd q, K, mass, pv;
 
     igl::matlab::parse_rhs_double(prhs+0, q);
     igl::matlab::parse_rhs_double(prhs+1, K);
-    double pv = mxGetScalar(prhs[2]);
+    igl::matlab::parse_rhs_double(prhs+2, pv);
+
     int num_agents = mxGetScalar(prhs[3]);
     int num_points_per_agent = mxGetScalar(prhs[4]);
 
