@@ -4,12 +4,12 @@
 % newA_visited - Adj Mat used to keep track of previously visited vertices
 % s, t - start and end
 % BV, Bind - Boundary verts and boundary indices into VV
-function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, Bind, agentRadius)
+function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, flatBV, flatbvhBV, Bind, agentRadius)
     global space_time_diags
     agent_radius = 2*agentRadius;
     
     % set the edge weights
-    newA = set_edge_weights_directed(VV, newA, BV,Bind, newA_visited, agent_radius);
+    newA = set_edge_weights_directed(VV, newA, flatBV, flatbvhBV, newA_visited, agent_radius);
     
     % 3d dijkstra
     n = size(newA, 1);
@@ -86,7 +86,7 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
     
 end
 
-function [E] = set_edge_weights_directed(Q, A, BV, Bind, A_visited, ar)   
+function [E] = set_edge_weights_directed(Q, A, flatBV, flatbvhBV, A_visited, ar)   
     
      %% Cross out edges within agent_radius from Boundary
 %     for i=1:length(Bind)
@@ -105,7 +105,7 @@ function [E] = set_edge_weights_directed(Q, A, BV, Bind, A_visited, ar)
 %         end
 %     end
 %     E = A_visited;
-    
+    flatBV = flatBV(:, 1:2);
     [ii,jj,ss] = find(A);
     for k=1:length(ii)
         ss(k) = 1;
@@ -113,7 +113,7 @@ function [E] = set_edge_weights_directed(Q, A, BV, Bind, A_visited, ar)
     
     for k=1:length(ii)
        %// A nonzero element of A: ss(k) = S(ii(k),jj(k))
-       d = min_edge_to_boundary_dist(Q(ii(k),:), Q(jj(k),:), BV);
+       d = min_edge_to_boundary_dist(Q(ii(k),:), Q(jj(k),:), flatBV, flatbvhBV);
        
        % if d < ar, then set weight to 0
        if d<ar
@@ -141,7 +141,9 @@ function [d] = find_edges_within_radius_of_node(n, Q, A, r)
     Q_idx = rangesearch(Q, n, r); %indexes of Q 
 end
 
-function [d] = min_edge_to_boundary_dist(P1, P2, M)
+function [d] = min_edge_to_boundary_dist(P1, P2, M, bvhM)
+    P1 = P1(1:2);
+    P2 = P2(1:2);
     v = P2 - P1;
     %quadrature sample points along edgee (P1, s1, s2,..., P2)
     
@@ -158,3 +160,9 @@ function [d] = min_edge_to_boundary_dist(P1, P2, M)
     %d = rand*min(min(D)) + 1e-7;
     d = min(min(D)) + 1e-7;
 end
+% 
+% function [d] = bvh_traversal(P, M, bvhM)
+%     P2 = P(1:2);
+%     
+% end
+

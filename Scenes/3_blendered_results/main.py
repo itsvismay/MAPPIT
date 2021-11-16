@@ -105,9 +105,12 @@ colors = [[0.19154,      0.78665,      0.56299],
           [  0.901,      0.34352,      0.29666],
           [0.14355,      0.83488,      0.56275],
           [0.19705,      0.19373,       1.0]]
-def assign_mesh_color(agent_mesh, id):
+def assign_mesh_color(agent_mesh, id = -1):
     i = id
-    color = colors[i]
+    if(i>=0):
+      color = colors[i]
+    else:
+      color = [0,0,0]
     mat = bpy.data.materials.new('agent_material'+str(i))
     agent_mesh.data.materials.append(mat)
     agent_mesh.active_material = mat
@@ -153,6 +156,18 @@ def make_path_curve(name, coords_list):
     # make a new object with the curve
     obj = bpy.data.objects.new(name, crv)
     bpy.context.collection.objects.link(obj)
+
+    #extrude to cylinder
+    bpy.ops.mesh.primitive_circle_add(radius=0.05, enter_editmode=False, align='WORLD', location=(0, 0, -20), scale=(1, 1, 1))
+    bpy.context.object.select_set(True)
+    # bpy.context.object.hide_viewport = True
+    bpy.context.object.name = "path-circle-"+name;
+    bpy.ops.object.convert(target='CURVE')
+    obj.data.bevel_mode = "OBJECT"
+    obj.data.bevel_object = bpy.data.objects["path-circle-"+name]
+    # obj.hide_viewport = True
+    assign_mesh_color(obj, -1) #paint it black (-1)
+
     return obj
 
 def make_rod_curve(name, coords_list, agent_radius, agent_id):
@@ -175,9 +190,17 @@ def make_rod_curve(name, coords_list, agent_radius, agent_id):
     bpy.context.collection.objects.link(obj)
 
     #make sphere caps on the spline rod
+    #capend
     bpy.ops.mesh.primitive_uv_sphere_add(radius=agent_radius, 
                   align='WORLD', location=(coords_list[-1][0], coords_list[-1][1], coords_list[-1][2]), scale=(1, 1, 1))
     cap = bpy.context.selected_objects[0]
+    bpy.ops.object.shade_smooth()
+    assign_mesh_color(cap, agent_id)
+    #capstart
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=agent_radius, 
+                  align='WORLD', location=(coords_list[0][0], coords_list[0][1], coords_list[0][2]), scale=(1, 1, 1))
+    cap = bpy.context.selected_objects[0]
+    bpy.ops.object.shade_smooth()
     assign_mesh_color(cap, agent_id)
 
     #extrude to cylinder
@@ -193,9 +216,7 @@ def make_rod_curve(name, coords_list, agent_radius, agent_id):
     return obj
 
 
-def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, filename):
-    render_rods = True
-
+def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, filename, render_rods = True):
     bpy.ops.wm.open_mainfile(filepath=crowds_folder+"Scenes/1_input_scenes/"+scene_folder.split("/")[0]+"/base.blend")
 
     f = open(crowds_folder+"Scenes/2_output_results/"+scene_folder+filename+".json", "r")
@@ -214,15 +235,16 @@ def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder
         make_path_curve("Path-"+str(a["id"]), np.array([x, y, y*0], order='F').transpose())
 
     #load agents rods
-    for a in scene["agents"]:
-        v = np.array(a["v"])
-        
-        x = np.around(v[:,0], decimals=2)
-        y = np.around(v[:,1], decimals=2) 
-        t = np.around(v[:,2], decimals=2)
+    if(render_rods):
+      for a in scene["agents"]:
+          v = np.array(a["v"])
+          
+          x = np.around(v[:,0], decimals=2)
+          y = np.around(v[:,1], decimals=2) 
+          t = np.around(v[:,2], decimals=2)
 
-        r = float(a["radius"])
-        rod = make_rod_curve("Rod-"+str(a["id"]), np.array([x, y, t], order='F').transpose(), r, int(a["id"]))
+          r = float(a["radius"])
+          rod = make_rod_curve("Rod-"+str(a["id"]), np.array([x, y, t], order='F').transpose(), r, int(a["id"]))
         
 
     #load agents objects
@@ -316,11 +338,11 @@ blend_material_folder = "blend_material/"
 #scene_folder = "complex_maze/square_maze/three_agents/"
 
 # #Three agent scenes
-# scene_folder = "three_agents/no_collisions/run3/"
+#scene_folder = "three_agents/no_collisions/run3/"
 # scene_folder = "three_agents/symmetric_collisions/run1/"
+# scene_folder = "three_agents/size_mass_asymmetric_collisions/run5/"
 # scene_folder = "three_agents/size_asymmetric_collisions/run15/"
-# scene_folder = "three_agents/mass_asymmetric_collisions/run14/"
-#scene_folder = "three_agents/size_mass_asymmetric_collisions/run5/"
+scene_folder = "three_agents/mass_asymmetric_collisions/run14/"
 
 # #Tunnel Maze
 #scene_folder = "tunnel_maze/scene_1/run39/"
@@ -328,11 +350,15 @@ blend_material_folder = "blend_material/"
 # #Comparisons
 # scene_folder = "Comparisons/2_agents/implicit_crowds/2_agents_output/output_2_agents_offset/"
 # scene_folder = "Comparisons/2_agents/implicit_crowds/2_agents_output/output_2_agents_sym/"
-scene_folder = "Comparisons/3_agents/implicit_crowds/3_agents_output/output_3_agents_sym/"
-#scene_folder = "Comparisons/3_agents/implicit_crowds/3_agents_output/output_3_agents_offset/"
+# scene_folder = "Comparisons/3_agents/implicit_crowds/3_agents_output/output_3_agents_sym/"
+# scene_folder = "Comparisons/3_agents/implicit_crowds/3_agents_output/output_3_agents_offset/"
 
-main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents")
-#main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "initial")
+# #RBE
+# scene_folder = "ricky_baboon_elephant/run28/"
+
+main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents", render_rods=True)
+main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents", render_rods=False)
+#main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder,  "initial", render_rods = True)
 
 exit()
 

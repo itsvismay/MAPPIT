@@ -15,8 +15,8 @@ space_time_diags = 0;
 %      num_segments = 30; max_iters = 10; num_inside_iters = 40;
 % fname = "../Scenes/1_input_scenes/scaling_tests/10_agents/"; nLayer = 9;
 %      num_segments = 30; max_iters = 10; num_inside_iters = 40;
-%fname = "../Scenes/1_input_scenes/scaling_tests/20_agents/"; nLayer = 9;
-     %num_segments = 30; max_iters = 10; num_inside_iters = 30;
+% fname = "../Scenes/1_input_scenes/scaling_tests/20_agents/"; nLayer = 9;
+%      num_segments = 30; max_iters = 10; num_inside_iters = 30;
 %fname = "../Scenes/output_results/scaling_tests/30_agents/"; nLayer = 11;
     %num_segments = 50; max_iters = 5; num_inside_iters = 30;
 %fname = "../Scenes/output_results/scaling_tests/60_agents/"; nLayer = 7;
@@ -68,10 +68,13 @@ space_time_diags = 0;
 %     num_segments = 50; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
 %% Antelopes
-fname = "../Scenes/1_input_scenes/antelopes/200/"; nLayer = 10;
-    num_segments = 100; max_iters = 5; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/antelopes/200/"; nLayer = 30;
+%     num_segments = 100; max_iters = 5; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
-    
+%% RBE
+fname = "../Scenes/1_input_scenes/ricky_baboon_elephant/"; nLayer = 15;
+    num_segments = 55; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+
 %% Setup
     
 %looks at the output folder and gets the latest test run number
@@ -87,6 +90,7 @@ scene.terrain.F = tF;
 scene.terrain.BF = boundary_faces(tF);
 scene.terrain.BVind = unique(scene.terrain.BF);
 scene.terrain.BV = tV(scene.terrain.BVind,:);
+scene.terrain.bvhBV = 0;%makePointBVH(scene.terrain.BV(:, 1:2), [1:size(scene.terrain.BV,1)]);
 scene.agents = [];
 scene.smoothDistAlpha = setup_params.smoothDistAlpha;
 tV(scene.terrain.BVind,3) = 1;
@@ -131,6 +135,8 @@ end
 time = linspace(0,max_time,nLayer)';
 [VV,EE, AdjM, BVind] = spacetime_graph(scene.terrain.V,edge,time, scene.terrain.BVind);
 BV = VV(BVind,:);
+%bvhBV = makePointBVH(BV, [1:size(BV,1)]);
+
 %plot3(BV(:,1), BV(:,2), BV(:,3), 'ko');hold on;
 
 % make the graph directed along the time dimension
@@ -174,7 +180,7 @@ for i = 1:numel(a)
         
     %set path new
     %[r1e, r1v, AdjM, AdjM_visited] = set_path(AdjM, AdjM_visited, agent, scene);
-    [r1e, r1v, AdjM, AdjM_visited] = set_path3d(AdjM, AdjM_visited, agent, scene, VV, EE, BV, BVind, nLayer, nTotalVer, agent.segments);
+    [r1e, r1v, AdjM, AdjM_visited] = set_path3d(AdjM, AdjM_visited, agent, scene, VV, EE, BV, scene.terrain.BV, scene.terrain.bvhBV, BVind, nLayer, nTotalVer, agent.segments);
 
     %edges
     agent.e = r1e;

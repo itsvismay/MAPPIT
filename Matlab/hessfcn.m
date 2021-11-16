@@ -7,7 +7,7 @@ function [H] = hessfcn(q_i,lambda)
     
     %Weights
     K_agent = 1*scene.coeff_matrix(1,:);
-    K_tol =   1*scene.coeff_matrix(2,:);
+    K_tol =   1*scene.coeff_matrix(2,:); %friendship
     K_accel = 1*scene.coeff_matrix(3,:);
     K_map =   1*scene.coeff_matrix(4,:);
     K_ke =    1*scene.coeff_matrix(5,:);

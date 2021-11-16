@@ -2,7 +2,7 @@
 	"agent":{
 		"file": "agent.obj",
 		"orientation_forward_up": ["-Z", "Y"],
-		"radius": 0.5
+		"radius": 0.25
 	},
 	"elephant":{
 		"file": "elephant.obj",
@@ -23,5 +23,10 @@
 		"file": "roomba.obj",
 		"orientation_forward_up": ["Z", "Y"],
 		"radius": 0.125
+	},
+	"monkey":{
+		"file": "monkey.obj",
+		"orientation_forward_up": ["Z", "Y"],
+		"radius": 0.25
 	}
 }
