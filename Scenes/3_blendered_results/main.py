@@ -138,7 +138,7 @@ def origin_to_bottom(ob, meshFU, matrix=Matrix()):
     me.transform(Matrix.Translation(-o))
     mw.translation = mw @ o
 
-def make_path_curve(name, coords_list):
+def make_path_curve(name, coords_list, agent_radius, agent_id):
     # make a new curve
     crv = bpy.data.curves.new('crv', 'CURVE')
     crv.dimensions = '3D'
@@ -166,7 +166,7 @@ def make_path_curve(name, coords_list):
     obj.data.bevel_mode = "OBJECT"
     obj.data.bevel_object = bpy.data.objects["path-circle-"+name]
     # obj.hide_viewport = True
-    assign_mesh_color(obj, -1) #paint it black (-1)
+    assign_mesh_color(obj, agent_id) #paint it black (-1)
 
     return obj
 
@@ -216,7 +216,7 @@ def make_rod_curve(name, coords_list, agent_radius, agent_id):
     return obj
 
 
-def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, filename, render_rods = True):
+def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, filename, render_rods = True, path = True):
     bpy.ops.wm.open_mainfile(filepath=crowds_folder+"Scenes/1_input_scenes/"+scene_folder.split("/")[0]+"/base.blend")
 
     f = open(crowds_folder+"Scenes/2_output_results/"+scene_folder+filename+".json", "r")
@@ -225,14 +225,16 @@ def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder
     agent_obj_list = json.loads(f1.read())
 
     #load agents curves
-    for a in scene["agents"]:
-        v = np.array(a["v"])
-        
-        x = np.around(v[:,0], decimals=2)
-        y = np.around(v[:,1], decimals=2) 
-        t = np.around(v[:,2], decimals=2)
+    if(path):
+      for a in scene["agents"]:
+          v = np.array(a["v"])
+          
+          x = np.around(v[:,0], decimals=2)
+          y = np.around(v[:,1], decimals=2) 
+          t = np.around(v[:,2], decimals=2)
+          r = float(a["radius"])
 
-        make_path_curve("Path-"+str(a["id"]), np.array([x, y, y*0], order='F').transpose())
+          make_path_curve("Path-"+str(a["id"]), np.array([x, y, y*0], order='F').transpose(), r, int(a["id"]))
 
     #load agents rods
     if(render_rods):
@@ -281,16 +283,15 @@ def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder
                 dx = next_rot_euler.x - curr_rot.x
                 dy = next_rot_euler.y - curr_rot.y
                 dz = next_rot_euler.z - curr_rot.z 
-                
                 if abs(dx) > 3.14159:
                     print("go the other way")
-                    next_rot_euler.x += 1*(dx/dx)*(2*3.14159)
+                    next_rot_euler.x -= 1*(dx/abs(dx))*(2*3.14159)
                 if abs(dy) > 3.14159:
                     print("go the other way")
-                    next_rot_euler.y += 1*(dy/dy)*(2*3.14159)
+                    next_rot_euler.y -= 1*(dy/abs(dy))*(2*3.14159)
                 if abs(dz) > 3.14159:
                     print("go the other way")
-                    next_rot_euler.z += 1*(dz/dz)*(2*3.14159)
+                    next_rot_euler.z -= 1*(dz/abs(dz))*(2*3.14159)
 
                 obj_object.rotation_euler = (next_rot_euler.x, next_rot_euler.y, next_rot_euler.z)
 
@@ -310,9 +311,20 @@ def main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder
 
 
     if(render_rods):
-      bpy.ops.wm.save_mainfile(filepath=output_folder + filename + "_with_rods.blend")
+      pathlib.Path(output_folder+"with-rods/").mkdir(parents=True, exist_ok=True)
+      bpy.context.scene.render.filepath = output_folder+"with-rods/"
+      bpy.ops.wm.save_mainfile(filepath=output_folder + filename + "-with-rods.blend")
     else:
-      bpy.ops.wm.save_mainfile(filepath=output_folder + filename + "_no_rods.blend")
+      if not path:
+        pathlib.Path(output_folder+"no-rods-no-paths/").mkdir(parents=True, exist_ok=True)
+        bpy.context.scene.render.filepath = output_folder+"no-rods-no-paths/"
+        bpy.ops.wm.save_mainfile(filepath=output_folder + filename + "-no-rods-no-paths.blend")
+      else:
+        pathlib.Path(output_folder+"no-rods/").mkdir(parents=True, exist_ok=True)
+        bpy.context.scene.render.filepath = output_folder+"no-rods/"
+        bpy.ops.wm.save_mainfile(filepath=output_folder + filename + "-no-rods.blend")
+
+
 
 
 # #------------------------
@@ -327,25 +339,29 @@ blend_material_folder = "blend_material/"
 
 # #Roomba Scenes
 # scene_folder = "roomba_maze/scene_2/run2/"
-# scene_folder = "roomba_maze/scene_3/run0/"
+scene_folder = "roomba_maze/scene_3/run0-use/"
 
 # #Scaling Tests
-#scene_folder = "scaling_tests/10_agents/run11/"
-#scene_folder = "scaling_tests/2_agents/run2/"
+# scene_folder = "scaling_tests/2_agents/run2/"
+# scene_folder = "scaling_tests/8_agents/run0/"
+# scene_folder = "scaling_tests/10_agents/run11-use/"
+# scene_folder = "scaling_tests/20_agents/run3-use/"
+# scene_folder = "scaling_tests/30_agents/run1/"
 
 # #Complex Maze
 #scene_folder = "complex_maze/square_maze/one_agent/run0/"
 #scene_folder = "complex_maze/square_maze/three_agents/"
+scene_folder = "complex_maze/square_maze/five_agents/run4/"
 
 # #Three agent scenes
-#scene_folder = "three_agents/no_collisions/run3/"
+# scene_folder = "three_agents/no_collisions/run3/"
 # scene_folder = "three_agents/symmetric_collisions/run1/"
 # scene_folder = "three_agents/size_mass_asymmetric_collisions/run5/"
 # scene_folder = "three_agents/size_asymmetric_collisions/run15/"
-scene_folder = "three_agents/mass_asymmetric_collisions/run14/"
+# scene_folder = "three_agents/mass_asymmetric_collisions/run14/"
 
 # #Tunnel Maze
-#scene_folder = "tunnel_maze/scene_1/run39/"
+# scene_folder = "tunnel_maze/scene_1/run39/"
 
 # #Comparisons
 # scene_folder = "Comparisons/2_agents/implicit_crowds/2_agents_output/output_2_agents_offset/"
@@ -353,12 +369,18 @@ scene_folder = "three_agents/mass_asymmetric_collisions/run14/"
 # scene_folder = "Comparisons/3_agents/implicit_crowds/3_agents_output/output_3_agents_sym/"
 # scene_folder = "Comparisons/3_agents/implicit_crowds/3_agents_output/output_3_agents_offset/"
 
+# #Pond Scene
+# scene_folder = "pond_scene/all_agents_normal/run0/"
+# scene_folder = "pond_scene/one_agent_hurries/run0/"
+# scene_folder = "pond_scene/two_friends_meet/run1/"
+
 # #RBE
-# scene_folder = "ricky_baboon_elephant/run28/"
+# scene_folder = "ricky_baboon_elephant/run32/"
 
 main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents", render_rods=True)
 main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents", render_rods=False)
-#main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder,  "initial", render_rods = True)
+main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder,  "initial", render_rods = True)
+main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents", render_rods=False,  path = False)
 
 exit()
 

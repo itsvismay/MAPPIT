@@ -5,6 +5,7 @@ addpath("../CrowdSolverCpp/matlab/");
 global scene num_agents simple_sd mu_barrier space_time_diags surf_anim;
 
 mu_barrier= 1;
+mu_barrier_decrease_factor = 0.5;
 smoothing_eps_coeff = 1e-2;
 space_time_diags = 0;
 
@@ -38,8 +39,8 @@ space_time_diags = 0;
 %     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/complex_maze/square_maze/three_agents/";nLayer = 3; 
 %     num_segments = 200;max_iters = 5;num_inside_iters = 10;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
-%fname = "../Scenes/output_results/complex_maze/square_maze/five_agents/";nLayer = 10; 
-    %num_segments = 280; max_iters = 10; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+fname = "../Scenes/1_input_scenes/complex_maze/square_maze/five_agents/";nLayer = 10; 
+    num_segments = 200; max_iters = 5; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
  
 %% Three Agents Didactic
 % fname = "../Scenes/1_input_scenes/three_agents/symmetric_collisions/";nLayer = 3; 
@@ -72,8 +73,9 @@ space_time_diags = 0;
 %     num_segments = 100; max_iters = 5; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
 %% RBE
-fname = "../Scenes/1_input_scenes/ricky_baboon_elephant/"; nLayer = 15;
-    num_segments = 55; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/ricky_baboon_elephant/"; nLayer = 10;
+%     num_segments = 45; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; mu_barrier_decrease_factor = 0.75;
+%     smoothing_eps_coeff = 1e-2;
 
 %% Setup
     
@@ -315,7 +317,7 @@ for  iter=1:max_iters
     print_agents(strrep(fname,"1_input_scenes","2_output_results") +"run"+runId+"/", "agents", qn) %TODO
     plottings(scene, qn, []);
    
-    mu_barrier = mu_barrier*0.5;
+    mu_barrier = mu_barrier*mu_barrier_decrease_factor;
 end
 
 %path_energy(q_i,UserTols, numel(scene.agents),scene, e, surf_anim)

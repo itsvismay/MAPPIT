@@ -16,7 +16,9 @@ namespace crowds{
 		VectorXd q_i = q.segment(i*3*num_points_per_agent, 3*num_points_per_agent);
 
 		int t_end = q_i.size()-1;
-		g(i*3*num_points_per_agent + t_end) = K_pv(i)*(q_i(t_end) - pv(i));
+		if(fabs(K_pv(i)) > 1e-6){
+			g(i*3*num_points_per_agent + t_end) = K_pv(i)*(q_i(t_end) - pv(i));
+		}
 
 		// //For each rod segment, do this:
 		// for(int e =0; e<num_points_per_agent - 1; e++)

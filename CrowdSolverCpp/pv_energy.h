@@ -17,6 +17,9 @@ namespace crowds{
 		// in this version, pv is the desired end time
 		// just get end times to match
 		double energy_i = K_pv(i)*0.5*(q_i(q_i.size()-1) - pv(i))*(q_i(q_i.size()-1) - pv(i));
+		if(fabs(K_pv(i))< 1e-6){
+			energy_i = 0;
+		}
 
 		// option 2, 
 		// matching the slope of each rod segment
