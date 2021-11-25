@@ -39,8 +39,8 @@ space_time_diags = 0;
 %     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/complex_maze/square_maze/three_agents/";nLayer = 3; 
 %     num_segments = 200;max_iters = 5;num_inside_iters = 10;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
-fname = "../Scenes/1_input_scenes/complex_maze/square_maze/five_agents/";nLayer = 10; 
-    num_segments = 200; max_iters = 5; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/complex_maze/square_maze/five_agents/";nLayer = 10; 
+%     num_segments = 200; max_iters = 5; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
  
 %% Three Agents Didactic
 % fname = "../Scenes/1_input_scenes/three_agents/symmetric_collisions/";nLayer = 3; 
@@ -71,6 +71,11 @@ fname = "../Scenes/1_input_scenes/complex_maze/square_maze/five_agents/";nLayer 
 %% Antelopes
 % fname = "../Scenes/1_input_scenes/antelopes/200/"; nLayer = 30;
 %     num_segments = 100; max_iters = 5; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+
+%% Love
+fname = "../Scenes/1_input_scenes/love/sparse/"; nLayer = 15;
+    num_segments = 100; max_iters = 5; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+
 
 %% RBE
 % fname = "../Scenes/1_input_scenes/ricky_baboon_elephant/"; nLayer = 10;

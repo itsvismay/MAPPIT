@@ -1,20 +1,20 @@
-fname = "../../../1_input_scenes/antelopes/200/";
-inputVerts = readOBJ(fname + "input_verts.obj");
-outputVerts = readOBJ(fname + "output_verts.obj");
+fname = "../Scenes/1_input_scenes/love/sparse/";
+inputVerts = readOBJ(fname + "start_verts.obj");
+outputVerts = readOBJ(fname + "end_verts.obj");
 
 xy_starts = [inputVerts(:,1), inputVerts(:,3), zeros(size(inputVerts,1),1)];
 xy_ends = [outputVerts(:,1), outputVerts(:,3), 100*ones(size(inputVerts,1),1)];
 scene = struct;
-scene.name = "antelopes";
+scene.name = "love";
 agents = struct;
 for i=1:size(xy_starts,1)
     a = struct;
     a.id = i;
     a.xse = [xy_starts(i,:)' xy_ends(i,:)']';
-    a.mesh = "deer";
+    a.mesh = "agent";
     a.animation_cycles = "pass";
     a.friends = [];
-    a.radius = 1;
+    a.radius = 0.2;
     a.mass = 1;
     ec = struct;
     ec.K_agent = 1; % agent
