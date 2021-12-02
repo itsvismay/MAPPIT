@@ -339,7 +339,7 @@ blend_material_folder = "blend_material/"
 
 # #Roomba Scenes
 # scene_folder = "roomba_maze/scene_2/run2/"
-scene_folder = "roomba_maze/scene_3/run0-use/"
+# scene_folder = "roomba_maze/scene_3/run0-use/"
 
 # #Scaling Tests
 # scene_folder = "scaling_tests/2_agents/run2/"
@@ -351,7 +351,7 @@ scene_folder = "roomba_maze/scene_3/run0-use/"
 # #Complex Maze
 #scene_folder = "complex_maze/square_maze/one_agent/run0/"
 #scene_folder = "complex_maze/square_maze/three_agents/"
-scene_folder = "complex_maze/square_maze/five_agents/run4/"
+# scene_folder = "complex_maze/square_maze/five_agents/run4/"
 
 # #Three agent scenes
 # scene_folder = "three_agents/no_collisions/run3/"
@@ -375,7 +375,14 @@ scene_folder = "complex_maze/square_maze/five_agents/run4/"
 # scene_folder = "pond_scene/two_friends_meet/run1/"
 
 # #RBE
-# scene_folder = "ricky_baboon_elephant/run32/"
+scene_folder = "ricky_baboon_elephant/run32/"
+
+#Smily
+# scene_folder = "love/sparse/run28/"
+# scene_folder = "love/sparse/run29/"
+# scene_folder = "love/sparse/run30/"
+
+
 
 main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents", render_rods=True)
 main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents", render_rods=False)

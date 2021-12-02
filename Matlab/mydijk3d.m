@@ -4,12 +4,13 @@
 % newA_visited - Adj Mat used to keep track of previously visited vertices
 % s, t - start and end
 % BV, Bind - Boundary verts and boundary indices into VV
-function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, flatBV, flatbvhBV, Bind, agentRadius)
+function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, flatBV, flatbvhBV, Bind, agentRadius, bypass_min_edge)
     global space_time_diags
     agent_radius = 2*agentRadius;
     
+    
     % set the edge weights
-    newA = set_edge_weights_directed(VV, newA, flatBV, flatbvhBV, newA_visited, agent_radius);
+    newA = set_edge_weights_directed(VV, newA, flatBV, flatbvhBV, newA_visited, agent_radius, bypass_min_edge);
     
     % 3d dijkstra
     n = size(newA, 1);
@@ -86,7 +87,7 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
     
 end
 
-function [E] = set_edge_weights_directed(Q, A, flatBV, flatbvhBV, A_visited, ar)   
+function [E] = set_edge_weights_directed(Q, A, flatBV, flatbvhBV, A_visited, ar, bypass_min_edge_to_bdry)   
     
      %% Cross out edges within agent_radius from Boundary
 %     for i=1:length(Bind)
@@ -113,7 +114,7 @@ function [E] = set_edge_weights_directed(Q, A, flatBV, flatbvhBV, A_visited, ar)
     
     for k=1:length(ii)
        %// A nonzero element of A: ss(k) = S(ii(k),jj(k))
-       d = min_edge_to_boundary_dist(Q(ii(k),:), Q(jj(k),:), flatBV, flatbvhBV);
+       d = min_edge_to_boundary_dist(Q(ii(k),:), Q(jj(k),:), flatBV, flatbvhBV, bypass_min_edge_to_bdry);
        
        % if d < ar, then set weight to 0
        if d<ar
@@ -141,7 +142,16 @@ function [d] = find_edges_within_radius_of_node(n, Q, A, r)
     Q_idx = rangesearch(Q, n, r); %indexes of Q 
 end
 
-function [d] = min_edge_to_boundary_dist(P1, P2, M, bvhM)
+function [d] = min_edge_to_boundary_dist(P1, P2, M, bvhM, bypass)
+    % return small number (1e-7) to block out the edges
+    % return large number (tol) to keep edge
+
+    if(bypass)
+        % bypass the function is map doesn't have holes
+        d = 1;
+        return;
+    end
+    
     P1 = P1(1:2);
     P2 = P2(1:2);
     v = P2 - P1;

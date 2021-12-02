@@ -8,6 +8,7 @@ mu_barrier= 1;
 mu_barrier_decrease_factor = 0.5;
 smoothing_eps_coeff = 1e-2;
 space_time_diags = 0;
+bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doesn't matter
 
 %% Scaling Tests
 % fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 3;
@@ -67,15 +68,21 @@ space_time_diags = 0;
 %% Bottleneck
 % fname = "../Scenes/1_input_scenes/bottleneck/bottleneck/";nLayer = 10; 
 %     num_segments = 50; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+fname = "../Scenes/1_input_scenes/bottleneck/dense_no_bottleneck/";nLayer = 5; 
+    num_segments = 100; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
 %% Antelopes
 % fname = "../Scenes/1_input_scenes/antelopes/200/"; nLayer = 30;
 %     num_segments = 100; max_iters = 5; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
-%% Love
-fname = "../Scenes/1_input_scenes/love/sparse/"; nLayer = 15;
-    num_segments = 100; max_iters = 5; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-
+% %% Love
+% fname = "../Scenes/1_input_scenes/love/sparse/"; nLayer = 20;
+%     num_segments = 50; max_iters = 5; num_inside_iters = 50; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+%     mu_barrier_decrease_factor  = 0.8;
+% fname = "../Scenes/1_input_scenes/love/letters/"; nLayer = 10;
+%     num_segments = 50; max_iters = 5; num_inside_iters = 50; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+%     mu_barrier_decrease_factor  = 0.8;
+%     bypass_mind_edge = 1;
 
 %% RBE
 % fname = "../Scenes/1_input_scenes/ricky_baboon_elephant/"; nLayer = 10;
@@ -92,6 +99,13 @@ setup_params = jsondecode(fileread(fname+"setup.json"));
 simple_sd = 1;
 scene = struct;
 [tV, tF] = readOBJ(fname+setup_params.terrain.mesh);
+
+%For FlashMob
+% tempBV = tV(unique(boundary_faces(tF)),:);
+% tempBV(:,3) = zeros(size(tempBV,1),1);
+% [tV,tF,TN] = triangle(tempBV(:,1:2), 'Quality', 30, 'MaxArea', 0.3);
+% tV(:,3) = zeros(size(tV,1),1);
+
 scene.terrain.V = tV;
 scene.terrain.F = tF;
 scene.terrain.BF = boundary_faces(tF);
@@ -132,7 +146,7 @@ a = fieldnames(setup_params.agents);
 max_time = 0;
 for i = 1:numel(a)
     if getfield(setup_params.agents, a{i}).xse(end, end)> max_time
-        max_time = getfield(setup_params.agents, a{i}).xse(end, end)
+        max_time = getfield(setup_params.agents, a{i}).xse(end, end);
     end
 end
 if max_time == 0
@@ -186,8 +200,7 @@ for i = 1:numel(a)
     coefficients_matrix(7, i) = getfield(setup_params.agents, a{i}).energy_coefficients.K_rg;
         
     %set path new
-    %[r1e, r1v, AdjM, AdjM_visited] = set_path(AdjM, AdjM_visited, agent, scene);
-    [r1e, r1v, AdjM, AdjM_visited] = set_path3d(AdjM, AdjM_visited, agent, scene, VV, EE, BV, scene.terrain.BV, scene.terrain.bvhBV, BVind, nLayer, nTotalVer, agent.segments);
+    [r1e, r1v, AdjM, AdjM_visited] = set_path3d(AdjM, AdjM_visited, agent, scene, VV, EE, BV, scene.terrain.BV, scene.terrain.bvhBV, BVind, nLayer, nTotalVer, agent.segments, bypass_mind_edge);
 
     %edges
     agent.e = r1e;

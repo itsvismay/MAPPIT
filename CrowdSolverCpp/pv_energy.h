@@ -17,6 +17,7 @@ namespace crowds{
 		// in this version, pv is the desired end time
 		// just get end times to match
 		double energy_i = K_pv(i)*0.5*(q_i(q_i.size()-1) - pv(i))*(q_i(q_i.size()-1) - pv(i));
+		// std::cout<<"q_i: "<<q_i(q_i.size()-1)<<", "<<pv(i)<<", "<<K_pv(i)<<std::endl;
 		if(fabs(K_pv(i))< 1e-6){
 			energy_i = 0;
 		}
@@ -43,6 +44,7 @@ namespace crowds{
 
 		energy += energy_i;
 	}
+	// std::cout<<"mex: "<<energy<<std::endl;
 	return energy;
   }
 }

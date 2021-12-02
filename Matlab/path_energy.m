@@ -33,7 +33,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
     scene.timings.iterations(end).egMap = scene.timings.iterations(end).egMap + toc(oneTic);
     
     oneTic = tic;
-    e_pv = mex_pv_energy(Q(:), K_pv', A_pv, num_agents, size(Q, 1)/3);
+    e_pv = mex_pv_energy(Q(:), K_pv', A_pv', num_agents, size(Q, 1)/3);
     scene.timings.iterations(end).ePv = scene.timings.iterations(end).ePv + toc(oneTic);
     
     oneTic = tic;
@@ -51,7 +51,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
     scene.timings.iterations(end).eReg = scene.timings.iterations(end).eReg + toc(oneTic);
     
     oneTic = tic;
-    g_pv = mex_pv_gradient(Q(:),K_pv', A_pv, num_agents, size(Q,1)/3);
+    g_pv = mex_pv_gradient(Q(:),K_pv', A_pv', num_agents, size(Q,1)/3);
     scene.timings.iterations(end).ePv = scene.timings.iterations(end).ePv + toc(oneTic);
     
     oneTic = tic;
@@ -203,9 +203,12 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K, Ktol)
                     dist_is_good =1;
                 end
                 if(isinf(D))
-                    sprintf("Error: path_energy, agent energy, D is inf");
+                    sprintf("Error: path_energy, agent energy, D is inf")
+                    alpha_val = alpha_val-alpha_count;
+                else
+                    alpha_val = alpha_val+alpha_count;
                 end
-                alpha_val = alpha_val+alpha_count;
+       
             end
             
          
@@ -218,8 +221,10 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K, Ktol)
             %GB(:,j) = GB(:,j)+ K(j)*(-2/((-tol + D)))*JG2;
             
             %New energy
-     
+            
+           
             e = e + -K(i)*log((-tol + D));
+        
             GB(:,i) = GB(:,i)+ -(K(i)*JG1)/(-tol + D);
             GB(:,j) = GB(:,j)+ -(K(j)*JG2)/(-tol + D);
             

@@ -1,17 +1,18 @@
-function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, VV, EE, BV, flatBV, flatbvhBV, BVind, nLayer, nTotalVer, segments)
+function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, VV, EE, BV, flatBV, flatbvhBV, BVind, nLayer, nTotalVer, segments, bypass)
 %SET_PATH3D Summary of this function goes here
-%   Detailed explanation goes here
+% Detailed explanation goes here
 % set_path
-    s = [agent.xse(1,1),agent.xse(1,2),0];
-    t = [agent.xse(end,1),agent.xse(end,2),0];
-    [I1, minD, VI] = snap_points([s; t], scene.terrain.V);
+    s = [agent.xse(1,1),agent.xse(1,2), agent.xse(1,3)];
+    t = [agent.xse(end,1),agent.xse(end,2), agent.xse(end,3)];
+    [I1, minD, VI] = snap_points([s; t], VV);
     agent.xse(:, 1:2) = VI(:, 1:2);
+    
     % 3d dijkstra
     % P1 contains all vertices on the path 
     % (note: the index of P1 corresponds to the one in 3d graph VV)
-    I1(2) = I1(2) + (nLayer-1)*(nTotalVer/nLayer);
+    % Don't need this line: I1(2) = I1(2) + (nLayer-1)*(nTotalVer/nLayer);
     
-    [D1, P1, AdjM, A_visited] = mydijk3d(VV, EE, AdjM, A_visited, I1(1), I1(2), BV,flatBV, flatbvhBV, BVind, agent.radius);
+    [D1, P1, AdjM, A_visited] = mydijk3d(VV, EE, AdjM, A_visited, I1(1), I1(2), BV,flatBV, flatbvhBV, BVind, agent.radius, bypass);
     
     % P1 are the indexes from djikstra's path
     % read out the vertex values into vv
