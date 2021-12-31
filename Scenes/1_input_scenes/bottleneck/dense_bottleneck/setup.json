@@ -1,0 +1,38 @@
+{
+	"name": "bottleneck",
+	"agents": {
+		"agent1": {
+			"id": 1,
+			"xse": [
+				[-160,
+					80,
+					0
+				],
+				[-159.495911, -80,
+					77.30928
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 1,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		}
+	},
+	"terrain": {
+		"mesh": "terrain.obj"
+	},
+	"obstacles": {},
+	"smoothDistAlpha": 80,
+	"useSpaceTimeGraphDiags": 0
+}

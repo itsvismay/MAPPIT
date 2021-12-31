@@ -6,7 +6,7 @@
 % BV, Bind - Boundary verts and boundary indices into VV
 function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, flatBV, flatbvhBV, Bind, agentRadius, bypass_min_edge)
     global space_time_diags
-    agent_radius = 2*agentRadius;
+    agent_radius = 2.5*agentRadius;
     
     
     % set the edge weights
@@ -28,8 +28,12 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
         [neighbors,kA,Aj] = find(newA(:,u));
         for vi = neighbors'
             edge_weight = 1.0/newA(vi, u);%min_edge_to_boundary_dist(Q(u,:), Q(vi,:), BV);
-            edge_weight = edge_weight + 100*norm(VV(vi,:) - VV(t,:));
-            alt_dist = D(u) + edge_weight*norm(VV(u,:) - VV(vi,:));
+            %this is a mod of norm(VV(vi,:) - VV(t,:))
+            %weights the jump from one level to another higher. 
+            %helps in super constrained cases where one agent can block the
+            %end locattion of another agent.
+            edge_weight = edge_weight + 100*norm(VV(vi,:) - VV(t,:)); 
+            alt_dist = D(u) + edge_weight*sqrt(sum(((VV(u,:) - VV(vi,:)).^2).*[1 1 10]));
             if alt_dist < D(vi)
                 D(vi) = alt_dist;
                 P(vi) = u;
@@ -42,8 +46,9 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
     b = t;
     Path = [];
     
-    %Vertex Based
-    [xx,vv] = find(newA(:,b));
+    %Vertex Based 
+    %wipe out all edges connected to b (t)
+    xx = [find(newA(:,b))' find(newA(b,:))];
     for num=1:length(xx)
         newA_visited(xx(num),b) = 0;
         newA_visited(b,xx(num)) = 0;
@@ -61,7 +66,7 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
         %for each nearby neighbor, wipe out edges
         for idx_n = 1:length(Idx_neighbors_in_radius)
             neighbor_idx = Idx_neighbors_in_radius(idx_n);
-            [xx,vv] = find(newA(:,neighbor_idx));
+            xx = [find(newA(:,neighbor_idx))' find(newA(neighbor_idx,:))];
             for num=1:length(xx)
                 newA_visited(xx(num),neighbor_idx) = 0;
                 newA_visited(neighbor_idx, xx(num)) = 0;
@@ -71,7 +76,7 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
  
             
         %% vertices based, cross out edges connected to vertices already visited from Adj mat
-        [xx,vv] = find(newA(:,P(b)));
+        xx = [find(newA(:,P(b)))' find(newA(P(b),:))];
         for num=1:length(xx)
             newA_visited(xx(num),P(b)) = 0;
             newA_visited(P(b), xx(num)) = 0;

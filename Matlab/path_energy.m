@@ -190,7 +190,7 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K, Ktol)
             end
             while dist_is_good==0
                 if simple_sd
-                    [~,G1] = soft_distance(alpha_val,A22, A11);
+                    [D,G1] = soft_distance(alpha_val,A22, A11);
                     [D,G2] = soft_distance(alpha_val,A11, A22);
                 else
                     [B1,I1] = build_distance_bvh(A11,[]);
@@ -222,7 +222,6 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K, Ktol)
             
             %New energy
             
-           
             e = e + -K(i)*log((-tol + D));
         
             GB(:,i) = GB(:,i)+ -(K(i)*JG1)/(-tol + D);

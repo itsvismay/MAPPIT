@@ -21,7 +21,7 @@
 	},
 	"roomba":{
 		"file": "roomba.obj",
-		"orientation_forward_up": ["Z", "Y"],
+		"orientation_forward_up": ["-Z", "Y"],
 		"radius": 0.125
 	},
 	"monkey":{

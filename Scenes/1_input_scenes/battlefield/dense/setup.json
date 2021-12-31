@@ -1,0 +1,1334 @@
+{
+	"name": "bottleneck",
+	"agents": {
+		"agent1": {
+			"id": 1,
+			"xse": [
+				[-163.404251,
+					80,
+					0
+				],
+				[-163.404251, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent2": {
+			"id": 2,
+			"xse": [
+				[-155.595734, -80,
+					0
+				],
+				[-155.595734,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent3": {
+			"id": 3,
+			"xse": [
+				[-149.787231,
+					80,
+					0
+				],
+				[-149.787231, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent4": {
+			"id": 4,
+			"xse": [
+				[-141.978699, -80,
+					0
+				],
+				[-141.978699,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent5": {
+			"id": 5,
+			"xse": [
+				[-136.170227,
+					80,
+					0
+				],
+				[-136.170227, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent6": {
+			"id": 6,
+			"xse": [
+				[-128.361694, -80,
+					0
+				],
+				[-128.361694,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent7": {
+			"id": 7,
+			"xse": [
+				[-122.553215,
+					80,
+					0
+				],
+				[-122.553215, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent8": {
+			"id": 8,
+			"xse": [
+				[-114.744667, -80,
+					0
+				],
+				[-114.744667,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent9": {
+			"id": 9,
+			"xse": [
+				[-108.936172,
+					80,
+					0
+				],
+				[-108.936172, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent10": {
+			"id": 10,
+			"xse": [
+				[-101.127647, -80,
+					0
+				],
+				[-101.127647,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent11": {
+			"id": 11,
+			"xse": [
+				[-95.319153,
+					80,
+					0
+				],
+				[-95.319153, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent12": {
+			"id": 12,
+			"xse": [
+				[-87.510628, -80,
+					0
+				],
+				[-87.510628,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent13": {
+			"id": 13,
+			"xse": [
+				[-81.702156,
+					80,
+					0
+				],
+				[-81.702156, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent14": {
+			"id": 14,
+			"xse": [
+				[-73.893608, -80,
+					0
+				],
+				[-73.893608,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent15": {
+			"id": 15,
+			"xse": [
+				[-68.085136,
+					80,
+					0
+				],
+				[-68.085136, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent16": {
+			"id": 16,
+			"xse": [
+				[-60.276588, -80,
+					0
+				],
+				[-60.276588,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent17": {
+			"id": 17,
+			"xse": [
+				[-54.468098,
+					80,
+					0
+				],
+				[-54.468098, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent18": {
+			"id": 18,
+			"xse": [
+				[-46.659569, -80,
+					0
+				],
+				[-46.659569,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent19": {
+			"id": 19,
+			"xse": [
+				[-40.851078,
+					80,
+					0
+				],
+				[-40.851078, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent20": {
+			"id": 20,
+			"xse": [
+				[-33.042549, -80,
+					0
+				],
+				[-33.042549,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent21": {
+			"id": 21,
+			"xse": [
+				[-27.234077,
+					80,
+					0
+				],
+				[-27.234077, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent22": {
+			"id": 22,
+			"xse": [
+				[-19.425529, -80,
+					0
+				],
+				[-19.425529,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent23": {
+			"id": 23,
+			"xse": [
+				[-13.617039,
+					80,
+					0
+				],
+				[-13.617039, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent24": {
+			"id": 24,
+			"xse": [
+				[-5.808519, -80,
+					0
+				],
+				[-5.808519,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent25": {
+			"id": 25,
+			"xse": [
+				[-1.9E-5,
+					80,
+					0
+				],
+				[-1.9E-5, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent26": {
+			"id": 26,
+			"xse": [
+				[7.80851, -80,
+					0
+				],
+				[7.80851,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent27": {
+			"id": 27,
+			"xse": [
+				[13.617001,
+					80,
+					0
+				],
+				[13.617001, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent28": {
+			"id": 28,
+			"xse": [
+				[21.425529, -80,
+					0
+				],
+				[21.425529,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent29": {
+			"id": 29,
+			"xse": [
+				[27.23402,
+					80,
+					0
+				],
+				[27.23402, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent30": {
+			"id": 30,
+			"xse": [
+				[35.042549, -80,
+					0
+				],
+				[35.042549,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent31": {
+			"id": 31,
+			"xse": [
+				[40.851028,
+					80,
+					0
+				],
+				[40.851028, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent32": {
+			"id": 32,
+			"xse": [
+				[48.659569, -80,
+					0
+				],
+				[48.659569,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent33": {
+			"id": 33,
+			"xse": [
+				[54.46806,
+					80,
+					0
+				],
+				[54.46806, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent34": {
+			"id": 34,
+			"xse": [
+				[62.276588, -80,
+					0
+				],
+				[62.276588,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent35": {
+			"id": 35,
+			"xse": [
+				[68.085083,
+					80,
+					0
+				],
+				[68.085083, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent36": {
+			"id": 36,
+			"xse": [
+				[75.893585, -80,
+					0
+				],
+				[75.893585,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent37": {
+			"id": 37,
+			"xse": [
+				[81.702103,
+					80,
+					0
+				],
+				[81.702103, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent38": {
+			"id": 38,
+			"xse": [
+				[89.510651, -80,
+					0
+				],
+				[89.510651,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent39": {
+			"id": 39,
+			"xse": [
+				[95.319122,
+					80,
+					0
+				],
+				[95.319122, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent40": {
+			"id": 40,
+			"xse": [
+				[103.127625, -80,
+					0
+				],
+				[103.127625,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent41": {
+			"id": 41,
+			"xse": [
+				[108.936142,
+					80,
+					0
+				],
+				[108.936142, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent42": {
+			"id": 42,
+			"xse": [
+				[116.744667, -80,
+					0
+				],
+				[116.744667,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent43": {
+			"id": 43,
+			"xse": [
+				[122.553169,
+					80,
+					0
+				],
+				[122.553169, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent44": {
+			"id": 44,
+			"xse": [
+				[130.361694, -80,
+					0
+				],
+				[130.361694,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent45": {
+			"id": 45,
+			"xse": [
+				[136.170197,
+					80,
+					0
+				],
+				[136.170197, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent46": {
+			"id": 46,
+			"xse": [
+				[143.978699, -80,
+					0
+				],
+				[143.978699,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent47": {
+			"id": 47,
+			"xse": [
+				[149.787201,
+					80,
+					0
+				],
+				[149.787201, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent48": {
+			"id": 48,
+			"xse": [
+				[157.595734, -80,
+					0
+				],
+				[157.595734,
+					80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		},
+		"agent49": {
+			"id": 49,
+			"xse": [
+				[163.404251,
+					80,
+					0
+				],
+				[163.404251, -80,
+					100
+				]
+			],
+			"mesh": "elephant",
+			"preferred_end_time": 60,
+			"animation_cycles": "pass",
+			"friends": [],
+			"radius": 3,
+			"mass": 100,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 1,
+				"K_ke": 1,
+				"K_pv": 1,
+				"K_rg": 100
+			}
+		}
+	},
+	"terrain": {
+		"mesh": "terrain.obj"
+	},
+	"obstacles": {},
+	"smoothDistAlpha": 40,
+	"useSpaceTimeGraphDiags": 0
+}

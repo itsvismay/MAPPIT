@@ -158,7 +158,7 @@ def make_path_curve(name, coords_list, agent_radius, agent_id):
     bpy.context.collection.objects.link(obj)
 
     #extrude to cylinder
-    bpy.ops.mesh.primitive_circle_add(radius=0.05, enter_editmode=False, align='WORLD', location=(0, 0, -20), scale=(1, 1, 1))
+    bpy.ops.mesh.primitive_circle_add(radius=0.1, enter_editmode=False, align='WORLD', location=(0, 0, -20), scale=(1, 1, 1))
     bpy.context.object.select_set(True)
     # bpy.context.object.hide_viewport = True
     bpy.context.object.name = "path-circle-"+name;
@@ -338,7 +338,7 @@ blend_material_folder = "blend_material/"
 #scene_folder = "3x_3_agents/test/run3/"
 
 # #Roomba Scenes
-# scene_folder = "roomba_maze/scene_2/run2/"
+# scene_folder = "roomba_maze/scene_2/run2-use/"
 # scene_folder = "roomba_maze/scene_3/run0-use/"
 
 # #Scaling Tests
@@ -359,23 +359,35 @@ blend_material_folder = "blend_material/"
 # scene_folder = "three_agents/size_mass_asymmetric_collisions/run5/"
 # scene_folder = "three_agents/size_asymmetric_collisions/run15/"
 # scene_folder = "three_agents/mass_asymmetric_collisions/run14/"
+# scene_folder = "three_agents/friends_asymmetric_grouping/run1/"
 
 # #Tunnel Maze
 # scene_folder = "tunnel_maze/scene_1/run39/"
 
+# #Circle Maze
+# scene_folder = "circle_maze/three_agents/run1/"
+
 # #Comparisons
-# scene_folder = "Comparisons/2_agents/implicit_crowds/2_agents_output/output_2_agents_offset/"
-# scene_folder = "Comparisons/2_agents/implicit_crowds/2_agents_output/output_2_agents_sym/"
+# 3 agents
 # scene_folder = "Comparisons/3_agents/implicit_crowds/3_agents_output/output_3_agents_sym/"
-# scene_folder = "Comparisons/3_agents/implicit_crowds/3_agents_output/output_3_agents_offset/"
+# scene_folder = "Comparisons/3_agents/NHTTC/NHTTC_3_agents/"
+# scene_folder = "Comparisons/3_agents/RVO2/"
+
+# scene_folder = "Comparisons/8_agents/implicit_crowds/8_agents_output/output_8_agents_offset/"
+# scene_folder = "Comparisons/8_agents/NHTTC/NHTTC_8_agents/"
+# scene_folder = "Comparisons/8_agents/RVO2/"
+
 
 # #Pond Scene
-# scene_folder = "pond_scene/all_agents_normal/run0/"
+scene_folder = "pond_scene/all_agents_normal/run0/"
 # scene_folder = "pond_scene/one_agent_hurries/run0/"
 # scene_folder = "pond_scene/two_friends_meet/run1/"
 
 # #RBE
-scene_folder = "ricky_baboon_elephant/run32/"
+# scene_folder = "ricky_baboon_elephant/run32/"
+
+# Bottleneck
+# scene_folder = "bottleneck/bottleneck/run1/"
 
 #Smily
 # scene_folder = "love/sparse/run28/"

@@ -8,12 +8,20 @@ mu_barrier= 1;
 mu_barrier_decrease_factor = 0.5;
 
 %looks at the output folder and gets the latest test run number
-runId = 1;
-fname = "../Scenes/1_input_scenes/bottleneck/dense_no_bottleneck/";nLayer = 5; 
-    num_segments = 100; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
+% 
+% fname = "../Scenes/1_input_scenes/bottleneck/dense_bottleneck/";nLayer = 5; 
+%     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
-printedScene = jsondecode(fileread("../Scenes/2_output_results/bottleneck/dense_no_bottleneck/run"+runId+"/initial.json"));
+%run = 6;
+% fname = "../Scenes/1_input_scenes/circle_maze/seven_agents/";nLayer = 10; 
+%     num_segments = 300; max_iters = 5; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+
+runId = 0;
+fname = "../Scenes/1_input_scenes/battlefield/denser/";nLayer = 3; 
+    num_segments = 100; max_iters = 5; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+
+printedScene = jsondecode(fileread(strrep(fname,"1_input_scenes","2_output_results")+"run"+runId+"/initial.json"));
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
 simple_sd = 1;
@@ -39,8 +47,9 @@ beq = [];
 A = [];
 b = [];
 UserTols = [];
-coefficients_matrix = printedScene.energyMultiplierMatrix;
+scene.coeff_matrix = printedScene.energyMultiplierMatrix;
 
+a = fieldnames(setup_params.agents);
 for i = 1:numel(a)
     agent.id = i
     agent.xse = getfield(setup_params.agents, a{i}).xse;
@@ -77,12 +86,6 @@ for i = 1:numel(a)
     r1e = r1e + size(v,1);
     e = [e; r1e]; 
     
-    %wiggles the rod start so that they aren't intersecting
-    starttime = r1v(1,3);
-    smoothing_eps = smoothing_eps_coeff*linspace(1,size(r1v,1), size(r1v,1))'; 
-    r1v(:,3) = r1v(:,3) + smoothing_eps;
-    r1v(1,3) = starttime;
-    endtime = r1v(end,end);
     
     %r1v(end,3) = endtime;
     agent.v = r1v;            
@@ -139,7 +142,6 @@ end
 %Aeq = [Aeq zeros(size(Aeq,1),numel(scene.agents))];
 %A = [A zeros(size(A,1),numel(scene.agents))];
 num_agents = numel(scene.agents);
-scene.coeff_matrix = coefficients_matrix;
 
 scene.timings.preprocess = toc(pre_tic);
 

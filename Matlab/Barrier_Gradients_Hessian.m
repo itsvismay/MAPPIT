@@ -28,9 +28,9 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 
 %% Roomba Maze
 % fname = "../Scenes/1_input_scenes/roomba_maze/scene_2/"; nLayer = 5; 
-%     num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 1;
-% fname = "../Scenes/1_input_scenes/roomba_maze/scene_3/"; nLayer = 5; 
-%    num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 1;
+%     num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 0;
+fname = "../Scenes/1_input_scenes/roomba_maze/scene_3/"; nLayer = 5; 
+   num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 1;
 %Cannot do the following. Its like folding a shipping box without overlaps. Impossible.
 % fname = "../Scenes/1_input_scenes/roomba_maze/scene_4/"; nLayer = 10; 
 %     num_segments = 40; max_iters = 6; num_inside_iters = 50; space_time_diags = 1;
@@ -42,7 +42,13 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %     num_segments = 200;max_iters = 5;num_inside_iters = 10;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
 % fname = "../Scenes/1_input_scenes/complex_maze/square_maze/five_agents/";nLayer = 10; 
 %     num_segments = 200; max_iters = 5; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
- 
+
+%% Circle Maze
+% fname = "../Scenes/1_input_scenes/circle_maze/three_agents/";nLayer = 8; 
+%     num_segments = 300; max_iters = 5; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/circle_maze/seven_agents/";nLayer = 3; 
+%     num_segments = 300; max_iters = 5; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+  
 %% Three Agents Didactic
 % fname = "../Scenes/1_input_scenes/three_agents/symmetric_collisions/";nLayer = 3; 
 %     num_segments = 30; max_iters = 2; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
@@ -66,10 +72,21 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %% Pond Scene
 
 %% Bottleneck
-% fname = "../Scenes/1_input_scenes/bottleneck/bottleneck/";nLayer = 10; 
+% fname = "../Scenes/1_input_scenes/bottleneck/bottleneck/";nLayer = 5; 
 %     num_segments = 50; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-fname = "../Scenes/1_input_scenes/bottleneck/dense_no_bottleneck/";nLayer = 5; 
-    num_segments = 100; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/bottleneck/dense_no_bottleneck/";nLayer = 5; 
+%     num_segments = 100; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+%For dense bottleneck I had to turn off sampling as well (1 sample point
+%per segment.
+% fname = "../Scenes/1_input_scenes/bottleneck/dense_bottleneck/";nLayer = 20; 
+%     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+
+%% Battlefield
+%For dense bottleneck I had to turn off sampling as well (1 sample point
+%per segment.
+% fname = "../Scenes/1_input_scenes/battlefield/denser/";nLayer = 4; bypass_mind_edge = 1;
+%     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+
 
 %% Antelopes
 % fname = "../Scenes/1_input_scenes/antelopes/200/"; nLayer = 30;
@@ -104,6 +121,12 @@ scene = struct;
 % tempBV = tV(unique(boundary_faces(tF)),:);
 % tempBV(:,3) = zeros(size(tempBV,1),1);
 % [tV,tF,TN] = triangle(tempBV(:,1:2), 'Quality', 30, 'MaxArea', 0.3);
+% tV(:,3) = zeros(size(tV,1),1);
+
+%For Battlefield
+% tempBV = tV(unique(boundary_faces(tF)),:);
+% tempBV(:,3) = zeros(size(tempBV,1),1);
+% [tV,tF,TN] = triangle(tempBV(:,1:2), 'Quality', 30, 'MaxArea', 3);
 % tV(:,3) = zeros(size(tV,1),1);
 
 scene.terrain.V = tV;

@@ -9,13 +9,19 @@ function [D, G] = soft_distance(alpha, X, V)
      diff_all_d = exp(-alpha*d);
      diff_d = sum(sum(diff_all_d));
      
-     D = -1./alpha.*log(diff_d);
-     
      G = zeros(size(V));
+     
+     if(diff_d<1e-6)
+         D = 1e1;
+         return;
+     end
+     D = -1./alpha.*log(diff_d);
      if(isinf(D) || isnan(D))
          D = 1e1;
          return;
      end
+     
+    
      %loop over all mesh vertices
      for i=1:size(V,1)
         G(i, 1) = -(1./diff_d).*sum(diff_all_d(:,i).*(dx(:,i)./d(:,i)));

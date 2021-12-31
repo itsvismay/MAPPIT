@@ -28,6 +28,9 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
     vv = VV(P1,:);
     
     re = [(1:segments)' (2:(segments+1))'];
+    
+    
+    
     if(size(P1)==1)
         for a = 1:numel(scene.agents)
             PV = scene.agents(a).v;
@@ -42,6 +45,16 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
         % check agent start and end points. Make sure they're valid
     end
     rv = interpolate_rod_segments(vv, segments);
+    
+   for a = 1:numel(scene.agents)
+    for b = a+1:numel(scene.agents)
+        PV1 = scene.agents(a).v;
+        PV2 = scene.agents(b).v;
+        [D, G] = soft_distance(80, PV1, PV2);
+        sprintf("%f, %i, %i", D, a, b)
+    end
+   end
+    
     %re = [(1:size(vv,1)-1)' (2:size(vv,1))'];
     %rv = vv;
 end
