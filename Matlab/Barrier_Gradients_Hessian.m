@@ -2,8 +2,9 @@
 addpath("../external/smooth-distances/build/");
 addpath("../CrowdSolverCpp/matlab/");
 
-global scene num_agents simple_sd mu_barrier space_time_diags surf_anim;
+global scene num_agents simple_sd mu_barrier space_time_diags surf_anim agentRadiusBuffer;
 
+agentRadiusBuffer = 1.5;
 mu_barrier= 1;
 mu_barrier_decrease_factor = 0.5;
 smoothing_eps_coeff = 1e-2;
@@ -29,7 +30,7 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %% Roomba Maze
 % fname = "../Scenes/1_input_scenes/roomba_maze/scene_2/"; nLayer = 5; 
 %     num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 0;
-fname = "../Scenes/1_input_scenes/roomba_maze/scene_3/"; nLayer = 5; 
+fname = "../Scenes/1_input_scenes/roomba_maze/scene_3/"; nLayer = 10; 
    num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 1;
 %Cannot do the following. Its like folding a shipping box without overlaps. Impossible.
 % fname = "../Scenes/1_input_scenes/roomba_maze/scene_4/"; nLayer = 10; 

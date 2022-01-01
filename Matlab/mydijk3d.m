@@ -5,8 +5,8 @@
 % s, t - start and end
 % BV, Bind - Boundary verts and boundary indices into VV
 function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited, s, t, BV, flatBV, flatbvhBV, Bind, agentRadius, bypass_min_edge)
-    global space_time_diags
-    agent_radius = 2.5*agentRadius;
+    global agentRadiusBuffer
+    agent_radius = agentRadiusBuffer*agentRadius;
     
     
     % set the edge weights
