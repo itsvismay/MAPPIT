@@ -13,9 +13,9 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 
 %% Scaling Tests
 % fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 3;
-%     num_segments = 30; max_iters = 4; num_inside_iters = 50;
-% fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
-%      num_segments = 30; max_iters = 10; num_inside_iters = 40;
+%     num_segments = 50; max_iters = 4; num_inside_iters = 50;
+fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
+     num_segments = 30; max_iters = 10; num_inside_iters = 40;
 % fname = "../Scenes/1_input_scenes/scaling_tests/10_agents/"; nLayer = 9;
 %      num_segments = 30; max_iters = 10; num_inside_iters = 40;
 % fname = "../Scenes/1_input_scenes/scaling_tests/20_agents/"; nLayer = 9;
@@ -30,8 +30,8 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %% Roomba Maze
 % fname = "../Scenes/1_input_scenes/roomba_maze/scene_2/"; nLayer = 5; 
 %     num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 0;
-fname = "../Scenes/1_input_scenes/roomba_maze/scene_3/"; nLayer = 10; 
-   num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 1;
+% fname = "../Scenes/1_input_scenes/roomba_maze/scene_3/"; nLayer = 10; 
+%    num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 1;
 %Cannot do the following. Its like folding a shipping box without overlaps. Impossible.
 % fname = "../Scenes/1_input_scenes/roomba_maze/scene_4/"; nLayer = 10; 
 %     num_segments = 40; max_iters = 6; num_inside_iters = 50; space_time_diags = 1;
@@ -67,9 +67,10 @@ fname = "../Scenes/1_input_scenes/roomba_maze/scene_3/"; nLayer = 10;
 %     num_segments = 30; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
 %% Tunnel Maze
-% fname = "../Scenes/1_input_scenes/tunnel_maze/scene_1/";nLayer = 8; 
-%     num_segments = 50;max_iters = 1;num_inside_iters = 150;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
-
+% fname = "../Scenes/1_input_scenes/tunnel_maze/scene_1/";nLayer = 10; 
+%     num_segments = 50;max_iters = 2;num_inside_iters = 150;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
+% agentRadiusBuffer = 2.0;
+% mu_barrier_decrease_factor = 0.75;
 %% Pond Scene
 
 %% Bottleneck

@@ -11,10 +11,10 @@ function [D, G] = soft_distance(alpha, X, V)
      
      G = zeros(size(V));
      
-     if(diff_d<1e-6)
-         D = 1e1;
-         return;
-     end
+%      if(diff_d<1e-6)
+%          D = 1e1;
+%          return;
+%      end
      D = -1./alpha.*log(diff_d);
      if(isinf(D) || isnan(D))
          D = 1e1;

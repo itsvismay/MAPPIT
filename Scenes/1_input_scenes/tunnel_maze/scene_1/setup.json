@@ -8,7 +8,7 @@
 			"mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.35,
+            "radius": 0.40,
             "mass": 10,
             "preferred_end_time": 10,
             "energy_coefficients": {
@@ -17,7 +17,7 @@
                 "K_accel": 0,
                 "K_map": 1,
                 "K_ke": 1,
-                "K_pv": 1000,
+                "K_pv": 0,
                 "K_rg": 10
             }
 		},
@@ -28,7 +28,7 @@
 			"mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.35,
+            "radius": 0.40,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,

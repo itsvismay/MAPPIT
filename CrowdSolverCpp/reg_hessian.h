@@ -52,7 +52,7 @@ namespace crowds
 
 			}
 
-			//Technically the last block should be 0 since 'kt' is not exactly a constant
+			//Technically the last block should be 0 since 'kt' is not technically a constant
 			//g(i*3*num_points_per_agent + 3*(s+1)+2) = 0;
 		}
 		H.setFromTriplets(Htrips.begin(), Htrips.end());
