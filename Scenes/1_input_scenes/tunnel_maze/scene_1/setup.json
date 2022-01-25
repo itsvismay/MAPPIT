@@ -8,7 +8,7 @@
 			"mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.40,
+            "radius": 0.35,
             "mass": 10,
             "preferred_end_time": 10,
             "energy_coefficients": {
@@ -28,7 +28,7 @@
 			"mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.40,
+            "radius": 0.35,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
@@ -46,7 +46,7 @@
 		"mesh": "maze.obj"
 	},
 	"tol":0,
-    "smoothDistAlpha":100,
+    "smoothDistAlpha":150,
     "useSpaceTimeGraphDiags": 0
 
 }

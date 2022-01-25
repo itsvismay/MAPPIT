@@ -4,7 +4,7 @@
 		"agent3":{
 			"id": 3,
 			"xse": [[14, -17.188, 0],
-					[-8.6, -15.3, 7]], 
+					[-8.6, -15.3, 20]], 
 			"mesh": "agent",
 			"animation_cycles": null,
 			"friends": [],
@@ -23,7 +23,7 @@
 		"agent1":{
 			"id": 1,
 			"xse": [[-23.437, 4.6875, 0],
-					[17.187, 23.438, 10]], 
+					[17.187, 23.438, 20]], 
 			"mesh": "agent",
 			"animation_cycles": null,
 			"friends": [],
@@ -42,7 +42,7 @@
 		"agent2":{
 			"id": 2,
 			"xse": [[23.4375, -20.3125, 0],
-					[-23.4375, -4.6875, 15]], 
+					[-23.4375, -4.6875, 20]], 
 			"mesh": "agent",
 			"animation_cycles": null,
 			"friends": [],
@@ -80,7 +80,7 @@
 		"agent5":{
 			"id": 5,
 			"xse": [[22.66, 17.19, 0], 
-					[12.5, -10.16, 10]], 
+					[12.5, -10.16, 20]], 
 			"mesh": "agent",
 			"animation_cycles": null,
 			"friends": [],
@@ -101,7 +101,7 @@
 	"terrain": {
 		"mesh": "terrain.obj"
 	},
-	"smoothDistAlpha":20,
+	"smoothDistAlpha":100,
     "useSpaceTimeGraphDiags": 0
 
 }

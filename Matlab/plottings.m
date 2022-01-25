@@ -19,7 +19,7 @@ function [s] = plottings(scene, q, g)
         PV = scene.agents(i).v;
         PE = scene.agents(i).e;
         rad = scene.agents(i).radius;
-        [CVi,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness', 2.0*rad, 'PolySize', 4);
+        [CVi,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness', 2.0*rad, 'PolySize', 2);
         CV = [CV; CVi];
     end
     surf_anim.Vertices = CV;

@@ -44,7 +44,7 @@ function p = print_agents(path, fname, q)
         PV = scene.agents(i).v;
         PE = scene.agents(i).e;
         rad = scene.agents(i).radius;
-        [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness', 2.0*rad, 'PolySize', 10);
+        [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness', 2.0*rad, 'PolySize', 2);
         tsurf(CF, CV,'FaceColor', colors(:, i)'); hold on;
     end
     saveas(fig, path+"fig-"+fname);

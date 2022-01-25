@@ -1,6 +1,7 @@
 %read in from the scene file
-addpath("../external/smooth-distances/build/");
-addpath("../CrowdSolverCpp/matlab/");
+%addpath("../external/smooth-distances/build/");
+addpath("../CrowdSolverCpp/matlab/Release/");
+
 
 global scene num_agents simple_sd mu_barrier space_time_diags surf_anim agentRadiusBuffer;
 
@@ -14,14 +15,14 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %% Scaling Tests
 % fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 3;
 %     num_segments = 50; max_iters = 4; num_inside_iters = 50;
-fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
-     num_segments = 30; max_iters = 10; num_inside_iters = 40;
+% fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
+%      num_segments = 30; max_iters = 10; num_inside_iters = 40;
 % fname = "../Scenes/1_input_scenes/scaling_tests/10_agents/"; nLayer = 9;
 %      num_segments = 30; max_iters = 10; num_inside_iters = 40;
 % fname = "../Scenes/1_input_scenes/scaling_tests/20_agents/"; nLayer = 9;
 %      num_segments = 30; max_iters = 10; num_inside_iters = 30;
-%fname = "../Scenes/output_results/scaling_tests/30_agents/"; nLayer = 11;
-    %num_segments = 50; max_iters = 5; num_inside_iters = 30;
+% fname = "../Scenes/output_results/scaling_tests/30_agents/"; nLayer = 11;
+%     num_segments = 50; max_iters = 5; num_inside_iters = 30;
 %fname = "../Scenes/output_results/scaling_tests/60_agents/"; nLayer = 7;
     %num_segments = 50; max_iters = 5; num_inside_iters = 30;
 %fname = "../Scenes/1_input_scenes/3x_3_agents/test/"; nLayer = 3; 
@@ -41,8 +42,8 @@ fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
 %     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/complex_maze/square_maze/three_agents/";nLayer = 3; 
 %     num_segments = 200;max_iters = 5;num_inside_iters = 10;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
-% fname = "../Scenes/1_input_scenes/complex_maze/square_maze/five_agents/";nLayer = 10; 
-%     num_segments = 200; max_iters = 5; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/complex_maze/square_maze/five_agents/";nLayer = 10; agentRadiusBuffer = 2.0;
+%     num_segments = 200; max_iters = 5; num_inside_iters = 30; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
 %% Circle Maze
 % fname = "../Scenes/1_input_scenes/circle_maze/three_agents/";nLayer = 8; 
@@ -75,7 +76,7 @@ fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
 
 %% Bottleneck
 % fname = "../Scenes/1_input_scenes/bottleneck/bottleneck/";nLayer = 5; 
-%     num_segments = 50; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+%     num_segments = 50; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;mu_barrier_decrease_factor = 0.75;
 % fname = "../Scenes/1_input_scenes/bottleneck/dense_no_bottleneck/";nLayer = 5; 
 %     num_segments = 100; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 %For dense bottleneck I had to turn off sampling as well (1 sample point
@@ -86,8 +87,8 @@ fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
 %% Battlefield
 %For dense bottleneck I had to turn off sampling as well (1 sample point
 %per segment.
-% fname = "../Scenes/1_input_scenes/battlefield/denser/";nLayer = 4; bypass_mind_edge = 1;
-%     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/battlefield/denser/";nLayer = 2; bypass_mind_edge = 1;
+%     num_segments = 200; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
 
 %% Antelopes
@@ -104,14 +105,20 @@ fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
 %     bypass_mind_edge = 1;
 
 %% RBE
-% fname = "../Scenes/1_input_scenes/ricky_baboon_elephant/"; nLayer = 10;
-%     num_segments = 45; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; mu_barrier_decrease_factor = 0.75;
-%     smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/ricky_baboon_elephant/"; nLayer = 15;
+%     num_segments = 55; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; mu_barrier_decrease_factor = 0.75;
+%     smoothing_eps_coeff = 1e-2;agentRadiusBuffer = 2.0;
+
+%% Airplane
+fname = "../Scenes/1_input_scenes/airplane/3agents/";nLayer = 5; 
+    num_segments = 50;max_iters = 2;num_inside_iters = 150;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
+agentRadiusBuffer = 2.0;
+mu_barrier_decrease_factor = 0.75;
 
 %% Setup
     
 %looks at the output folder and gets the latest test run number
-runId = size(split(ls(strrep(fname,"1_input_scenes","2_output_results"))),1) -1;
+runId = size(ls(strrep(fname,"1_input_scenes","2_output_results")),1) -1;
 
 
 setup_params = jsondecode(fileread(fname+"setup.json"));
@@ -125,11 +132,11 @@ scene = struct;
 % [tV,tF,TN] = triangle(tempBV(:,1:2), 'Quality', 30, 'MaxArea', 0.3);
 % tV(:,3) = zeros(size(tV,1),1);
 
-%For Battlefield
-% tempBV = tV(unique(boundary_faces(tF)),:);
-% tempBV(:,3) = zeros(size(tempBV,1),1);
-% [tV,tF,TN] = triangle(tempBV(:,1:2), 'Quality', 30, 'MaxArea', 3);
-% tV(:,3) = zeros(size(tV,1),1);
+% For Airplane
+tempBV = tV(unique(boundary_faces(tF)),:);
+tempBV(:,3) = zeros(size(tempBV,1),1);
+[tV,tF,TN] = triangle(tempBV(:,1:2), 'Quality', 30, 'MaxArea', 3);
+tV(:,3) = zeros(size(tV,1),1);
 
 scene.terrain.V = tV;
 scene.terrain.F = tF;
@@ -250,9 +257,9 @@ for i = 1:numel(a)
     agent.rest_region_lengths = [0; r1el(1:size(r1el)-1) + r1el(2:size(r1el))];
     
     %sets up the agent bvh
-    [B,I] = build_distance_bvh(agent.v,[]);
-    agent.bvh.B = B;
-    agent.bvh.I = I;
+    % [B,I] = build_distance_bvh(agent.v,[]);
+    agent.bvh.B = 1;
+    agent.bvh.I = 1;
     
     %fix end points
     num_constraints = size(agent.xse,1)*2 +1;
@@ -300,7 +307,7 @@ scene.timings.preprocess = toc(pre_tic);
 PV = v;
 PE = e;
 hold on;
-[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',0.25, 'PolySize', 4);
+[CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness',0.25, 'PolySize', 2);
 surf_anim = tsurf(CF, CV); 
 hold on;
 axis equal;

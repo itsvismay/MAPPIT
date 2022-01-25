@@ -36,7 +36,7 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
             PV = scene.agents(a).v;
             PE = scene.agents(a).e;
             rad = scene.agents(a).radius;
-            [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness', 2.0*rad, 'PolySize', 4);
+            [CV,CF,CJ,CI] = edge_cylinders(PV,PE, 'Thickness', 2.0*rad, 'PolySize', 2);
             tsurf(CF, CV, 'FaceColor', [0.19154,      0.78665,      0.56299]'); hold on;
         end
         

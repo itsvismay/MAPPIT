@@ -1,0 +1,32 @@
+{
+	"name": "scene_3",
+	"agents": {
+		"agent1":{
+			"id": 1,
+			"xse": [[0, -3.6, 0], 
+					[0, 3.7, 10]], 
+			"mesh": "agent3",
+			"animation_cycles": null,
+			"radius": 0.1,
+			"friends": [],
+			"mass": 1,
+			"energy_coefficients":{
+				"K_agent" : 1,
+				"K_tol" : 0,
+				"K_accel" : 1,
+				"K_map" : 1,
+				"K_ke" : 10,
+				"K_pv" : 0,
+				"K_rg" : 100
+			}
+		}
+	},
+	"obstacles": {},
+	"terrain": {
+		"mesh": "base.obj"
+	},
+	"smoothDistAlpha":100,
+	"useSpaceTimeGraphDiags": 1
+
+
+}
