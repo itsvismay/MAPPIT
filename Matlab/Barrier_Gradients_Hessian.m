@@ -110,9 +110,9 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %     smoothing_eps_coeff = 1e-2;agentRadiusBuffer = 2.0;
 
 %% Airplane
-fname = "../Scenes/1_input_scenes/airplane/3agents/";nLayer = 5; 
+fname = "../Scenes/1_input_scenes/airplane/3agents/";nLayer = 10; 
     num_segments = 50;max_iters = 2;num_inside_iters = 150;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
-agentRadiusBuffer = 2.0;
+agentRadiusBuffer = 2.5;
 mu_barrier_decrease_factor = 0.75;
 
 %% Setup
@@ -133,10 +133,10 @@ scene = struct;
 % tV(:,3) = zeros(size(tV,1),1);
 
 % For Airplane
-tempBV = tV(unique(boundary_faces(tF)),:);
-tempBV(:,3) = zeros(size(tempBV,1),1);
-[tV,tF,TN] = triangle(tempBV(:,1:2), 'Quality', 30, 'MaxArea', 3);
-tV(:,3) = zeros(size(tV,1),1);
+% tempBV = tV(unique(boundary_faces(tF)),:);
+% tempBV(:,3) = zeros(size(tempBV,1),1);
+% [tV,tF,TN] = triangle(tempBV(:,1:2), 'Quality', 30, 'MaxArea', 3);
+% tV(:,3) = zeros(size(tV,1),1);
 
 scene.terrain.V = tV;
 scene.terrain.F = tF;
