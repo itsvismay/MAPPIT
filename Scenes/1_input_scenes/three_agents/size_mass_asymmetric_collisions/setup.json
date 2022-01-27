@@ -8,7 +8,7 @@
 			"mesh": "elephant",
 			"animation_cycles": null,
 			"friends": [],
-            "radius": 1.75,
+            "radius": 0.9,
             "mass": 10,
             "energy_coefficients":{
 				"K_agent" : 1,
@@ -22,8 +22,8 @@
 		},
 		"agent3":{
 			"id": 3,
-			"xse": [[7.5, 7.5, 0],
-					[11.25,-11.25, 10]],
+			"xse": [[3.75, 7.5, 0],
+					[11.25,-13.125, 10]],
 			"mesh": "agent",
 			"animation_cycles": null,
 			"friends": [],
@@ -41,8 +41,8 @@
 		},
 		"agent2":{
 			"id": 2,
-			"xse":[[11.25,7.5,0],
-					[7.5,-11.25, 10]], 
+			"xse":[[13.125, 13.125,0],
+					[7.5,-13.25, 10]], 
 			"mesh": "agent",
 			"animation_cycles": null,
 			"friends": [],
@@ -63,7 +63,7 @@
 	"terrain": {
 		"mesh": "terrain.obj"
 	},
-    "smoothDistAlpha":100,
+    "smoothDistAlpha":150,
     "useSpaceTimeGraphDiags": 0
 
 }

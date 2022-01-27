@@ -8,7 +8,7 @@
 			"mesh": "elephant",
 			"animation_cycles": null,
 			"friends": [],
-            "radius": 1.7,
+            "radius": 1.2,
             "mass": 100,
             "energy_coefficients":{
 				"K_agent" : 1,
@@ -84,26 +84,6 @@
 			"id": 5,
 			"xse": [[15.625, -10.938, 0],
 					[-15.62, 10.94, 30]],
-			"mesh": "monkey",
-			"animation_cycles": null,
-			"friends": [],
-            "radius": 0.15,
-            "mass": 1,
-            "preferred_end_time": 20,
-            "energy_coefficients":{
-				"K_agent" : 1,
-				"K_tol" : 0,
-				"K_accel" : 0,
-				"K_map" : 1,
-				"K_ke" : 1,
-				"K_pv" : 1,
-				"K_rg" : 10
-			}
-		},
-		"agent6":{
-			"id": 6,
-			"xse": [[14.062, -10.938, 0],
-					[-17.625, 4.7, 30]],
 			"mesh": "monkey",
 			"animation_cycles": null,
 			"friends": [],

@@ -61,7 +61,6 @@ function [Dist, Path, newA, newA_visited] = mydijk3d(VV, EE, newA, newA_visited,
         
         %% Cross out edges within agent_radius from Adj Mat
         Idx_neighbors_in_radius = cell2mat(rangesearch(VV, VV(b,:), agent_radius));
-        %plot3(VV(Idx_neighbors_in_radius,1), VV(Idx_neighbors_in_radius,2), VV(Idx_neighbors_in_radius,3), 'ko')
         Idx_neighbors_in_radius = Idx_neighbors_in_radius(2:end);%ignores node b
         %for each nearby neighbor, wipe out edges
         for idx_n = 1:length(Idx_neighbors_in_radius)

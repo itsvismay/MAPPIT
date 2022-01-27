@@ -52,15 +52,15 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %     num_segments = 300; max_iters = 5; num_inside_iters = 30;mu_barrier= 1; smoothing_eps_coeff = 1e-2;
   
 %% Three Agents Didactic
-% fname = "../Scenes/1_input_scenes/three_agents/symmetric_collisions/";nLayer = 3; 
+% fname = "../Scenes/1_input_scenes/three_agents/symmetric_collisions/";nLayer = 5; 
 %     num_segments = 30; max_iters = 2; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-% fname = "../Scenes/1_input_scenes/three_agents/no_collisions/";nLayer = 3; 
+% fname = "../Scenes/1_input_scenes/three_agents/no_collisions/";nLayer = 5; 
 %     num_segments = 30; max_iters = 2; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-% fname = "../Scenes/1_input_scenes/three_agents/mass_asymmetric_collisions/";nLayer = 3; 
+% fname = "../Scenes/1_input_scenes/three_agents/mass_asymmetric_collisions/";nLayer = 5; 
 %     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-% fname = "../Scenes/1_input_scenes/three_agents/size_asymmetric_collisions/";nLayer = 10; 
+% fname = "../Scenes/1_input_scenes/three_agents/size_asymmetric_collisions/";nLayer = 5;
 %     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-% fname = "../Scenes/1_input_scenes/three_agents/size_mass_asymmetric_collisions/";nLayer = 10; 
+% fname = "../Scenes/1_input_scenes/three_agents/size_mass_asymmetric_collisions/";nLayer = 5; 
 %     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/three_agents/stinky_collisions/";nLayer = 5; 
 %     num_segments = 30; max_iters = 5; num_inside_iters = 50; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
@@ -105,15 +105,15 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %     bypass_mind_edge = 1;
 
 %% RBE
-% fname = "../Scenes/1_input_scenes/ricky_baboon_elephant/"; nLayer = 15;
-%     num_segments = 55; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; mu_barrier_decrease_factor = 0.75;
-%     smoothing_eps_coeff = 1e-2;agentRadiusBuffer = 2.0;
+fname = "../Scenes/1_input_scenes/ricky_baboon_elephant/"; nLayer = 15;
+    num_segments = 55; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; mu_barrier_decrease_factor = 0.75;
+    smoothing_eps_coeff = 1e-2;agentRadiusBuffer = 1.5;
 
 %% Airplane
-fname = "../Scenes/1_input_scenes/airplane/3agents/";nLayer = 10; 
-    num_segments = 50;max_iters = 2;num_inside_iters = 150;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
-agentRadiusBuffer = 2.5;
-mu_barrier_decrease_factor = 0.75;
+% fname = "../Scenes/1_input_scenes/airplane/3agents/";nLayer = 10; 
+%     num_segments = 50;max_iters = 1;num_inside_iters = 200;mu_barrier= 5;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
+% agentRadiusBuffer = 2.5;
+% mu_barrier_decrease_factor = 0.75;
 
 %% Setup
     
