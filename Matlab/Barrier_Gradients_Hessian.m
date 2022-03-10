@@ -15,8 +15,8 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %% Scaling Tests
 % fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 3;
 %     num_segments = 50; max_iters = 4; num_inside_iters = 50;
-% fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
-%      num_segments = 30; max_iters = 10; num_inside_iters = 40;
+fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
+     num_segments = 30; max_iters = 10; num_inside_iters = 40;
 % fname = "../Scenes/1_input_scenes/scaling_tests/10_agents/"; nLayer = 9;
 %      num_segments = 30; max_iters = 10; num_inside_iters = 40;
 % fname = "../Scenes/1_input_scenes/scaling_tests/20_agents/"; nLayer = 9;
@@ -105,9 +105,9 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %     bypass_mind_edge = 1;
 
 %% RBE
-fname = "../Scenes/1_input_scenes/ricky_baboon_elephant/"; nLayer = 15;
-    num_segments = 55; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; mu_barrier_decrease_factor = 0.75;
-    smoothing_eps_coeff = 1e-2;agentRadiusBuffer = 1.5;
+% fname = "../Scenes/1_input_scenes/ricky_baboon_elephant/"; nLayer = 15;
+%     num_segments = 55; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; mu_barrier_decrease_factor = 0.75;
+%     smoothing_eps_coeff = 1e-2;agentRadiusBuffer = 1.5;
 
 %% Airplane
 % fname = "../Scenes/1_input_scenes/airplane/3agents/";nLayer = 10; 

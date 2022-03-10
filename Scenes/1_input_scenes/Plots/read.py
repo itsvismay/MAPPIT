@@ -52,5 +52,6 @@ for i in range(0,len(files)):
 	preprocessTotalTime = float(data["timings"]["preprocess"])
 	iterations = float(len(data["timings"]["iterations"]))
 	avgTimePerIterationForSolve = [float(it["totalTime"])/int(it["output"]["funcCount"]) for it in data["timings"]["iterations"]] if isinstance(data["timings"]["iterations"], list) else [float(data["timings"]["iterations"]["totalTime"])/int(data["timings"]["iterations"]["output"]["funcCount"])]
+	totalSolveTime = [float(it["totalTime"]) for it in data["timings"]["iterations"]] if isinstance(data["timings"]["iterations"], list) else [float(data["timings"]["iterations"]["totalTime"])]
 	# print("----"+str(numAgents)+"------")
-	print(numAgents, numAgents*numSegments, preprocessTotalTime/numAgents,sum(avgTimePerIterationForSolve))
+	print(numAgents, numAgents*numSegments, preprocessTotalTime/numAgents,sum(avgTimePerIterationForSolve), sum(totalSolveTime), len(totalSolveTime))
