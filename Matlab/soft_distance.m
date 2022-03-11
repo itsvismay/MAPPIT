@@ -8,7 +8,9 @@ function [D, G] = soft_distance(alpha, X, V)
      d = sqrt(dx.^2 + dy.^2 + dz.^2); 
      diff_all_d = exp(-alpha*d);
      diff_d = sum(sum(diff_all_d));
-     
+     if(diff_d<1e-100)
+         diff_d = 1e-100;
+     end
      G = zeros(size(V));
      
 %      if(diff_d<1e-6)

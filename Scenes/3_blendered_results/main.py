@@ -377,9 +377,10 @@ blend_material_folder = "blend_material/"
 # scene_folder = "Comparisons/8_agents/NHTTC/NHTTC_8_agents/"
 # scene_folder = "Comparisons/8_agents/RVO2/"
 
+scene_folder = "Comparisons/8_agents/Ours/run16/"
 
 # #Pond Scene
-scene_folder = "pond_scene/all_agents_normal/run0/"
+# scene_folder = "pond_scene/all_agents_normal/run0/"
 # scene_folder = "pond_scene/one_agent_hurries/run0/"
 # scene_folder = "pond_scene/two_friends_meet/run1/"
 
