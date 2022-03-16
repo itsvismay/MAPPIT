@@ -379,7 +379,7 @@ blend_material_folder = "blend_material/"
 
 
 # #Pond Scene
-scene_folder = "pond_scene/all_agents_normal/run0/"
+# scene_folder = "pond_scene/all_agents_normal/run0/"
 # scene_folder = "pond_scene/one_agent_hurries/run0/"
 # scene_folder = "pond_scene/two_friends_meet/run1/"
 
@@ -394,6 +394,11 @@ scene_folder = "pond_scene/all_agents_normal/run0/"
 # scene_folder = "love/sparse/run29/"
 # scene_folder = "love/sparse/run30/"
 
+# # Battlefield
+# scene_folder = "battlefield/denser/run4/"
+
+# # Airplane
+scene_folder = "airplane/3agents/run18/"
 
 
 main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents", render_rods=True)
