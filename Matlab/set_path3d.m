@@ -50,7 +50,8 @@ function [re, rv, AdjM, A_visited] = set_path3d(AdjM, A_visited, agent, scene, V
     for b = a+1:numel(scene.agents)
         PV1 = scene.agents(a).v;
         PV2 = scene.agents(b).v;
-        [D, G] = soft_distance(80, PV1, PV2);
+        KDTV2 = KDTreeSearcher(PV2);
+        [D, G] = soft_distance(80, PV1, PV2, KDTV2, 100*(scene.agents(a).radius + scene.agents(b).radius));
         sprintf("%f, %i, %i", D, a, b)
     end
    end

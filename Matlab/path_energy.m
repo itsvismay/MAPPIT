@@ -17,19 +17,24 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
     K_reg =   1*scene.coeff_matrix(7,:);
     A_mass = zeros(numel(scene.agents), 1)';
     A_pv = zeros(numel(scene.agents), 1)';
+    KDTMdls = cell(1,numel(scene.agents));
+    %KDTEnv = KDTreeSearcher(scene.terrain.BV);
     for i=1:numel(scene.agents)
         A_mass(i) = scene.agents(i).mass;
         A_pv(i) = scene.agents(i).preferred_end_time;
+        A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
+        [A11, ~] = sample_points_for_rod(A1, scene.agents(i).e);
+        KDTMdls{i} = KDTreeSearcher(A11);
     end
     
     
     %% fxns
     oneTic = tic;
-    [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent, K_tol);
+    [e_agent, g_full] = agent_agent_energy(Q, Tols, scene, K_agent, K_tol, KDTMdls);
     scene.timings.iterations(end).egAgent = scene.timings.iterations(end).egAgent + toc(oneTic);
     
     oneTic = tic;
-    [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
+    [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map, KDTMdls);
     scene.timings.iterations(end).egMap = scene.timings.iterations(end).egMap + toc(oneTic);
     
     oneTic = tic;
@@ -155,7 +160,7 @@ function [e, g] = preferred_time_energy(Q, scene, K)
     g = reshape(GT, size(GT,1)*size(GT,2),1);
 end
 
-function [e, g] = agent_agent_energy(Q, Tols, scene, K, Ktol)
+function [e, g] = agent_agent_energy(Q, Tols, scene, K, Ktol, KDTMdls)
     global simple_sd;
     num_agents = numel(scene.agents);
     if sum(K)==0
@@ -175,6 +180,12 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K, Ktol)
             if j==i
                 continue;
             end
+            %if j is not included in the i's collision_interactions list,
+            %continue
+            if(~ismember(j,scene.agents(i).collision_interactions))
+                continue;
+            end
+
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
             [A22, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             tol = scene.agents(i).radius+scene.agents(j).radius;%Tols(i) + Tols(j);
@@ -190,13 +201,10 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K, Ktol)
             end
             while dist_is_good==0
                 if simple_sd
-                    [D,G1] = soft_distance(alpha_val,A22, A11);
-                    [D,G2] = soft_distance(alpha_val,A11, A22);
+                    [D,G1] = soft_distance(alpha_val,A22, A11, KDTMdls{i}, 10*tol);
+                    [D,G2] = soft_distance(alpha_val,A11, A22,  KDTMdls{j}, 10*tol);
                 else
-                    [B1,I1] = build_distance_bvh(A11,[]);
-                    [B2,I2] = build_distance_bvh(A22,[]);
-                    [~, G1] = smooth_min_distance(A22,[],B2,I2,alpha_val,A11,[],alpha_val, beta_val);
-                    [D, G2] = smooth_min_distance(A11,[],B1,I1,alpha_val,A22,[],alpha_val, beta_val);
+                   return;
                 end
                 
                 if(D>1e-8)
@@ -240,7 +248,7 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K, Ktol)
     %g(end-num_agents+1:end) = gW; TODO
 end
       
-function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
+function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K, KDTMdls)
     if sum(K)==0
         e=0;
         g = zeros(numel(Q),1);
@@ -262,7 +270,7 @@ function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
         alpha_val = scene.smoothDistAlpha;
         
         while dist_is_good==0
-            [D,GP] = soft_distance(alpha_val,P, A11);
+            [D,GP] = soft_distance(alpha_val,P, A11, KDTMdls{i}, 10*tol);
 
             if(D>-1e-8)
                 dist_is_good =1;

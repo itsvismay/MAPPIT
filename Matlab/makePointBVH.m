@@ -1,4 +1,4 @@
-% Format:
+ % Format:
 % root: 0 [bboxMin] [bboxMax] rightSubIdx
 % leaf: vidx [bboxMin] [bboxMax] 0
 function T = makePointBVH(V, vidx)

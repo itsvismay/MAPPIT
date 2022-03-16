@@ -1,0 +1,1211 @@
+{
+	"name": "bottleneck",
+	"agents": {
+		"agent1": {
+			"id": 1,
+			"xse": [
+				[48,-8,0
+				],
+				[48, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [2],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent2": {
+			"id": 2,
+			"xse": [
+				[46.8, 8,0
+				],
+				[46.8,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [1, 3],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent3": {
+			"id": 3,
+			"xse": [
+				[45.3,-8,0
+				],
+				[45.3, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [2, 4],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent4": {
+			"id": 4,
+			"xse": [
+				[43.75, 8,0
+				],
+				[43.75,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [3,5],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent5": {
+			"id": 5,
+			"xse": [
+				[42.18,-8,0
+				],
+				[42.18, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [4,6],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent6": {
+			"id": 6,
+			"xse": [
+				[40.62,8,0
+				],
+				[40.62,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [5,7],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent7": {
+			"id": 7,
+			"xse": [
+				[39.06,-8,0
+				],
+				[39.06, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [6, 8],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent8": {
+			"id": 8,
+			"xse": [
+				[37.5,8,0
+				],
+				[37.5,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [7, 9],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent9": {
+			"id": 9,
+			"xse": [
+				[35.9,-8,0
+				],
+				[35.9, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [8, 10],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent10": {
+			"id": 10,
+			"xse": [
+				[34.375,8,0
+				],
+				[34.375,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [9,11],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent11": {
+			"id": 11,
+			"xse": [
+				[32.8,-8,0
+				],
+				[32.8, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [10,12],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent12": {
+			"id": 12,
+			"xse": [
+				[31.25,8,0
+				],
+				[31.25,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [11,13],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent13": {
+			"id": 13,
+			"xse": [
+				[29.688,-8,0
+				],
+				[29.688,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [12,14],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent14": {
+			"id": 14,
+			"xse": [
+				[28.125,8,0
+				],
+				[28.125,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [13, 15],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent15": {
+			"id": 15,
+			"xse": [
+				[26.56,-8,0
+				],
+				[26.56,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [14,16],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent16": {
+			"id": 16,
+			"xse": [
+				[25,8,0
+				],
+				[25,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [15, 17],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent17": {
+			"id": 17,
+			"xse": [
+				[23.348,-8,0
+				],
+				[23.348,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [16,18],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent18": {
+			"id": 18,
+			"xse": [
+				[21.875,8,0
+				],
+				[21.875,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [17, 19],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent19": {
+			"id": 19,
+			"xse": [
+				[20.312,-8,0
+				],
+				[20.312,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [18,20],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent20": {
+			"id": 20,
+			"xse": [
+				[18.75,8,0
+				],
+				[18.75,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [19,21],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent21": {
+			"id": 21,
+			"xse": [
+				[17.188,-8,0
+				],
+				[17.188, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [20,22],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent22": {
+			"id": 22,
+			"xse": [
+				[15.625, 8,0
+				],
+				[15.625,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [21, 23],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent23": {
+			"id": 23,
+			"xse": [
+				[14.062,-8,0
+				],
+				[14.062, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [22, 24],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent24": {
+			"id": 24,
+			"xse": [
+				[12.5, 8,0
+				],
+				[12.5,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [23,25],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent25": {
+			"id": 25,
+			"xse": [
+				[10.937,-8,0
+				],
+				[10.937, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [24,26],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent26": {
+			"id": 26,
+			"xse": [
+				[9.375,8,0
+				],
+				[9.375,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [25,27],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent27": {
+			"id": 27,
+			"xse": [
+				[7.8125,-8,0
+				],
+				[7.8125, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [26, 28],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent28": {
+			"id": 28,
+			"xse": [
+				[6.25,8,0
+				],
+				[6.25,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [27, 29],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent29": {
+			"id": 29,
+			"xse": [
+				[4.6875,-8,0
+				],
+				[4.6875, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [28, 30],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent30": {
+			"id": 30,
+			"xse": [
+				[3.125,8,0
+				],
+				[3.125,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [29,31],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent31": {
+			"id": 31,
+			"xse": [
+				[1.5625,-8,0
+				],
+				[1.5625, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [30,32],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent32": {
+			"id": 32,
+			"xse": [
+				[-1.5625,8,0
+				],
+				[-1.5625,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [31,33],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent33": {
+			"id": 33,
+			"xse": [
+				[-3.125,-8,0
+				],
+				[-3.125,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [32,34],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent34": {
+			"id": 34,
+			"xse": [
+				[-4.6875,8,0
+				],
+				[-4.6875,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [33, 35],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent35": {
+			"id": 35,
+			"xse": [
+				[-6.25,-8,0
+				],
+				[-6.25,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [34,36],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent36": {
+			"id": 36,
+			"xse": [
+				[-7.8125,8,0
+				],
+				[-7.8125,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [35, 37],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent37": {
+			"id": 37,
+			"xse": [
+				[-9.375,-8,0
+				],
+				[-9.375,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [36,38],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent38": {
+			"id": 38,
+			"xse": [
+				[-10.938,8,0
+				],
+				[-10.938,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [37, 39],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent39": {
+			"id": 39,
+			"xse": [
+				[-12.5,-8,0
+				],
+				[-12.5,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [38,40],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent40": {
+			"id": 40,
+			"xse": [
+				[-14.063,8,0
+				],
+				[-14.063,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [39],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent41": {
+			"id": 41,
+			"xse": [
+				[-15.625, 8,0
+				],
+				[-15.625,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [40, 42],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent42": {
+			"id": 42,
+			"xse": [
+				[-17.188,-8,0
+				],
+				[-17.188, 8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [41, 43],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent43": {
+			"id": 43,
+			"xse": [
+				[-18.75,8,0
+				],
+				[-18.75,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [42, 44],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent44": {
+			"id": 44,
+			"xse": [
+				[-20.312,-8,0
+				],
+				[-20.312,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [43,45],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent45": {
+			"id": 45,
+			"xse": [
+				[-21.875,8,0
+				],
+				[-21.875,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [44,46],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent46": {
+			"id": 46,
+			"xse": [
+				[-23.348,-8,0
+				],
+				[-23.348,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [45,47],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent47": {
+			"id": 47,
+			"xse": [
+				[-25,8,0
+				],
+				[-25,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [46, 48],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent48": {
+			"id": 48,
+			"xse": [
+				[-26.56,-8,0
+				],
+				[-26.56,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [47,49],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent49": {
+			"id": 49,
+			"xse": [
+				[-28.125,8,0
+				],
+				[-28.125,-8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [48, 50],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		},
+		"agent50": {
+			"id": 50,
+			"xse": [
+				[-29.688,-8,0
+				],
+				[-29.688,8, 100
+				]
+			],
+			"mesh": "agent",
+			"animation_cycles": "pass",
+			"friends": [],
+			"collision_interactions": [49],
+			"radius": 0.25,
+			"mass": 1,
+			"energy_coefficients": {
+				"K_agent": 1,
+				"K_tol": 0,
+				"K_accel": 0,
+				"K_map": 0,
+				"K_ke": 1,
+				"K_pv": 0,
+				"K_rg": 100
+			}
+		}
+	},
+	"terrain": {
+		"mesh": "terrain.obj"
+	},
+	"obstacles": {},
+	"smoothDistAlpha": 40,
+	"useSpaceTimeGraphDiags": 0
+}

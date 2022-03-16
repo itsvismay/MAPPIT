@@ -16,33 +16,28 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 % fname = "../Scenes/1_input_scenes/scaling_tests/2_agents/"; nLayer = 3;
 %     num_segments = 50; max_iters = 4; num_inside_iters = 50;
 % fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
-%      num_segments = 30; max_iters = 10; num_inside_iters = 40;
- fname = "../Scenes/1_input_scenes//Comparisons/8_agents/Ours/"; nLayer = 8;
-     num_segments = 40; max_iters = 5; num_inside_iters = 40; agentRadiusBuffer = 2.0;
+%      num_segments = 50; max_iters = 5; num_inside_iters = 30;
+%  fname = "../Scenes/1_input_scenes//Comparisons/8_agents/Ours/"; nLayer = 8;
+%      num_segments = 50; max_iters = 5; num_inside_iters = 40; agentRadiusBuffer = 2.0;
 % fname = "../Scenes/1_input_scenes/scaling_tests/10_agents/"; nLayer = 9;
-%      num_segments = 30; max_iters = 10; num_inside_iters = 40;
+%      num_segments = 50; max_iters = 5; num_inside_iters = 40;
 % fname = "../Scenes/1_input_scenes/scaling_tests/20_agents/"; nLayer = 9;
-%      num_segments = 30; max_iters = 10; num_inside_iters = 30;
-% fname = "../Scenes/output_results/scaling_tests/30_agents/"; nLayer = 11;
+%      num_segments = 50; max_iters = 5; num_inside_iters = 30;
+% fname = "../Scenes/1_input_scenes/scaling_tests/30_agents/"; nLayer = 9;
 %     num_segments = 50; max_iters = 5; num_inside_iters = 30;
-%fname = "../Scenes/output_results/scaling_tests/60_agents/"; nLayer = 7;
-    %num_segments = 50; max_iters = 5; num_inside_iters = 30;
-%fname = "../Scenes/1_input_scenes/3x_3_agents/test/"; nLayer = 3; 
-    %num_segments = 30; max_iters = 10; num_inside_iters = 50;
+
 
 %% Roomba Maze
 % fname = "../Scenes/1_input_scenes/roomba_maze/scene_2/"; nLayer = 5; 
 %     num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 0;
 % fname = "../Scenes/1_input_scenes/roomba_maze/scene_3/"; nLayer = 10; 
 %    num_segments = 35; max_iters = 2; num_inside_iters = 50; space_time_diags = 1;
-%Cannot do the following. Its like folding a shipping box without overlaps. Impossible.
-% fname = "../Scenes/1_input_scenes/roomba_maze/scene_4/"; nLayer = 10; 
-%     num_segments = 40; max_iters = 6; num_inside_iters = 50; space_time_diags = 1;
+
 
 %% Complex Maze   
 % fname = "../Scenes/1_input_scenes/complex_maze/square_maze/one_agent/";nLayer = 3; 
 %     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-% fname = "../Scenes/1_input_scenes/complex_maze/square_maze/three_agents/";nLayer = 3; 
+% fname = "../Scenes/1_input_scenes/complex_maze/square_maze/three_agents/";nLayer = 3; agentRadiusBuffer = 1.0;
 %     num_segments = 200;max_iters = 5;num_inside_iters = 10;mu_barrier= 1;smoothing_eps_coeff = 1e-2;space_time_diags = 0;
 % fname = "../Scenes/1_input_scenes/complex_maze/square_maze/five_agents/";nLayer = 10; agentRadiusBuffer = 2.0;
 %     num_segments = 200; max_iters = 5; num_inside_iters = 30; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
@@ -64,8 +59,6 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/three_agents/size_mass_asymmetric_collisions/";nLayer = 5; 
 %     num_segments = 30; max_iters = 5; num_inside_iters = 40; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-% fname = "../Scenes/1_input_scenes/three_agents/stinky_collisions/";nLayer = 5; 
-%     num_segments = 30; max_iters = 5; num_inside_iters = 50; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 % fname = "../Scenes/1_input_scenes/three_agents/friends_asymmetric_grouping/";nLayer = 5; 
 %     num_segments = 30; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
@@ -89,9 +82,26 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %% Battlefield
 %For dense bottleneck I had to turn off sampling as well (1 sample point
 %per segment.
-% fname = "../Scenes/1_input_scenes/battlefield/denser/";nLayer = 2; bypass_mind_edge = 1;
-%     num_segments = 200; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
-
+% fname = "../Scenes/1_input_scenes/battlefield/4Agents/";nLayer = 3; bypass_mind_edge = 1;
+%    num_segments = 100; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/battlefield/10Agents/";nLayer = 3; bypass_mind_edge = 1;
+%     num_segments = 100; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/battlefield/15Agents/";nLayer = 3; bypass_mind_edge = 1;
+%     num_segments = 100; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/battlefield/20Agents/";nLayer = 3; bypass_mind_edge = 1;
+%     num_segments = 100; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/battlefield/25Agents/";nLayer = 3; bypass_mind_edge = 1;
+%     num_segments = 100; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/battlefield/30Agents/";nLayer = 3; bypass_mind_edge = 1;
+%     num_segments = 100; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/battlefield/35Agents/";nLayer = 3; bypass_mind_edge = 1;
+%     num_segments = 100; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/battlefield/40Agents/";nLayer = 3; bypass_mind_edge = 1;
+%     num_segments = 100; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/battlefield/45Agents/";nLayer = 3; bypass_mind_edge = 1;
+%     num_segments = 100; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+% fname = "../Scenes/1_input_scenes/battlefield/50Agents/";nLayer = 3; bypass_mind_edge = 1;
+%     num_segments = 100; max_iters = 2; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
 %% Antelopes
 % fname = "../Scenes/1_input_scenes/antelopes/200/"; nLayer = 30;
@@ -221,6 +231,11 @@ for i = 1:numel(a)
         agent.preferred_end_time = getfield(setup_params.agents, a{i}).preferred_end_time;
     end
     agent.friends = getfield(setup_params.agents, a{i}).friends;
+    if (isfield(getfield(setup_params.agents, a{i}), "collision_interactions"))
+        agent.collision_interactions = getfield(setup_params.agents, a{i}).collision_interactions;
+    else
+        agent.collision_interactions = [1:numel(a)];
+    end
     agent.mesh = getfield(setup_params.agents, a{i}).mesh;
     agent.animation_cycles = getfield(setup_params.agents, a{i}).animation_cycles;
     %agent.mesh_direction_forward_up = getfield(setup_params.agents, a{i}).mesh_direction_forward_up;
