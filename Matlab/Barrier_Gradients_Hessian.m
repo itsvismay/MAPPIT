@@ -107,7 +107,7 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 % fname = "../Scenes/1_input_scenes/antelopes/200/"; nLayer = 30;
 %     num_segments = 100; max_iters = 5; num_inside_iters = 20; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
-% %% Love
+%% Love
 % fname = "../Scenes/1_input_scenes/love/sparse/"; nLayer = 20;
 %     num_segments = 50; max_iters = 5; num_inside_iters = 50; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 %     mu_barrier_decrease_factor  = 0.8;
