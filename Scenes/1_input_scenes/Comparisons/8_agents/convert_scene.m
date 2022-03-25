@@ -1,5 +1,6 @@
 % folder_name = "8_agents/implicit_crowds/8_agents_output/output_8_agents_offset/";
 folder_name = "8_agents/RVO2/";
+folder_name = "8_agents/8_agents_offset/";
 % folder_name = "8_agents/NHTTC/NHTTC_8_agents/";
 
 fileID = fopen(folder_name+"agent0.txt",'r');

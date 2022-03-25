@@ -158,7 +158,7 @@ def make_path_curve(name, coords_list, agent_radius, agent_id):
     bpy.context.collection.objects.link(obj)
 
     #extrude to cylinder
-    bpy.ops.mesh.primitive_circle_add(radius=0.1, enter_editmode=False, align='WORLD', location=(0, 0, -20), scale=(1, 1, 1))
+    bpy.ops.mesh.primitive_circle_add(radius=0.05, enter_editmode=False, align='WORLD', location=(0, 0, -20), scale=(1, 1, 1))
     bpy.context.object.select_set(True)
     # bpy.context.object.hide_viewport = True
     bpy.context.object.name = "path-circle-"+name;
@@ -375,8 +375,9 @@ blend_material_folder = "blend_material/"
 
 # scene_folder = "Comparisons/8_agents/implicit_crowds/8_agents_output/output_8_agents_offset/"
 # scene_folder = "Comparisons/8_agents/NHTTC/NHTTC_8_agents/"
-# scene_folder = "Comparisons/8_agents/RVO2/"
+scene_folder = "Comparisons/8_agents/8_agents_offset/"
 
+# scene_folder = "Comparisons/8_agents/Ours/run16/"
 
 # #Pond Scene
 # scene_folder = "pond_scene/all_agents_normal/run0/"
@@ -398,7 +399,7 @@ blend_material_folder = "blend_material/"
 # scene_folder = "battlefield/denser/run4/"
 
 # # Airplane
-scene_folder = "airplane/3agents/run18/"
+# scene_folder = "airplane/3agents/run18/"
 
 
 main_create_blender_scene(crowds_folder, blend_material_folder, scene_folder, "agents", render_rods=True)

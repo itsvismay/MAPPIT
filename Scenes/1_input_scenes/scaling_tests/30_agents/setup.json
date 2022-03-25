@@ -18,15 +18,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent2": {
@@ -46,15 +47,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent3": {
@@ -74,15 +76,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent4": {
@@ -102,15 +105,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent5": {
@@ -130,15 +134,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent6": {
@@ -158,15 +163,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent7": {
@@ -186,15 +192,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent8": {
@@ -214,15 +221,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent9": {
@@ -242,15 +250,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent10": {
@@ -270,15 +279,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent11": {
@@ -298,15 +308,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent12": {
@@ -326,15 +337,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent13": {
@@ -354,15 +366,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent14": {
@@ -382,15 +395,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent15": {
@@ -410,15 +424,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent16": {
@@ -438,15 +453,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent17": {
@@ -466,15 +482,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent18": {
@@ -494,15 +511,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent19": {
@@ -522,15 +540,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent20": {
@@ -550,15 +569,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent21": {
@@ -578,15 +598,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent22": {
@@ -606,15 +627,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent23": {
@@ -634,15 +656,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent24": {
@@ -662,15 +685,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent25": {
@@ -690,15 +714,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent26": {
@@ -718,15 +743,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent27": {
@@ -746,15 +772,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent28": {
@@ -774,15 +801,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent29": {
@@ -802,15 +830,16 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         },
         "agent30": {
@@ -830,20 +859,24 @@
             "mesh": "agent",
             "animation_cycles": null,
             "friends": [],
-            "radius": 0.75,
+            "radius": 0.5,
             "mass": 1,
             "energy_coefficients": {
                 "K_agent": 1,
-                "K_tol": 100,
+                "K_tol": 0,
                 "K_accel": 0,
                 "K_map": 0,
                 "K_ke": 1,
-                "K_pv": 0
+                "K_pv": 0,
+                "K_rg": 100
             }
         }
     },
     "obstacles": {},
     "terrain": {
         "mesh": "terrain.obj"
-    }
+    },
+    "obstacles": {},
+	"smoothDistAlpha": 10,
+	"useSpaceTimeGraphDiags": 1
 }

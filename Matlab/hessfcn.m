@@ -14,23 +14,27 @@ function [H] = hessfcn(q_i,lambda)
     K_reg =   1*scene.coeff_matrix(7,:);
     A_mass = zeros(numel(scene.agents), 1)';
     A_pv = zeros(numel(scene.agents), 1)';
+    KDTMdls = cell(1,numel(scene.agents));
     for i=1:numel(scene.agents)
         A_mass(i) = scene.agents(i).mass;
         A_pv(i) = scene.agents(i).preferred_end_time;
+        A1 = reshape(Q(:,i), 3, numel(Q(:,i))/3)';
+        [A11, ~] = sample_points_for_rod(A1, scene.agents(i).e);
+        KDTMdls{i} = KDTreeSearcher(A11);
     end
     
     H = sparse(size(q_i,1),size(q_i,1));
 
     oneHessTic = tic;
     if simple_sd
-        [e_agent, HB_agent, hw_agent] = agent_agent_energy_with_hessian(Q, Tols, scene, K_agent, K_tol);
+        [e_agent, HB_agent, hw_agent] = agent_agent_energy_with_hessian(Q, Tols, scene, K_agent, K_tol, KDTMdls);
     else
-        [e_agent, HB_agent, hw_agent] = agent_agent_energy_with_hessian_abhisheks(Q, Tols, scene, K_agent); 
+       return;
     end
     scene.timings.iterations(end).hAgent = scene.timings.iterations(end).hAgent + toc(oneHessTic);
     
     oneHessTic = tic;
-    [e_map, H_map] = map_energy_with_hessian(Q, Tols, scene, K_map);
+    [e_map, H_map] = map_energy_with_hessian(Q, Tols, scene, K_map, KDTMdls);
     scene.timings.iterations(end).hMap = scene.timings.iterations(end).hMap + toc(oneHessTic);
     
     for ii=1:num_agents
@@ -102,7 +106,7 @@ function [e, HT] = regularizer_energy_with_hessian(Q, scene, K)
     end
 end
 
-function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K, Ktol)
+function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K, Ktol, KDTMdls)
     HB = cell(size(Q,2));
     for i=1:numel(scene.agents)
         HB{i,i} = sparse(size(Q,1), size(Q,1));
@@ -128,6 +132,11 @@ function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K, Ktol)
             if j==i
                 continue;
             end
+            %if j is not included in the i's collision_interactions list,
+            %continue
+            if(~ismember(j,scene.agents(i).collision_interactions))
+                continue;
+            end
             A2 = reshape(Q(:,j), 3, numel(Q(:,j))/3)';
             [A22, J2] = sample_points_for_rod(A2, scene.agents(j).e);
             
@@ -136,8 +145,8 @@ function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K, Ktol)
             alpha_count = scene.smoothDistAlpha/10;
             alpha_val = scene.smoothDistAlpha;
             while dist_is_good==0
-                [~,G1] = soft_distance(alpha_val,A22, A11);
-                [D,G2] = soft_distance(alpha_val,A11, A22);
+                [D,G1] = soft_distance(alpha_val,A22, A11, KDTMdls{i}, 10*tol);
+                [D,G2] = soft_distance(alpha_val,A11, A22,  KDTMdls{j}, 10*tol);
                       
                 if(D>-1-8)
                     dist_is_good =1;
@@ -189,7 +198,7 @@ function [e, HB, hW] = agent_agent_energy_with_hessian(Q, Tols, scene, K, Ktol)
     end
 end
 
-function [e, HB, hW] = map_energy_with_hessian(Q, Tols, scene, K)
+function [e, HB, hW] = map_energy_with_hessian(Q, Tols, scene, K, KDTMdls)
     if sum(K)==0
         e=0;
         HB(1:size(Q,2)) = {sparse(size(Q,1), size(Q,1))};
@@ -215,7 +224,7 @@ function [e, HB, hW] = map_energy_with_hessian(Q, Tols, scene, K)
         alpha_val = scene.smoothDistAlpha;
 
         while dist_is_good==0
-            [D,GP] = soft_distance(alpha_val,P, A11);
+            [D,GP] = soft_distance(alpha_val,P, A11, KDTMdls{i}, 10*tol);
 
             if(D > -1e-8)
                 dist_is_good =1;
