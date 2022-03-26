@@ -104,7 +104,16 @@ colors = [[0.19154,      0.78665,      0.56299],
           [0.20283,      0.70141,      0.63694],
           [  0.901,      0.34352,      0.29666],
           [0.14355,      0.83488,      0.56275],
-          [0.19705,      0.19373,       1.0]]
+          [0.19705,      0.19373,       1.0],
+          [0.19154,      0.78665,      0.56299], 
+          [1.0,      0.31997,      0.20648],
+          [0.24929,       0.4175,      0.87439],
+          [0.18907,      0.61792,      0.73418],
+          [0.19126,      0.50687,      0.84305],
+          [0.20127,      0.55259,      0.78732],
+          [0.35756,      0.34505,      0.83857],
+          [0.22557,      0.28247,       1.0]]
+
 def assign_mesh_color(agent_mesh, id = -1):
     i = id
     if(i>=0):
@@ -375,7 +384,7 @@ blend_material_folder = "blend_material/"
 
 # scene_folder = "Comparisons/8_agents/implicit_crowds/8_agents_output/output_8_agents_offset/"
 # scene_folder = "Comparisons/8_agents/NHTTC/NHTTC_8_agents/"
-scene_folder = "Comparisons/8_agents/8_agents_offset/"
+# scene_folder = "Comparisons/8_agents/8_agents_offset/"
 
 # scene_folder = "Comparisons/8_agents/Ours/run16/"
 
@@ -397,6 +406,7 @@ scene_folder = "Comparisons/8_agents/8_agents_offset/"
 
 # # Battlefield
 # scene_folder = "battlefield/denser/run4/"
+scene_folder = "battlefield/102Agents/run0/"
 
 # # Airplane
 # scene_folder = "airplane/3agents/run18/"

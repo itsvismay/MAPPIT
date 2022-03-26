@@ -78,8 +78,8 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %per segment.
 % fname = "../Scenes/1_input_scenes/bottleneck/dense_bottleneck/";nLayer = 20; 
 %     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
- fname = "../Scenes/1_input_scenes/bottleneck/30Agents/";nLayer = 10; bypass_mind_edge = 1;
-     num_segments = 100; max_iters = 3; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+ fname = "../Scenes/1_input_scenes/b/102Agents/";nLayer = 3; bypass_mind_edge = 1;
+     num_segments = 20; max_iters = 3; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
 %% Battlefield
 %For dense bottleneck I had to turn off sampling as well (1 sample point
