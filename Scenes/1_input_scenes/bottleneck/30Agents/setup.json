@@ -4,27 +4,26 @@
 		"agent1": {
 			"id": 1,
 			"xse": [
-				[12, -37.5,
+				[2.5, -37.5,
 					0
 				],
-				[12,
+				[2.5,
 					37.5,
-					100
+					20
 				]
 			],
-			"mesh": "elephant",
+			"mesh": "agent",
 			"preferred_end_time": 60,
 			"animation_cycles": "pass",
 			"friends": [],
-			"collision_interactions": [],
 			"radius": 0.35,
-			"mass": 100,
+			"mass": 1,
 			"energy_coefficients": {
-				"K_agent": 10,
+				"K_agent": 1,
 				"K_tol": 0,
 				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
+				"K_map": 10,
+				"K_ke": 10,
 				"K_pv": 0,
 				"K_rg": 100
 			}
@@ -32,27 +31,26 @@
 		"agent2": {
 			"id": 2,
 			"xse": [
-				[18,
+				[3.75,
 					37.5,
 					0
 				],
-				[18, -37.5,
-					100
+				[3.75, -37.5,
+					20
 				]
 			],
-			"mesh": "elephant",
+			"mesh": "agent",
 			"preferred_end_time": 60,
 			"animation_cycles": "pass",
 			"friends": [],
-			"collision_interactions": [],
 			"radius": 0.35,
-			"mass": 100,
+			"mass": 1,
 			"energy_coefficients": {
-				"K_agent": 10,
+				"K_agent": 1,
 				"K_tol": 0,
 				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
+				"K_map": 10,
+				"K_ke": 10,
 				"K_pv": 0,
 				"K_rg": 100
 			}
@@ -60,27 +58,26 @@
 		"agent3": {
 			"id": 3,
 			"xse": [
-				[24, -37.5,
+				[5, -37.5,
 					0
 				],
-				[24,
+				[5,
 					37.5,
-					100
+					20
 				]
 			],
-			"mesh": "elephant",
+			"mesh": "agent",
 			"preferred_end_time": 60,
 			"animation_cycles": "pass",
 			"friends": [],
-			"collision_interactions": [],
 			"radius": 0.35,
-			"mass": 100,
+			"mass": 1,
 			"energy_coefficients": {
-				"K_agent": 10,
+				"K_agent": 1,
 				"K_tol": 0,
 				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
+				"K_map": 10,
+				"K_ke": 10,
 				"K_pv": 0,
 				"K_rg": 100
 			}
@@ -88,27 +85,26 @@
 		"agent4": {
 			"id": 4,
 			"xse": [
-				[30,
+				[6.25,
 					37.5,
 					0
 				],
-				[30, -37.5,
-					100
+				[6.25, -37.5,
+					20
 				]
 			],
-			"mesh": "elephant",
+			"mesh": "agent",
 			"preferred_end_time": 60,
 			"animation_cycles": "pass",
 			"friends": [],
-			"collision_interactions": [],
 			"radius": 0.35,
-			"mass": 100,
+			"mass": 1,
 			"energy_coefficients": {
-				"K_agent": 10,
+				"K_agent": 1,
 				"K_tol": 0,
 				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
+				"K_map": 10,
+				"K_ke": 10,
 				"K_pv": 0,
 				"K_rg": 100
 			}
@@ -116,307 +112,26 @@
 		"agent5": {
 			"id": 5,
 			"xse": [
-				[36, -37.5,
+				[7.5, -37.5,
 					0
 				],
-				[36,
+				[7.5,
 					37.5,
-					100
+					20
 				]
 			],
-			"mesh": "elephant",
+			"mesh": "agent",
 			"preferred_end_time": 60,
 			"animation_cycles": "pass",
 			"friends": [],
-			"collision_interactions": [],
 			"radius": 0.35,
-			"mass": 100,
+			"mass": 1,
 			"energy_coefficients": {
-				"K_agent": 10,
+				"K_agent": 1,
 				"K_tol": 0,
 				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
-				"K_pv": 0,
-				"K_rg": 100
-			}
-		},
-		"agent6": {
-			"id": 6,
-			"xse": [
-				[42,
-					37.5,
-					0
-				],
-				[42, -37.5,
-					100
-				]
-			],
-			"mesh": "elephant",
-			"preferred_end_time": 60,
-			"animation_cycles": "pass",
-			"friends": [],
-			"collision_interactions": [],
-			"radius": 0.35,
-			"mass": 100,
-			"energy_coefficients": {
-				"K_agent": 10,
-				"K_tol": 0,
-				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
-				"K_pv": 0,
-				"K_rg": 100
-			}
-		},
-		"agent7": {
-			"id": 7,
-			"xse": [
-				[48, -37.5,
-					0
-				],
-				[48,
-					37.5,
-					100
-				]
-			],
-			"mesh": "elephant",
-			"preferred_end_time": 60,
-			"animation_cycles": "pass",
-			"friends": [],
-			"collision_interactions": [],
-			"radius": 0.35,
-			"mass": 100,
-			"energy_coefficients": {
-				"K_agent": 10,
-				"K_tol": 0,
-				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
-				"K_pv": 0,
-				"K_rg": 100
-			}
-		},
-		"agent8": {
-			"id": 8,
-			"xse": [
-				[54,
-					37.5,
-					0
-				],
-				[54, -37.5,
-					100
-				]
-			],
-			"mesh": "elephant",
-			"preferred_end_time": 60,
-			"animation_cycles": "pass",
-			"friends": [],
-			"collision_interactions": [],
-			"radius": 0.35,
-			"mass": 100,
-			"energy_coefficients": {
-				"K_agent": 10,
-				"K_tol": 0,
-				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
-				"K_pv": 0,
-				"K_rg": 100
-			}
-		},
-		"agent9": {
-			"id": 9,
-			"xse": [
-				[60, -37.5,
-					0
-				],
-				[60,
-					37.5,
-					100
-				]
-			],
-			"mesh": "elephant",
-			"preferred_end_time": 60,
-			"animation_cycles": "pass",
-			"friends": [],
-			"collision_interactions": [],
-			"radius": 0.35,
-			"mass": 100,
-			"energy_coefficients": {
-				"K_agent": 10,
-				"K_tol": 0,
-				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
-				"K_pv": 0,
-				"K_rg": 100
-			}
-		},
-		"agent10": {
-			"id": 10,
-			"xse": [
-				[66,
-					37.5,
-					0
-				],
-				[66, -37.5,
-					100
-				]
-			],
-			"mesh": "elephant",
-			"preferred_end_time": 60,
-			"animation_cycles": "pass",
-			"friends": [],
-			"collision_interactions": [],
-			"radius": 0.35,
-			"mass": 100,
-			"energy_coefficients": {
-				"K_agent": 10,
-				"K_tol": 0,
-				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
-				"K_pv": 0,
-				"K_rg": 100
-			}
-		},
-		"agent11": {
-			"id": 11,
-			"xse": [
-				[72, -37.5,
-					0
-				],
-				[72,
-					37.5,
-					100
-				]
-			],
-			"mesh": "elephant",
-			"preferred_end_time": 60,
-			"animation_cycles": "pass",
-			"friends": [],
-			"collision_interactions": [],
-			"radius": 0.35,
-			"mass": 100,
-			"energy_coefficients": {
-				"K_agent": 10,
-				"K_tol": 0,
-				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
-				"K_pv": 0,
-				"K_rg": 100
-			}
-		},
-		"agent12": {
-			"id": 12,
-			"xse": [
-				[78,
-					37.5,
-					0
-				],
-				[78, -37.5,
-					100
-				]
-			],
-			"mesh": "elephant",
-			"preferred_end_time": 60,
-			"animation_cycles": "pass",
-			"friends": [],
-			"collision_interactions": [],
-			"radius": 0.35,
-			"mass": 100,
-			"energy_coefficients": {
-				"K_agent": 10,
-				"K_tol": 0,
-				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
-				"K_pv": 0,
-				"K_rg": 100
-			}
-		},
-		"agent13": {
-			"id": 13,
-			"xse": [
-				[84, -37.5,
-					0
-				],
-				[84,
-					37.5,
-					100
-				]
-			],
-			"mesh": "elephant",
-			"preferred_end_time": 60,
-			"animation_cycles": "pass",
-			"friends": [],
-			"collision_interactions": [],
-			"radius": 0.35,
-			"mass": 100,
-			"energy_coefficients": {
-				"K_agent": 10,
-				"K_tol": 0,
-				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
-				"K_pv": 0,
-				"K_rg": 100
-			}
-		},
-		"agent14": {
-			"id": 14,
-			"xse": [
-				[90,
-					37.5,
-					0
-				],
-				[90, -37.5,
-					100
-				]
-			],
-			"mesh": "elephant",
-			"preferred_end_time": 60,
-			"animation_cycles": "pass",
-			"friends": [],
-			"collision_interactions": [],
-			"radius": 0.35,
-			"mass": 100,
-			"energy_coefficients": {
-				"K_agent": 10,
-				"K_tol": 0,
-				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
-				"K_pv": 0,
-				"K_rg": 100
-			}
-		},
-		"agent15": {
-			"id": 15,
-			"xse": [
-				[96, -37.5,
-					0
-				],
-				[96,
-					37.5,
-					100
-				]
-			],
-			"mesh": "elephant",
-			"preferred_end_time": 60,
-			"animation_cycles": "pass",
-			"friends": [],
-			"collision_interactions": [],
-			"radius": 0.35,
-			"mass": 100,
-			"energy_coefficients": {
-				"K_agent": 10,
-				"K_tol": 0,
-				"K_accel": 0,
-				"K_map": 1,
-				"K_ke": 1,
+				"K_map": 10,
+				"K_ke": 10,
 				"K_pv": 0,
 				"K_rg": 100
 			}

@@ -1,4 +1,4 @@
-fname = "../Scenes/1_input_scenes/bottleneck/30Agents/";
+fname = "../Scenes/1_input_scenes/bottleneck/20Agents/";
 % inputVerts = readOBJ(fname + "start_verts.obj");
 % outputVerts = readOBJ(fname + "end_verts.obj");
 
@@ -20,15 +20,15 @@ fname = "../Scenes/1_input_scenes/bottleneck/30Agents/";
 scene = struct;
 scene.name = "bottleneck";
 agents = struct;
-for i=1:15
+for i=1:20
     a = struct;
     a.id = i;
-    a.xse = [[6*(i+1), (2*mod(i,2)-1)*-37.5, 0]' [6*(i+1), (2*mod(i,2)-1)*37.5, 100]']';
-    a.mesh = "elephant";
+    a.xse = [[1.25*(i+1), (2*mod(i,2)-1)*-37.5, 0]' [1.25*(i+1), (2*mod(i,2)-1)*37.5, 20]']';
+    a.mesh = "agent";
     a.preferred_end_time = 60;
     a.animation_cycles = "pass";
     a.friends = [];
-    a.collision_interactions = [];
+    %a.collision_interactions = [];
 %     if(i==1)
 %         a.collision_interactions(end+1) = [2];
 %     elseif(i==102)
@@ -39,13 +39,13 @@ for i=1:15
 %     end
     
     a.radius = 0.35;
-    a.mass = 100;
+    a.mass = 1;
     ec = struct;
-    ec.K_agent = 10; % agent
+    ec.K_agent = 1; % agent
     ec.K_tol = 0; % friends
     ec.K_accel = 0;
-    ec.K_map = 1;
-    ec.K_ke = 1;
+    ec.K_map = 10;
+    ec.K_ke = 100;
     ec.K_pv = 0;
     ec.K_rg = 100;
     a.energy_coefficients = ec;

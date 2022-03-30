@@ -34,7 +34,7 @@ function [f,g] = path_energy(q_i, UserTols, num_agents, e, surf_anim)
     scene.timings.iterations(end).egAgent = scene.timings.iterations(end).egAgent + toc(oneTic);
     
     oneTic = tic;
-    [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map, KDTMdls);
+    [e_map, g_map] = agent_map_energy( Q,Tols, UserTols, scene, K_map);
     scene.timings.iterations(end).egMap = scene.timings.iterations(end).egMap + toc(oneTic);
     
     oneTic = tic;
@@ -248,7 +248,7 @@ function [e, g] = agent_agent_energy(Q, Tols, scene, K, Ktol, KDTMdls)
     %g(end-num_agents+1:end) = gW; TODO
 end
       
-function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K, KDTMdls)
+function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K)
     if sum(K)==0
         e=0;
         g = zeros(numel(Q),1);
@@ -261,6 +261,7 @@ function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K, KDTMdls)
         [A11, J1] = sample_points_for_rod(A1, scene.agents(i).e);
         
         A11(:, 3) = zeros(size(A11,1),1);
+        KDTMdli = KDTreeSearcher(A11);
         %[P, ~] = sample_points_for_rod(scene.terrain.V, scene.terrain.BF);
         P = scene.terrain.BV;
         
@@ -270,8 +271,8 @@ function [e, g] = agent_map_energy( Q, Tols, UserTols, scene, K, KDTMdls)
         alpha_val = scene.smoothDistAlpha;
         
         while dist_is_good==0
-            [D,GP] = soft_distance(alpha_val,P, A11, KDTMdls{i}, 10*tol);
-
+            [D,GP] = soft_distance(alpha_val,P, A11, KDTMdli, 10*tol);
+            %[D,GP] = soft_distance_original(alpha_val,P, A11);
             if(D>-1e-8)
                 dist_is_good =1;
             end

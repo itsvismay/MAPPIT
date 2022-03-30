@@ -17,8 +17,8 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %     num_segments = 50; max_iters = 4; num_inside_iters = 50;
 % fname = "../Scenes/1_input_scenes/scaling_tests/8_agents/"; nLayer = 9;
 %      num_segments = 50; max_iters = 5; num_inside_iters = 30;
-%  fname = "../Scenes/1_input_scenes//Comparisons/8_agents/Ours/"; nLayer = 8;
-%      num_segments = 50; max_iters = 5; num_inside_iters = 40; agentRadiusBuffer = 2.0;
+ fname = "../Scenes/1_input_scenes/Comparisons/8_agents/Ours/"; nLayer = 8;
+     num_segments = 50; max_iters = 5; num_inside_iters = 40; agentRadiusBuffer = 2.0;
 % fname = "../Scenes/1_input_scenes/scaling_tests/10_agents/"; nLayer = 9;
 %      num_segments = 50; max_iters = 5; num_inside_iters = 40;
 % fname = "../Scenes/1_input_scenes/scaling_tests/20_agents/"; nLayer = 9;
@@ -78,8 +78,8 @@ bypass_mind_edge = 0;%bypass function in mydijk if distance from map boundry doe
 %per segment.
 % fname = "../Scenes/1_input_scenes/bottleneck/dense_bottleneck/";nLayer = 20; 
 %     num_segments = 200; max_iters = 2; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
- fname = "../Scenes/1_input_scenes/bottleneck/30Agents/";nLayer = 10; bypass_mind_edge = 1;
-     num_segments = 100; max_iters = 3; num_inside_iters = 100; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
+%  fname = "../Scenes/1_input_scenes/bottleneck/30Agents/";nLayer = 10; bypass_mind_edge = 0;
+%      num_segments = 100; max_iters = 3; num_inside_iters = 200; mu_barrier= 1; smoothing_eps_coeff = 1e-2;
 
 %% Battlefield
 %For dense bottleneck I had to turn off sampling as well (1 sample point

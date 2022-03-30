@@ -215,6 +215,7 @@ function [e, HB, hW] = map_energy_with_hessian(Q, Tols, scene, K, KDTMdls)
         [A11, J1] = sample_points_for_rod(A1, scene.agents(i).e);
        
         A11(:, 3) = zeros(size(A11,1),1);
+        KDTMdli = KDTreeSearcher(A11);
         %[P, ~] = sample_points_for_rod(scene.terrain.V, scene.terrain.BF);
         P = scene.terrain.BV;
         
@@ -224,7 +225,8 @@ function [e, HB, hW] = map_energy_with_hessian(Q, Tols, scene, K, KDTMdls)
         alpha_val = scene.smoothDistAlpha;
 
         while dist_is_good==0
-            [D,GP] = soft_distance(alpha_val,P, A11, KDTMdls{i}, 10*tol);
+            [D,GP] = soft_distance(alpha_val,P, A11, KDTMdli, 10*tol);
+            %[D,GP] = soft_distance_original(alpha_val,P, A11);
 
             if(D > -1e-8)
                 dist_is_good =1;

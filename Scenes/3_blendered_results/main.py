@@ -386,7 +386,7 @@ blend_material_folder = "blend_material/"
 # scene_folder = "Comparisons/8_agents/NHTTC/NHTTC_8_agents/"
 # scene_folder = "Comparisons/8_agents/8_agents_offset/"
 
-# scene_folder = "Comparisons/8_agents/Ours/run16/"
+scene_folder = "Comparisons/8_agents/Ours/run-1/"
 
 # #Pond Scene
 # scene_folder = "pond_scene/all_agents_normal/run0/"
@@ -406,7 +406,7 @@ blend_material_folder = "blend_material/"
 
 # # Battlefield
 # scene_folder = "battlefield/denser/run4/"
-scene_folder = "battlefield/102Agents/run0/"
+# scene_folder = "battlefield/102Agents/run3/"
 
 # # Airplane
 # scene_folder = "airplane/3agents/run18/"

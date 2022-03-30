@@ -26,7 +26,6 @@ import json
 # 		"8AgentDOFS/run150/agents.json",
 # 		"8AgentDOFS/run180/agents.json"]
 
-<<<<<<< HEAD
 # files = [r'C:\Users\vismay\OneDrive - University of Toronto\CrowdsPngs\Timings\scaling_tests\2_agents\run0\agents.json',
 # r'C:\Users\vismay\OneDrive - University of Toronto\CrowdsPngs\Timings\scaling_tests\8_agents\run0\agents.json',
 # r'C:\Users\vismay\OneDrive - University of Toronto\CrowdsPngs\Timings\scaling_tests\10_agents\run0\agents.json',
@@ -47,19 +46,19 @@ import json
 # r'C:\Users\vismay\OneDrive - University of Toronto\CrowdsPngs\Timings\battlfield\agents.json',
 # r'C:\Users\vismay\OneDrive - University of Toronto\CrowdsPngs\Timings\ricky_baboon_elephant\run-1\agents.json'
 # ]
-files = ["/Users/vismay/recode/crowds/Scenes/2_output_results/love/sparse/run28/agents.json"]
-=======
+files = ["/Users/vismay/recode/crowds/Scenes/2_output_results/battlefield/102Agents/run2/agents.json"]
+
 # files = ["./EnvDOFS/agents1.json",
 # 		"EnvDOFS/agents2.json",
 # 		"EnvDOFS/agents3.json",
 # 		"EnvDOFS/agents4.json"]
 
-files = [r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\scaling_tests\2_agents\run2\agents.json',
-		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\scaling_tests\8_agents\run2\agents.json',
-		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\scaling_tests\10_agents\run2\agents.json',
-		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\scaling_tests\20_agents\run3\agents.json',
-		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\scaling_tests\30_agents\run2\agents.json',
-		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\roomba_maze\scene_3\run3\agents.json']
+# files = [r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\scaling_tests\2_agents\run2\agents.json',
+# 		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\scaling_tests\8_agents\run2\agents.json',
+# 		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\scaling_tests\10_agents\run2\agents.json',
+# 		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\scaling_tests\20_agents\run3\agents.json',
+# 		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\scaling_tests\30_agents\run2\agents.json',
+# 		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\roomba_maze\scene_3\run3\agents.json']
 # files=[r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\airplane\3agents\run18\agents.json',
 #  		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\three_agents\no_collisions\run2\agents.json',
 #  		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\three_agents\symmetric_collisions\run3\agents.json',
@@ -73,7 +72,6 @@ files = [r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\scaling_tests\2
 # 		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\circle_maze\seven_agents\run1\agents.json',
 # 		r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\tunnel_maze\scene_1\run8\agents.json',
 # files= [r'C:\Users\vismay\recode\crowds\Scenes\2_output_results\ricky_baboon_elephant\run3\agents.json']
->>>>>>> 2e13a90e73b3bac31fe08377769c3a36d1ea5cc1
 
 for i in range(0,len(files)):		
 	data = json.load(open(files[i]))
